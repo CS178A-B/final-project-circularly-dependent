@@ -4,7 +4,7 @@
   "description": "## Table of Contents - [Overview](#overview) - [Usage](#usage) - [How To Run](#how-to-run) - [Diagrams](#diagrams) - [Dependencies](#dependencies)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node your-script.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,8 @@
   "homepage": "https://github.com/CS178A-B/final-project-circularly-dependent#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }
