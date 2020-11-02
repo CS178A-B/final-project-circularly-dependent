@@ -15,3 +15,5 @@ const PORT = process. env.PORT || 3000;
 //                                                           () is a callback function, log to the console.
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
 
+app.get('/testPage', (req, res) => {
+});
