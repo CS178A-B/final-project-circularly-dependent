@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          HELLO THIS IS CIRCULARLY DEPENDENT
+          HELLO THIS IS CIRCULARLY DEPENDENT - Hello from client
         </p>
         <a
           className="App-link"
