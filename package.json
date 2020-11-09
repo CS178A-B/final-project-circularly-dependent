@@ -4,7 +4,7 @@
   "description": "## Table of Contents - [Overview](#overview) - [Usage](#usage) - [How To Run](#how-to-run) - [Diagrams](#diagrams) - [Dependencies](#dependencies)",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon express.js"
+    "start": "nodemon server/express.js"
   },
   "repository": {
     "type": "git",
