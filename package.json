@@ -18,7 +18,8 @@
   "homepage": "https://github.com/CS178A-B/final-project-circularly-dependent#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "react-scripts": "^4.0.0"
+    "react-scripts": "^4.0.0",
+    "snowflake-sdk": "^1.5.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
