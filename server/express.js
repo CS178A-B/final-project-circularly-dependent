@@ -19,7 +19,7 @@ const PORT = process. env.PORT || 4000;
 app.use('/', express.static(path.join(__dirname, '../deep-capitalizer/build')));
 
 app.get('/', (req, res) => { 
-    res.sendFile(path.join(__dirname, '../deep-capitalizer/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../deep-capitalizer/build', 'index.html'));
 })
 
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
