@@ -9,7 +9,7 @@ const app = express();
 // Save the port of our sever into a constant 'PORT'
 // process.env.PORT checks our environment variables to see if we already have a PORT defined.
 // if not, then we use PORT 4000
-const PORT = process. env.PORT || 3000;
+const PORT = process. env.PORT || 4000;
 
 // the built-in listen method expects at least one argument : port number, 
 //                                                           () is a callback function, log to the console.
