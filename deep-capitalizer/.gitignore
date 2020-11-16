@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+# /build
 
 # misc
 .DS_Store
@@ -24,6 +24,5 @@ yarn-error.log*
 
 web-build/
 .vscode/
-package-lock.json
 server/log-file.txt
 .expo/
