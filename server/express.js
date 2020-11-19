@@ -1,8 +1,9 @@
-/* entry point fo rour application*/
+/* entry point for our application*/
 
 // Bringing in the express framework and sotre it in a constant 'express'
 const express = require('express');
-const path = require('path')
+const path = require('path');
+const cors = require('cors');
 
 // Initializing the express framework and save it to another constant 'app'
 const app = express();
@@ -15,6 +16,9 @@ const PORT = process. env.PORT || 4000;
 // the built-in listen method expects at least one argument : port number, 
 //                                                           () is a callback function, log to the console.
 
+// Removes CORS error
+app.use(cors());
+
 // Serves up static Client build (React App)
 app.use('/', express.static(path.join(__dirname, '../deep-capitalizer/build')));
 
@@ -25,6 +29,6 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
 
 app.get('/testPage', (req, res) => {
-  res.status(200).json({ "message" : "> Poke recieved & returned <" })
-  console.log("Counter poke initiated")
+  res.status(200).json({ "message" : "> Counter poke from Server <" })
+  console.log('Counter poke initiated')
 });
