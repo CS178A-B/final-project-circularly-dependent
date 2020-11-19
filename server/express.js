@@ -11,7 +11,12 @@ const app = express();
 // Save the port of our sever into a constant 'PORT'
 // process.env.PORT checks our environment variables to see if we already have a PORT defined.
 // if not, then we use PORT 4000
-const PORT = process. env.PORT || 4000;
+const PORT = process.env.PORT || 4000;
+
+// Delay in mili-seconds
+const timeout = delay => {
+  return new Promise(res => setTimeout(res, delay));
+}
 
 // the built-in listen method expects at least one argument : port number, 
 //                                                           () is a callback function, log to the console.
@@ -28,7 +33,11 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
 
-app.get('/testPage', (req, res) => {
-  res.status(200).json({ "message" : "> Counter poke from Server <" })
-  console.log('Counter poke initiated')
+app.get('/test', (req, res) => {
+  delayedRes = async () => {
+    await timeout(500);
+    res.status(200).json({ "message" : "> Counter poke from Server <" })
+    console.log('Counter poke initiated')
+  }
+  delayedRes()
 });
