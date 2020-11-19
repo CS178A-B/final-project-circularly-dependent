@@ -24,4 +24,7 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
 
-app.get('/testPage', (req, res) => {});
+app.get('/testPage', (req, res) => {
+  res.status(200).json({ 'message' : '> Poke recieved & returned <' })
+  console.log('Counter poke initiated')
+});
