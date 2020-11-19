@@ -1,8 +1,8 @@
 /* entry point fo rour application*/
 
 // Bringing in the express framework and sotre it in a constant 'express'
-const express = require("express");
-const path = require("path")
+const express = require('express');
+const path = require('path')
 
 // Initializing the express framework and save it to another constant 'app'
 const app = express();
@@ -25,6 +25,6 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
 
 app.get('/testPage', (req, res) => {
-  res.status(200).json({ 'message' : '> Poke recieved & returned <' })
-  console.log('Counter poke initiated')
+  res.status(200).json({ "message" : "> Poke recieved & returned <" })
+  console.log("Counter poke initiated")
 });
