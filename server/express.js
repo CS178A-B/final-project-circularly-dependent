@@ -15,5 +15,19 @@ const PORT = process. env.PORT || 4000;
 //                                                           () is a callback function, log to the console.
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
 
+
+const DeepCapitalizer = require('./data.js').DeepCapitalizer
+
+
 app.get('/testPage', (req, res) => {
+    console.log('testing')
 });
+
+app.get("/", function(req, res){
+    var q = 'SELECT 1+1 AS solution';
+    connection.query(q, function (error, results) {
+    if (error) throw error;
+    var msg = "We have " + results[0].count + " users";
+    res.send(msg);
+    });
+   });
