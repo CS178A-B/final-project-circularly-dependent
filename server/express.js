@@ -2,7 +2,6 @@
 
 // Bringing in the express framework and sotre it in a constant 'express'
 const express = require("express");
-const path = require("path")
 
 // Initializing the express framework and save it to another constant 'app'
 const app = express();
@@ -14,14 +13,21 @@ const PORT = process. env.PORT || 4000;
 
 // the built-in listen method expects at least one argument : port number, 
 //                                                           () is a callback function, log to the console.
-
-// Serves up static Client build (React App)
-app.use('/', express.static(path.join(__dirname, '../deep-capitalizer/build')));
-
-app.get('/', (req, res) => { 
-  res.sendFile(path.join(__dirname, '../deep-capitalizer/build', 'index.html'));
-})
-
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
 
-app.get('/testPage', (req, res) => {});
+
+const DeepCapitalizer = require('./data.js').DeepCapitalizer
+
+
+app.get('/testPage', (req, res) => {
+    console.log('testing')
+});
+
+app.get("/", function(req, res){
+    var q = 'SELECT 1+1 AS solution';
+    connection.query(q, function (error, results) {
+    if (error) throw error;
+    var msg = "We have " + results[0].count + " users";
+    res.send(msg);
+    });
+   });
