@@ -1,7 +1,11 @@
-/* entry point fo rour application*/
+/* entry point for our application */
 
 // Bringing in the express framework and sotre it in a constant 'express'
-const express = require("express");
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+const DeepCapitalizer = require('./data.js').DeepCapitalizer
+
 
 // Initializing the express framework and save it to another constant 'app'
 const app = express();
@@ -9,25 +13,42 @@ const app = express();
 // Save the port of our sever into a constant 'PORT'
 // process.env.PORT checks our environment variables to see if we already have a PORT defined.
 // if not, then we use PORT 4000
-const PORT = process. env.PORT || 4000;
+const PORT = process.env.PORT || 4000;
+
+// Delay in mili-seconds
+const timeout = delay => {
+  return new Promise(res => setTimeout(res, delay));
+}
 
 // the built-in listen method expects at least one argument : port number, 
 //                                                           () is a callback function, log to the console.
+
+// Removes CORS error
+app.use(cors());
+
+// Serves up static Client build (React App)
+app.use('/', express.static(path.join(__dirname, '../deep-capitalizer/build')));
+
+app.get('/', (req, res) => { 
+  res.sendFile(path.join(__dirname, '../deep-capitalizer/build', 'index.html'));
+})
+
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
 
-
-const DeepCapitalizer = require('./data.js').DeepCapitalizer
-
-
-app.get('/testPage', (req, res) => {
-    console.log('testing')
+app.get('/test', (req, res) => {
+  delayedRes = async () => {
+    await timeout(500);
+    res.status(200).json({ "message" : "> Counter poke from Server <" })
+    console.log('Counter poke initiated')
+  }
+  delayedRes()
 });
 
 app.get("/", function(req, res){
-    var q = 'SELECT 1+1 AS solution';
-    connection.query(q, function (error, results) {
-    if (error) throw error;
-    var msg = "We have " + results[0].count + " users";
-    res.send(msg);
-    });
-   });
+  var q = 'SELECT 1+1 AS solution';
+  connection.query(q, function (error, results) {
+  if (error) throw error;
+  var msg = "We have " + results[0].count + " users";
+  res.send(msg);
+  });
+});
