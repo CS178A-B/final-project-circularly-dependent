@@ -1,23 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import Routes from './Routes';
-import ButtonAppBar from './Navbar';
-
 
 ReactDOM.render(
   <Router>
     <div className="App">
-      <ButtonAppBar/>
       <Routes />
     </div>
   </Router>,
   document.getElementById('root')
-
 );
 
 // If you want to start measuring performance in your app, pass a function

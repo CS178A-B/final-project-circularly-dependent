@@ -1,9 +1,8 @@
 import './App.css';
-import { SERVER_PORT, timeout } from './globals';
+import { SERVER_PORT, timeout } from './../globals';
 import { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
-import logo from './logo.svg';
-import Main from './Main'
+import logo from '../logo.svg';
 
 const App = () => {
   const [count, setCount] = useState(0);
@@ -46,7 +45,6 @@ const App = () => {
 
   return (
     <div className='App'>
-      <Main />
       <header className='App-header'>
         <img src={logo} className='App-logo' alt='logo' />
         <p>

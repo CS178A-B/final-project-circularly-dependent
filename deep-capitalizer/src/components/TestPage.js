@@ -1,9 +1,5 @@
 import './App.css';
-import { useState, useEffect } from 'react';
-import Button from '@material-ui/core/Button';
-import logo from './logo.svg';
-import Main from './Main'
-import { Link } from "react-router-dom";
+import logo from '../logo.svg';
 
 const TestPage = () => {
     return (
