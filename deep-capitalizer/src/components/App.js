@@ -1,9 +1,8 @@
 import './App.css';
-import { SERVER_PORT, timeout } from './globals';
+import { SERVER_PORT, timeout } from './../globals';
 import { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
-import logo from './logo.svg';
-
+import logo from '../logo.svg';
 
 const App = () => {
   const [count, setCount] = useState(0);
