@@ -4,7 +4,7 @@ import { Router, Switch, Route } from 'react-router-dom';
 import Home from './components/Home';
 import TestPage from './components/TestPage';
 import App from './components/App';
-import ButtonAppBar from './components/Navbar';
+import ButtonAppBar from './components/shared-components/Navbar';
 import { createBrowserHistory } from 'history';
 
 export const history = createBrowserHistory();
