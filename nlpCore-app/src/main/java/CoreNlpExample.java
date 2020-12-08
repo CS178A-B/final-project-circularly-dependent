@@ -9,10 +9,11 @@ import edu.stanford.nlp.pipeline.*;
 import edu.stanford.nlp.util.CoreMap;
 
 //other
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.*;
-import org.json.JSONObject;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 //import java.util.Scanner;
 
 
@@ -20,8 +21,8 @@ public class CoreNlpExample {
 
     public static JSONObject getGrouping(String text){
         JSONObject group = new JSONObject();
-        group.put("Product", "");
-        group.put("Descriptor", "");
+        group.put("Product", 0);
+        group.put("Descriptor", 0); //Do you want a json array???
         boolean consecutive = true;//capture consecutive nouns
         boolean noun_fill = false;
 
@@ -68,8 +69,13 @@ public class CoreNlpExample {
                             && consecutive){   //capture consecutive nouns
                         //System.out.println();
                         //group.put("Product", String.format("%s ", word));
-                        group.put("Product",
-                                group.get("Product").toString().concat(String.format("%s ", word)));
+                        if(group.get("Product").equals(0)){
+                            group.put("Product",String.format("%s ", word));
+                        }
+                        else {
+                            group.put("Product",
+                                    group.get("Product").toString().concat(String.format("%s ", word)));
+                        }
                         noun_fill = true;
                     }
                     else if(pos.matches("JJ")){  //caputre adjectives
@@ -77,8 +83,13 @@ public class CoreNlpExample {
                         if(noun_fill){
                             consecutive = false;
                         }
-                        group.put("Descriptor",
-                                group.get("Descriptor").toString().concat(String.format("%s ", word)));
+                        if(group.get("Descriptor").equals(0)){
+                            group.put("Descriptor", String.format("%s ", word));
+                        }
+                        else{
+                            group.put("Descriptor",
+                                    group.get("Descriptor").toString().concat(String.format("%s ", word)));
+                        }
                     }
                     else{
                         if(noun_fill){
@@ -100,40 +111,52 @@ public class CoreNlpExample {
 
 
     public static void main(String[] args) {
-        String filename = "testdata";
+        String in_file = "testdata";
+        String out_file = "outdata";
         String delimiter = "\\|\\|";  // using || double pipe as delimiter
+
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(out_file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         Scanner read = null;
         try{
-            read = new Scanner (new File(filename));
+            read = new Scanner (new File(in_file));
         } catch (FileNotFoundException e){
             e.printStackTrace();
         }
 
         read.useDelimiter(delimiter);
 
+        JSONArray product = new JSONArray();
+        JSONObject root = new JSONObject();
         String text = "";
-        JSONObject group;
-
         for(int i = 1; i <= 16; i++){
             text = read.next();
         }
         //System.out.println(text);//DEBUG
-        //group = getGrouping(text);
-        //System.out.println(group);
+        //product = getGrouping(text);
+        //System.out.println(product);
         while(read.hasNext()){
             //System.out.println(text);//DEBUG
-            group = getGrouping(text);
-            //System.out.println(group.get("Product"));
-            //System.out.println(group.get("Descriptor"));
-            System.out.println(group);
+            product.add(getGrouping(text));
+            //System.out.println(product.get("Product"));
+            //System.out.println(product.get("Descriptor"));
+            //System.out.println(product);
+            //writer.println(product);
             for(int i = 1; i <= 9; i++){
                 if(read.hasNext()){
                     text = read.next();
                 }
             }
         }
+        root.put("Purchases", product);
+        writer.println(root.toJSONString());
 
+        writer.close();
         // read some text in the text variable
 //        String text = "Hello, my first name is Jason. Using my green compact car," +
 //                " I drove to the store yesterday and bought some paleo groceries." +
