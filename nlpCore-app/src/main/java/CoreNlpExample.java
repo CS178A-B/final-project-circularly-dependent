@@ -19,6 +19,8 @@ public class CoreNlpExample {
 
     public static String getGrouping(String text){
         String group = "";
+        boolean consecutive = true;//capture consecutive nouns
+        boolean noun_check = false;
 
         // creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution
         Properties props = new Properties();
@@ -51,9 +53,18 @@ public class CoreNlpExample {
                 if(pos.matches("JJ") || pos.matches("NN") || pos.matches("NNS")) { //extract nouns only
                     //System.out.println(String.format("Print: word: [%s] pos: [%s] ne: [%s]", word, pos, ne));//DEBUG
                     //System.out.print(String.format(" %s", word));//DEBUG
-                    group += (String.format("%s ", word));
-                    if(pos.matches("NN") || pos.matches("NNS")){
+                    //group += (String.format("%s ", word));
+                    if((pos.matches("NN") || pos.matches("NNS")) && consecutive){   //capture consecutive nouns
                         //System.out.println();
+                        group += (String.format("%s ", word));
+                        noun_check = true;
+                    }
+                    if(pos.matches("JJ")){  //caputre adjectives
+                        //System.out.println();
+                        if(noun_check){
+                            consecutive = false;
+                        }
+                        group += (String.format("%s ", word));
                     }
                 }
             }
@@ -70,11 +81,8 @@ public class CoreNlpExample {
 
 
     public static void main(String[] args) {
-
         String filename = "test.txt";
         String delimiter = "\\|\\|";  // using || double pipe as delimiter
-
-
 
         Scanner read = null;
         try{
@@ -94,16 +102,13 @@ public class CoreNlpExample {
             System.out.println(group);
         }
 
-
-
-
         // read some text in the text variable
 //        String text = "Hello, my first name is Jason. Using my green compact car," +
 //                " I drove to the store yesterday and bought some paleo groceries." +
 //                " rubber gloves";
-
-
         //System.out.print("]");
+
+
     }
 }
 
