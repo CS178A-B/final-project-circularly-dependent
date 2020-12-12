@@ -6,10 +6,10 @@ const Home = () => {
   return (
     <>
         <Link to='/testPage'>
-          <Button>Goto testing page</Button>
+          <Button>Goto Visualization page</Button>
         </Link>
         <Link to='/app'>
-          <Button>Goto App page</Button>
+          <Button>Goto Server Test page</Button>
         </Link>    
         <p>This is Home</p>
     </>
