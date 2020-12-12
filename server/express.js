@@ -5,7 +5,13 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const DeepCapitalizer = require('./data.js').DeepCapitalizer
+// let results = require('./app.js').results 
 
+const csv = require('csv-parser')
+
+const fs = require('fs')
+
+const coolPath = path.join(__dirname, 'RS-20170701-20190630.csv');
 
 // Initializing the express framework and save it to another constant 'app'
 const app = express();
@@ -44,11 +50,34 @@ app.get('/test', (req, res) => {
   delayedRes()
 });
 
-app.get("/", function(req, res){
-  var q = 'SELECT 1+1 AS solution';
-  connection.query(q, function (error, results) {
-  if (error) throw error;
-  var msg = "We have " + results[0].count + " users";
-  res.send(msg);
-  });
+
+app.get('/rawData', (req, res) => {
+  const results = [];
+
+  console.log('File read')
+  delayedRes = async () => { 
+    fs.createReadStream(coolPath)
+      .on('error', () => {
+          console.log("errorr")
+      })
+      .pipe(csv())
+      .on('data', (row) => {
+          results.push(row)
+      })
+      .on('end', () => {
+        console.log(results[0]);
+      })
+  }
+  res.status(200).json(results)
+  delayedRes()  
+
 });
+
+// app.get("/", function(req, res){
+//   var q = 'SELECT 1+1 AS solution';
+//   connection.query(q, function (error, results) {
+//   if (error) throw error;
+//   var msg = "We have " + results[0].count + " users";
+//   res.send(msg);
+//   });
+// });
