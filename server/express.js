@@ -5,13 +5,9 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const DeepCapitalizer = require('./data.js').DeepCapitalizer
-// let results = require('./app.js').results 
-
 const csv = require('csv-parser')
-
 const fs = require('fs')
-
-const coolPath = path.join(__dirname, 'RS-20170701-20190630.csv');
+const filePath = path.join(__dirname, 'RS-20170701-20190630.csv');
 
 // Initializing the express framework and save it to another constant 'app'
 const app = express();
@@ -25,9 +21,6 @@ const PORT = process.env.PORT || 4000;
 const timeout = delay => {
   return new Promise(res => setTimeout(res, delay));
 }
-
-// the built-in listen method expects at least one argument : port number, 
-//                                                           () is a callback function, log to the console.
 
 // Removes CORS error
 app.use(cors());
@@ -50,13 +43,12 @@ app.get('/test', (req, res) => {
   delayedRes()
 });
 
-
 app.get('/rawData', (req, res) => {
   const results = [];
 
   console.log('File read')
   delayedRes = async () => { 
-    fs.createReadStream(coolPath)
+    fs.createReadStream(filePath)
       .on('error', () => {
           console.log("errorr")
       })
