@@ -1,10 +1,10 @@
 import './App.css';
-import { SERVER_PORT, timeout } from './../globals';
+import { SERVER_PORT, timeout } from '../globals';
 import { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
-import logo from '../logo.svg';
+import logo from '../resources/logo.svg';
 
-const App = () => {
+const ServerTest = () => {
   const [count, setCount] = useState(0);
   const [serverMsg, setServerMsg] = useState(null);
   const [error, setError] = useState(null);
@@ -61,4 +61,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default ServerTest;
