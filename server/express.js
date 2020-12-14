@@ -4,8 +4,12 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const DeepCapitalizer = require('./data.js').DeepCapitalizer
-
+const csv = require('csv-parser');
+const fs = require('fs');
+// const filePath = path.join(__dirname, 'RS-20170701-20190630.csv');
+const filePath = path.join(__dirname, 'outdata.json');
+const mysql = require('mysql');
+const bodyParrser = require('body-parser');
 
 // Initializing the express framework and save it to another constant 'app'
 const app = express();
@@ -20,8 +24,28 @@ const timeout = delay => {
   return new Promise(res => setTimeout(res, delay));
 }
 
-// the built-in listen method expects at least one argument : port number, 
-//                                                           () is a callback function, log to the console.
+// sql works
+// const con = mysql.createConnection({
+//   host: '192.168.1.28',
+//   user: 'root',
+//   password: 'CS178!CD!dc',
+//   database: "mock"
+// });
+
+// con.connect(function(err) {
+//   if (err) throw err;
+//   console.log("Connected!");
+
+//   con.query("DROP DATABASE mock", function(err, result){
+//     if(err) throw err;
+//     console.log("mock deleted")
+//   })
+
+//   con.query("CREATE DATABASE mock", function(err, result){
+//     if(err) throw err;
+//     console.log("mock created")
+//   })
+// });
 
 // Removes CORS error
 app.use(cors());
@@ -44,11 +68,65 @@ app.get('/test', (req, res) => {
   delayedRes()
 });
 
-app.get("/", function(req, res){
-  var q = 'SELECT 1+1 AS solution';
-  connection.query(q, function (error, results) {
-  if (error) throw error;
-  var msg = "We have " + results[0].count + " users";
-  res.send(msg);
+app.get('/rawData', (req, res) => {  
+  async function jsonReader(filePath, cb) {
+    fs.readFile(filePath, (err, fileData) => {
+        if (err) {
+          return cb && cb(err)
+        }
+        try {
+          const object = JSON.parse(fileData)
+            return cb && cb(null, object)
+          } catch(err) {
+            return cb && cb(err)
+        }
+      })
+  }
+
+  jsonReader(filePath, (err, ret) => {
+    if (err) {
+        console.log(err)
+        return 
+      }
+      
+    data = ret.Purchases
+    // console.log(data[0].Product)
+    var values = []
+    for (var i=0; i<data.length; i++)
+      values.push([data[i].Product, data[i].Descriptor])
+      
+      con.query('INSERT INTO items (product, descriptor) VALUES ?', [values], function(err,result) {
+        if(err) {
+          res.send('Error');
+          console.log('error')
+        }
+        else {
+          res.send('Success');
+          console.log("success")
+        }
+      });
+    })   
   });
-});
+  
+  // for CSV - version outcome
+  // app.get('/rawData', (req, res) => {
+  //   const results = [];
+  
+  //   console.log('File read')
+  //   delayedRes = async () => { 
+  //     fs.createReadStream(filePath)
+  //       .on('error', () => {
+  //           console.log("errorr")
+  //       })
+  //       .pipe(csv())
+  //       .on('data', (row) => {
+  //           results.push(row)
+  //       })
+  //       .on('end', () => {
+  //         console.log(results[0]);
+  //       })
+  //   }
+  //   res.status(200).json(results)
+  //   delayedRes()  
+  // });
+  
