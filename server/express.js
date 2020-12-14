@@ -25,38 +25,27 @@ const timeout = delay => {
 }
 
 // sql works
-const con = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'CS178!CD!dc',
-  database: "mock"
-});
+// const con = mysql.createConnection({
+//   host: '192.168.1.28',
+//   user: 'root',
+//   password: 'CS178!CD!dc',
+//   database: "mock"
+// });
 
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
+// con.connect(function(err) {
+//   if (err) throw err;
+//   console.log("Connected!");
 
-  con.query("DROP DATABASE mock", function(err, result){
-    if(err) throw err;
-    console.log("mock deleted")
-  })
+//   con.query("DROP DATABASE mock", function(err, result){
+//     if(err) throw err;
+//     console.log("mock deleted")
+//   })
 
-  con.query("CREATE DATABASE mock", function(err, result){
-    if(err) throw err;
-    console.log("mock created")
-  })
-  
-  con.query("USE mock", function(err, result){
-    if(err) throw err;
-    console.log("mock used")
-  })
-  
-  var sql = "CREATE TABLE items (product VARCHAR(255), descriptor VARCHAR(255))";
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("Table created");
-  });
-});
+//   con.query("CREATE DATABASE mock", function(err, result){
+//     if(err) throw err;
+//     console.log("mock created")
+//   })
+// });
 
 // Removes CORS error
 app.use(cors());
