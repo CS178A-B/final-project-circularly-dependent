@@ -45,6 +45,17 @@ con.connect(function(err) {
     if(err) throw err;
     console.log("mock created")
   })
+  
+  con.query("USE mock", function(err, result){
+    if(err) throw err;
+    console.log("mock used")
+  })
+  
+  var sql = "CREATE TABLE items (product VARCHAR(255), descriptor VARCHAR(255))";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Table created");
+  });
 });
 
 // Removes CORS error
