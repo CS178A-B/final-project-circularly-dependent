@@ -71,16 +71,16 @@ app.get('/test', (req, res) => {
 app.get('/rawData', (req, res) => {  
   async function jsonReader(filePath, cb) {
     fs.readFile(filePath, (err, fileData) => {
-        if (err) {
+      if (err) {
+        return cb && cb(err)
+      }
+      try {
+        const object = JSON.parse(fileData)
+          return cb && cb(null, object)
+        } catch(err) {
           return cb && cb(err)
-        }
-        try {
-          const object = JSON.parse(fileData)
-            return cb && cb(null, object)
-          } catch(err) {
-            return cb && cb(err)
-        }
-      })
+      }
+    })
   }
 
   jsonReader(filePath, (err, ret) => {
@@ -94,19 +94,19 @@ app.get('/rawData', (req, res) => {
     var values = []
     for (var i=0; i<data.length; i++)
       values.push([data[i].Product, data[i].Descriptor])
-      
-      con.query('INSERT INTO items (product, descriptor) VALUES ?', [values], function(err,result) {
-        if(err) {
-          res.send('Error');
-          console.log('error')
-        }
-        else {
-          res.send('Success');
-          console.log("success")
-        }
-      });
-    })   
-  });
+    console.log(values)
+    // con.query('INSERT INTO items (product, descriptor) VALUES ?', [values], function(err,result) {
+    //   if(err) {
+    //     res.send('Error');
+    //     console.log('error')
+    //   }
+    //   else {
+    //     res.send('Success');
+    //     console.log("success")
+    //   }
+    // });
+  })   
+});
   
   // for CSV - version outcome
   // app.get('/rawData', (req, res) => {
