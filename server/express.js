@@ -7,9 +7,8 @@ const cors = require('cors');
 const csv = require('csv-parser');
 const fs = require('fs');
 // const filePath = path.join(__dirname, 'RS-20170701-20190630.csv');
-const filePath = path.join(__dirname, 'outdata.json');
+const filePath = path.join(__dirname, 'out1.json');
 const mysql = require('mysql');
-const bodyParrser = require('body-parser');
 
 // Initializing the express framework and save it to another constant 'app'
 const app = express();
@@ -25,27 +24,38 @@ const timeout = delay => {
 }
 
 // sql works
-// const con = mysql.createConnection({
-//   host: '192.168.1.28',
-//   user: 'root',
-//   password: 'CS178!CD!dc',
-//   database: "mock"
-// });
+const con = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'CS178!CD!dc',
+  database: "mock"
+});
 
-// con.connect(function(err) {
-//   if (err) throw err;
-//   console.log("Connected!");
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
 
-//   con.query("DROP DATABASE mock", function(err, result){
-//     if(err) throw err;
-//     console.log("mock deleted")
-//   })
+  con.query("DROP DATABASE mock", function(err, result){
+    if(err) throw err;
+    console.log("mock deleted")
+  })
 
-//   con.query("CREATE DATABASE mock", function(err, result){
-//     if(err) throw err;
-//     console.log("mock created")
-//   })
-// });
+  con.query("CREATE DATABASE mock", function(err, result){
+    if(err) throw err;
+    console.log("mock created")
+  })
+    
+  con.query("USE mock", function(err, result){
+    if(err) throw err;
+    console.log("mock used")
+  })
+  
+  var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc VARCHAR(255), unit_price INT, dep_desc VARCHAR(255), item_total INT, product_name VARCHAR(255), po_no INT, entry_id INT, issue_date DATE, vendor_code INT, po_quality INT)";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Table created");
+  });
+});
 
 // Removes CORS error
 app.use(cors());
@@ -88,26 +98,55 @@ app.get('/rawData', (req, res) => {
         console.log(err)
         return 
       }
-      
-    data = ret.Purchases
-    // console.log(data[0].Product)
-    var values = []
-    for (var i=0; i<data.length; i++)
-      values.push([data[i].Product, data[i].Descriptor])
-      
-      con.query('INSERT INTO items (product, descriptor) VALUES ?', [values], function(err,result) {
-        if(err) {
-          res.send('Error');
-          console.log('error')
-        }
-        else {
-          res.send('Success');
-          console.log("success")
-        }
-      });
-    })   
-  });
-  
+    data = ret.PURCHASES
+    let values = []
+    let vendor_name = []
+    let descriptor = []
+    let req_department = []
+    let item_desc = []
+    let unit_price = []
+    let dep_desc = []
+    let item_total = []
+    let product_name = []
+    let po_no = []
+    let entry_id = []
+    let issue_date = []
+    let vendor_code = [] 
+    let po_quality = []
+
+    for (var i=0; i<data.length; i++) {
+      values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE, data[i].PO_QUANTITY])
+      vendor_name.push(data[i].VENDOR_NAME)
+      descriptor.push(data[i].DESCRIPTOR)
+      req_department.push(data[i].REQUESTOR_DEPARTMENT)
+      item_desc.push(data[i].ITEM_DESC)
+      unit_price.push(data[i].UNIT_PRICE)
+      dep_desc.push(data[i].DEPARTMENT_DESC)
+      item_total.push(data[i].ITEM_TOTAL_AMOUNT)
+      product_name.push(data[i].PRODUCT_NAME)
+      po_no.push(data[i].PO_NO)
+      entry_id.push(data[i].ENTRY_ID)
+      issue_date.push(data[i].ISSUE_DATE)
+      vendor_code.push(data[i].VENDOR_CODE)
+      po_quality.push(data[i].PO_QUANTITY)
+    }
+
+    // con.query('INSERT INTO items (product, descriptor) VALUES ?', [values], function(err,result) {
+    //   if(err) {
+    //     res.send('Error');
+    //     console.log('error')
+    //   }
+    //   else {
+    //     console.log("success")
+    //   }
+    // })
+    // console.log(data.PO_QUANTITY)
+
+    res.status(200).json([{'vendor_name':vendor_name, 'descriptor':descriptor, 'req_department':req_department, 'item_desc':item_desc, 'unit_price':unit_price, 'dep_desc':dep_desc, 'item_total':item_total, 'product_name':product_name, 'po_no':po_no, 'entry_id':entry_id, 'issue_date':issue_date, 'vendor_code':vendor_code, 'po_quality':po_quality}])
+  })   
+});
+
+
   // for CSV - version outcome
   // app.get('/rawData', (req, res) => {
   //   const results = [];
