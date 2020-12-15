@@ -147,18 +147,19 @@ public class CoreNlpExample {
 
         JSONArray purchases = new JSONArray();
         JSONObject purchase;
-        //int entryCount = 0;//track entries in the data
+        int entryCount = 0;//track entries in the data
 
         while(read.hasNext()){
             purchase = new JSONObject();
 
+            purchase.put("ENTRY_ID", ++entryCount);
             for(int i = 0; i < 10; i++){
                 purchase.put(purchaseData[i], 0);
                 if(read.hasNext()){
                     text = read.next();
                     //System.out.println(text);//DEBUG
                     purchase.put(purchaseData[i], text);
-                    
+
                     //description
                     if(i == 6){
                         //System.out.println(text);
@@ -167,7 +168,15 @@ public class CoreNlpExample {
                 }
             }
             product = getGrouping(description);
+
+            //option 1 (nested)
             purchase.put("PRODUCT", product);
+
+            //option 2 (not nested)
+            //purchase.put("DESCRIPTOR", product.get("DESCRIPTOR"));
+            //purchase.put("PRODUCT_NAME", product.get("PRODUCT_NAME"));
+
+
             purchases.add(purchase);
             //System.out.println(product.get("Product"));
             //System.out.println(product.get("Descriptor"));
