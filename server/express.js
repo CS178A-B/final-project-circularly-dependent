@@ -56,6 +56,44 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Table created");
   });
+
+  async function jsonReader(filePath, cb) {
+    fs.readFile(filePath, (err, fileData) => {
+      if (err) {
+        return cb && cb(err)
+      }
+      try {
+        const object = JSON.parse(fileData)
+          return cb && cb(null, object)
+        } catch(err) {
+          return cb && cb(err)
+      }
+    })
+  }
+
+  jsonReader(filePath, (err, ret) => {
+    if (err) {
+        console.log(err)
+        return 
+      }
+    data = ret.PURCHASES
+    
+    let values = []
+    for (var i=0; i<data.length; i++) {
+      cleanData(data[i])
+      values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE, data[i].PO_QUANTITY])
+    }
+  
+    let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quality) VALUES ?'
+    con.query(sql, [values], function(err,result) {
+      if(err) {
+        console.log('error')
+      }
+      else {
+        console.log("success")
+      }
+    }) 
+  })   
 });
 
 // Removes CORS error
@@ -79,88 +117,13 @@ app.get('/test', (req, res) => {
   delayedRes()
 });
 
-let check = []
-app.get('/rawData', (req, res) => {  
-  async function jsonReader(filePath, cb) {
-    fs.readFile(filePath, (err, fileData) => {
-        if (err) {
-          return cb && cb(err)
-        }
-        try {
-          const object = JSON.parse(fileData)
-            return cb && cb(null, object)
-          } catch(err) {
-            return cb && cb(err)
-        }
-      })
-  }
-
-  jsonReader(filePath, (err, ret) => {
-    if (err) {
-        console.log(err)
-        return 
-      }
-    data = ret.PURCHASES
-    
-    let values = []
-    let vendor_name = []
-    let descriptor = []
-    let req_department = []
-    let item_desc = []
-    let unit_price = []
-    let dep_desc = []
-    let item_total = []
-    let product_name = []
-    let po_no = []
-    let entry_id = []
-    let issue_date = []
-    let vendor_code = [] 
-    let po_quality = []
-    
-
-    for (var i=0; i<data.length; i++) {
-      cleanData(data[i])
-      values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE, data[i].PO_QUANTITY])
-      // vendor_name.push(data[i].VENDOR_NAME)
-      // descriptor.push(data[i].DESCRIPTOR)
-      // req_department.push(data[i].REQUESTOR_DEPARTMENT)
-      // item_desc.push(data[i].ITEM_DESC)
-      // unit_price.push(data[i].UNIT_PRICE)
-      // dep_desc.push(data[i].DEPARTMENT_DESC)
-      // item_total.push(data[i].ITEM_TOTAL_AMOUNT)
-      // product_name.push(data[i].PRODUCT_NAME)
-      // po_no.push(data[i].PO_NO)
-      // entry_id.push(data[i].ENTRY_ID)
-      // issue_date.push(data[i].ISSUE_DATE)
-      // vendor_code.push(data[i].VENDOR_CODE)
-      // po_quality.push(data[i].PO_QUANTITY)
-    }
-
-    // let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quality) VALUES ?'
-    let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quality) VALUES ?'
-
-    con.query(sql, [values], function(err,result) {
-      if(err) {
-        console.log('error')
-      }
-      else {
-        console.log("success")
-      }
-    })
-
-    con.query('SELECT * FROM items', function(err,result) {
-      if(err) {
-        console.log('error')
-      }
-      else {
-        console.log("successssssss")
-        res.status(200).json(result)
-      }
-    })    
-    // res.status(200).json([{'vendor_name':vendor_name, 'descriptor':descriptor, 'req_department':req_department, 'item_desc':item_desc, 'unit_price':unit_price, 'dep_desc':dep_desc, 'item_total':item_total, 'product_name':product_name, 'po_no':po_no, 'entry_id':entry_id, 'issue_date':issue_date, 'vendor_code':vendor_code, 'po_quality':po_quality}])
-  })   
-});
-
+app.get('/selectData', (req, res) => {
+  con.query("SELECT * FROM items ORDER BY item_total DESC LIMIT 3", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+    res.status(200).json(result)
+  });
+})
 
 function cleanData(data) {
   let thisData = data
