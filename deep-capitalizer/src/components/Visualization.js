@@ -5,10 +5,29 @@ import {
 import rawData from '../resources/out1.json';
 import { SERVER_PORT } from './../globals';
 import Button from '@material-ui/core/Button';
-// import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { useState, useEffect } from 'react';
 
+const useStyles = makeStyles({
+  root: {
+    textAlign: 'center',
+  },
+  header: {
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 'calc(8px + 1vmin)',
+  },
+  graph: {
+    minHeight: '40vh',
+    maxWidth: '80vw',
+  },
+});
+
 const Visualization = () => {
+  const classes = useStyles();
   const [read, setRead] = useState(false);
   const [tmpread, setTmpread] = useState(false);
   const [graphData, setGraph] = useState([]);
@@ -16,7 +35,7 @@ const Visualization = () => {
   useEffect(() => {
     const readFile = async () => {
       if (read) {
-        console.log("Read request sent")
+        console.log('Read request sent')
         await fetch(`http://localhost:${SERVER_PORT}/rawData`)
         .then(res => res.json())
         setRead(false)
@@ -31,10 +50,10 @@ const Visualization = () => {
 
       let g = [];
       for (let entry of rawData.PURCHASES) {
-        console.log(typeof(entry))
-        console.log(`entry ${entry['ENTRY_ID']}:`, entry)
-        console.log('product name:', entry['PRODUCT_NAME'])
-        if (entry['PRODUCT_NAME'] === 'INV ') {
+        // console.log(typeof(entry))
+        // console.log(`entry ${entry['ENTRY_ID']}:`, entry)
+        // console.log('product name:', entry['PRODUCT_NAME'])
+        if (entry['PRODUCT_NAME'] === 'PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING ') {
           g.push(entry);
         }
       }
@@ -45,16 +64,19 @@ const Visualization = () => {
   }, [tmpread]);
 
   return (
-      <div className='App'>
-        <body>
-          <ResponsiveContainer width={700} height={500}>
+      <div className={classes.root}>
+        <header className={classes.header}>
+          <p>
+            {graphData.length ? graphData[0].PRODUCT_NAME : ''}
+          </p>
+          <ResponsiveContainer className={classes.graph}>
             <BarChart width={730} height={250} data={graphData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="ITEM_TOTAL_AMOUNT" />
+              <CartesianGrid strokeDasharray='3 3' />
+              <XAxis dataKey='ENTRY_ID' />
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="ENTRY_ID" fill="#008000" />
+              <Bar dataKey='ITEM_TOTAL_AMOUNT' fill='#008000' />
             </BarChart>
           </ResponsiveContainer>
           <p>
@@ -63,7 +85,7 @@ const Visualization = () => {
           <Button onClick={() => { setTmpread(true) }} variant='contained'>
             Get da Data
           </Button>
-        </body>
+        </header>
       </div>
   );
 }
