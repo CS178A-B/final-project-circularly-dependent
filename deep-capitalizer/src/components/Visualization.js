@@ -2,7 +2,7 @@ import './App.css';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
-import rawData from '../resources/out1.json';
+// import rawData from '../resources/out1.json';
 import { SERVER_PORT } from './../globals';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -30,15 +30,37 @@ const Visualization = () => {
   const classes = useStyles();
   const [read, setRead] = useState(false);
   const [tmpread, setTmpread] = useState(false);
-  const [graphData, setGraph] = useState([]);
+  const [rawData, setRaw] = useState(null);
+  const [graphData, setGraph] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const readFile = async () => {
       if (read) {
+        setRead(false);
         console.log('Read request sent')
         await fetch(`http://localhost:${SERVER_PORT}/rawData`)
         .then(res => res.json())
-        setRead(false)
+        .then(
+          resp => setRaw(resp),
+          err => setError(err)
+        );
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Da rawData:', typeof(rawData), rawData);
+          let g = [];
+          for (let entry of rawData.PURCHASES) {
+            // console.log(typeof(entry))
+            // console.log(`entry ${entry['ENTRY_ID']}:`, entry)
+            // console.log('product name:', entry['PRODUCT_NAME'])
+            if (entry['PRODUCT_NAME'] === 'PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING ') {
+              g.push(entry);
+            }
+          }
+          console.log('graphSTUFF:', g);
+          setGraph(g);
+        }
       }
     }
     readFile()
@@ -67,7 +89,7 @@ const Visualization = () => {
       <div className={classes.root}>
         <header className={classes.header}>
           <p>
-            {graphData.length ? graphData[0].PRODUCT_NAME : ''}
+            {graphData ? graphData[0].PRODUCT_NAME : ''}
           </p>
           <ResponsiveContainer className={classes.graph}>
             <BarChart width={730} height={250} data={graphData}>
@@ -82,7 +104,7 @@ const Visualization = () => {
           <p>
             - Graphs go here -
           </p>
-          <Button onClick={() => { setTmpread(true) }} variant='contained'>
+          <Button onClick={() => { setRead(true) }} variant='contained'>
             Get da Data
           </Button>
         </header>
