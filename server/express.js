@@ -56,15 +56,6 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Table created");
   });
-
-  con.query('CREATE TABLE fooo (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc VARCHAR(255), item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date VARCHAR(255))', function(err,result) {
-    if(err) {
-      console.log('error')
-    }
-    else {
-      console.log("created f")
-    }
-  })   
 });
 
 // Removes CORS error
@@ -146,21 +137,7 @@ app.get('/rawData', (req, res) => {
     }
 
     let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quality) VALUES (?)'
-    let sql2 = 'INSERT INTO fooo (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date) VALUES (?)'
-    // con.query(sql, values, function(err,result) {
-    //   if(err) {
-    //     res.send('Error');
-    //     console.log('error')
-    //   }
-    //   else {
-    //     console.log("success")
-    //   }
-    // })
-    
-    let val = []
-    val.push(['John', 'oooo']) //, 1, 'PUMP EFFICIENTcdaafd', 1, 'Water-production & aa', 408, 'pump efficiency ', 60443, 27, '08/18/2017 14:06', 1889, 408]
-    val.push(['Jane', 'www'])
-    console.log(val)
+
     con.query(sql, values, function(err,result) {
       if(err) {
         console.log('error')
@@ -169,14 +146,12 @@ app.get('/rawData', (req, res) => {
         console.log("success")
       }
     })
-  // res.status(200).json([{'vendor_name':vendor_name, 'descriptor':descriptor, 'req_department':req_department, 'item_desc':item_desc, 'unit_price':unit_price, 'dep_desc':dep_desc, 'item_total':item_total, 'product_name':product_name, 'po_no':po_no, 'entry_id':entry_id, 'issue_date':issue_date, 'vendor_code':vendor_code, 'po_quality':po_quality}])
+    res.status(200).json([{'vendor_name':vendor_name, 'descriptor':descriptor, 'req_department':req_department, 'item_desc':item_desc, 'unit_price':unit_price, 'dep_desc':dep_desc, 'item_total':item_total, 'product_name':product_name, 'po_no':po_no, 'entry_id':entry_id, 'issue_date':issue_date, 'vendor_code':vendor_code, 'po_quality':po_quality}])
   })   
 });
 
 
-
 function cleanData(data) {
-
   let thisData = data
   if (thisData.DESCRIPTOR == 0)
     thisData.DESCRIPTOR = ""
