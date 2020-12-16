@@ -121,24 +121,25 @@ app.get('/rawData', (req, res) => {
     for (var i=0; i<data.length; i++) {
       cleanData(data[i])
       values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE, data[i].PO_QUANTITY])
-      vendor_name.push(data[i].VENDOR_NAME)
-      descriptor.push(data[i].DESCRIPTOR)
-      req_department.push(data[i].REQUESTOR_DEPARTMENT)
-      item_desc.push(data[i].ITEM_DESC)
-      unit_price.push(data[i].UNIT_PRICE)
-      dep_desc.push(data[i].DEPARTMENT_DESC)
-      item_total.push(data[i].ITEM_TOTAL_AMOUNT)
-      product_name.push(data[i].PRODUCT_NAME)
-      po_no.push(data[i].PO_NO)
-      entry_id.push(data[i].ENTRY_ID)
-      issue_date.push(data[i].ISSUE_DATE)
-      vendor_code.push(data[i].VENDOR_CODE)
-      po_quality.push(data[i].PO_QUANTITY)
+      // vendor_name.push(data[i].VENDOR_NAME)
+      // descriptor.push(data[i].DESCRIPTOR)
+      // req_department.push(data[i].REQUESTOR_DEPARTMENT)
+      // item_desc.push(data[i].ITEM_DESC)
+      // unit_price.push(data[i].UNIT_PRICE)
+      // dep_desc.push(data[i].DEPARTMENT_DESC)
+      // item_total.push(data[i].ITEM_TOTAL_AMOUNT)
+      // product_name.push(data[i].PRODUCT_NAME)
+      // po_no.push(data[i].PO_NO)
+      // entry_id.push(data[i].ENTRY_ID)
+      // issue_date.push(data[i].ISSUE_DATE)
+      // vendor_code.push(data[i].VENDOR_CODE)
+      // po_quality.push(data[i].PO_QUANTITY)
     }
 
-    let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quality) VALUES (?)'
+    // let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quality) VALUES ?'
+    let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quality) VALUES ?'
 
-    con.query(sql, values, function(err,result) {
+    con.query(sql, [values], function(err,result) {
       if(err) {
         console.log('error')
       }
@@ -146,7 +147,17 @@ app.get('/rawData', (req, res) => {
         console.log("success")
       }
     })
-    res.status(200).json([{'vendor_name':vendor_name, 'descriptor':descriptor, 'req_department':req_department, 'item_desc':item_desc, 'unit_price':unit_price, 'dep_desc':dep_desc, 'item_total':item_total, 'product_name':product_name, 'po_no':po_no, 'entry_id':entry_id, 'issue_date':issue_date, 'vendor_code':vendor_code, 'po_quality':po_quality}])
+
+    con.query('SELECT * FROM items', function(err,result) {
+      if(err) {
+        console.log('error')
+      }
+      else {
+        console.log("successssssss")
+        res.status(200).json(result)
+      }
+    })    
+    // res.status(200).json([{'vendor_name':vendor_name, 'descriptor':descriptor, 'req_department':req_department, 'item_desc':item_desc, 'unit_price':unit_price, 'dep_desc':dep_desc, 'item_total':item_total, 'product_name':product_name, 'po_no':po_no, 'entry_id':entry_id, 'issue_date':issue_date, 'vendor_code':vendor_code, 'po_quality':po_quality}])
   })   
 });
 
@@ -174,6 +185,7 @@ function cleanData(data) {
   thisData.PO_NO = Number(thisData.PO_NO)
   if ((thisData.ISSUE_DATE).includes("\\"))
     thisData.ISSUE_DATE = (thisData.ISSUE_DATE).replace("\\", "")
+  thisData.VENDOR_CODE = (thisData.VENDOR_CODE).replace("V", "")
   thisData.VENDOR_CODE = Number(thisData.VENDOR_CODE)
   if ((thisData.PO_QUANTITY).includes(",")) {
     thisData.PO_QUANTITY = (thisData.PO_QUANTITY).replace(",", "")
