@@ -39,7 +39,7 @@ export default Visualization = () => {
       if (read) {
         setRead(false);
         console.log('Read request sent')
-        await fetch(`http://localhost:${SERVER_PORT}/rawData`)
+        await fetch(`http://localhost:${SERVER_PORT}/selectData`)
         .then(res => res.json())
         .then(
           resp => setRaw(resp),
