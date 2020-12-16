@@ -133,7 +133,6 @@ function cleanData(data) {
   thisData.ITEM_DESC = (thisData.ITEM_DESC).replace("\"\\\"", "") 
   thisData.ITEM_DESC = (thisData.ITEM_DESC).replace("\"", "") 
   thisData.ITEM_DESC = thisData.ITEM_DESC.replace(/  |\r\n|\n|\r/gm, '');
-  
   if ((thisData.UNIT_PRICE).includes(",")) {
     thisData.UNIT_PRICE = (thisData.UNIT_PRICE).replace(",", "")
   }
