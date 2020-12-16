@@ -58,6 +58,12 @@ public class CoreNlpExample {
                 // this is the NER label of the token
                 String ne = token.get(CoreAnnotations.NamedEntityTagAnnotation.class);
 
+//                try{
+//                    System.out.println(String.format("Print: word: [%s] pos: [%s] ne: [%s]", word, pos, ne));//DEBUG
+//                } catch(NullPointerException no){
+//                    System.out.println("HERE");
+//                }
+
                 //capture nouns or adjectives otherwise check if we have nouns and break consecutive chain
                 if(pos.matches("JJ") ||
                         pos.matches("NN") ||
@@ -121,9 +127,9 @@ public class CoreNlpExample {
 
 
         //Partitioning functionality: these 2 variables are for if we want to process a section of data from the csv
-        int startEntry = 1;//this is not the exact cell in the csv. In the csv the exact cell is off by +1
-        //ie: to specify cell 21 in the csv, type in 20
-        int endEntry = 10;
+        int startEntry = 15001;//this is not the exact cell in the csv. In the csv the exact cell is off by +1
+        //ie: to specify cell 21 in the csv, type in 20.
+        int endEntry = 25000;//excluded entry
         //to stop at entry 33, type in 34, this will be 34 in the csv so this will be the exact cell in the csv
 
         //Generic Read and Write to file
@@ -171,7 +177,7 @@ public class CoreNlpExample {
             entryCount++;
         }
 
-        while(read.hasNext() && (entryCount < endEntry)){
+        while(read.hasNext() && (entryCount <= endEntry)){
             purchase = new JSONObject();
 
             purchase.put("ENTRY_ID", entryCount);
@@ -192,14 +198,22 @@ public class CoreNlpExample {
                     }
                 }
             }
-            product = getGrouping(description);
+            try{
+                product = getGrouping(description);
+                purchase.put("DESCRIPTOR", product.get("DESCRIPTOR"));
+                purchase.put("PRODUCT_NAME", product.get("PRODUCT_NAME"));
+            }catch (NullPointerException ne){
+                System.out.println("***** ERROR AT ENTRY: " + entryCount);
+                break;
+            }
+
 
             //option 1 (nested)
             //purchase.put("PRODUCT", product);
 
             //option 2 (not nested)
-            purchase.put("DESCRIPTOR", product.get("DESCRIPTOR"));
-            purchase.put("PRODUCT_NAME", product.get("PRODUCT_NAME"));
+//            purchase.put("DESCRIPTOR", product.get("DESCRIPTOR"));
+//            purchase.put("PRODUCT_NAME", product.get("PRODUCT_NAME"));
 
 
             purchases.add(purchase);
