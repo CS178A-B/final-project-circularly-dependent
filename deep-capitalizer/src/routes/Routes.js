@@ -9,7 +9,7 @@ import { createBrowserHistory } from 'history';
 
 export const history = createBrowserHistory();
 
-export default Routes = () => {
+const Routes = () => {
   return (
     <div className='App'>
       <ButtonAppBar/>
@@ -23,3 +23,5 @@ export default Routes = () => {
     </div>
   )
 }
+
+export default Routes

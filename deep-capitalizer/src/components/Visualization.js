@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default Visualization = () => {
+const Visualization = () => {
   const classes = useStyles();
   const [read, setRead] = useState(false);
   const [tmpread, setTmpread] = useState(false);
@@ -111,3 +111,5 @@ export default Visualization = () => {
       </div>
   );
 }
+
+export default Visualization;
