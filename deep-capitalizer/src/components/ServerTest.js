@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import logo from '../resources/logo.svg';
 
-export default ServerTest = () => {
+const ServerTest = () => {
   const [count, setCount] = useState(0);
   const [serverMsg, setServerMsg] = useState(null);
   const [error, setError] = useState(null);
@@ -60,3 +60,5 @@ export default ServerTest = () => {
     </div>
   );
 }
+
+export default ServerTest;
