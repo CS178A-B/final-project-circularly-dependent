@@ -64,7 +64,7 @@ const Visualization = () => {
       }
     }
     readFile()
-  }, [read]);
+  }, [read, error, rawData]);
 
   useEffect(() => {
     if (tmpread) {
@@ -83,7 +83,7 @@ const Visualization = () => {
       setGraph(g);
       setTmpread(false);
     }
-  }, [tmpread]);
+  }, [tmpread, rawData]);
 
   return (
       <div className={classes.root}>
