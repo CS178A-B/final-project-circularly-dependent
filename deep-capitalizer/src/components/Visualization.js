@@ -34,6 +34,7 @@ const Visualization = () => {
   const [graphData, setGraph] = useState(null);
   const [error, setError] = useState(null);
 
+  // Fetch from "/selectData" end-point
   useEffect(() => {
     const readFile = async () => {
       if (read) {
@@ -45,36 +46,39 @@ const Visualization = () => {
           resp => setRaw(resp),
           err => setError(err)
         );
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Da rawData:', typeof(rawData), rawData);
-          let g = [];
-          for (let entry of rawData.PURCHASES) {
-            // console.log(typeof(entry))
-            // console.log(`entry ${entry['ENTRY_ID']}:`, entry)
-            // console.log('product name:', entry['PRODUCT_NAME'])
-            if (entry['PRODUCT_NAME'] === 'PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING ') {
-              g.push(entry);
-            }
-          }
-          console.log('graphSTUFF:', g);
-          setGraph(g);
-        }
+        if (error) { console.log(error); }
       }
     }
-    readFile()
-  }, [read, error, rawData]);
+    readFile();
+  }, [read, error]);
 
+  // Populate graphical data
+  useEffect(() => {
+    if (rawData) {
+      console.log('Da rawData:', typeof(rawData), rawData);
+      let g = [];
+      for (let entry of rawData) {
+        console.log(typeof(entry))
+        console.log(`entry ${entry['entry_id']}:`, entry)
+        console.log('product name:', entry['product_name'])
+        if (entry['product_name'] === 'PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING ') {
+          g.push(entry);
+        }
+      }
+      console.log('graphSTUFF:', g);
+      setGraph(g);
+    }
+  }, [rawData]);
+
+  // Read from file (alternative to fetching from "/selectData" end-point)
   useEffect(() => {
     if (tmpread) {
       console.log('Da rawData:', typeof(rawData), rawData);
-
       let g = [];
       for (let entry of rawData.PURCHASES) {
         // console.log(typeof(entry))
-        // console.log(`entry ${entry['ENTRY_ID']}:`, entry)
-        // console.log('product name:', entry['PRODUCT_NAME'])
+        // console.log(`entry ${entry['entry_id']}:`, entry)
+        // console.log('product name:', entry['product_name'])
         if (entry['PRODUCT_NAME'] === 'PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING ') {
           g.push(entry);
         }
@@ -89,16 +93,16 @@ const Visualization = () => {
       <div className={classes.root}>
         <header className={classes.header}>
           <p>
-            {graphData ? graphData[0].PRODUCT_NAME : ''}
+            {graphData ? graphData[0]['product_name'] : ''}
           </p>
           <ResponsiveContainer className={classes.graph}>
             <BarChart width={730} height={250} data={graphData}>
               <CartesianGrid strokeDasharray='3 3' />
-              <XAxis dataKey='ENTRY_ID' />
+              <XAxis dataKey='entry_id' />
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey='ITEM_TOTAL_AMOUNT' fill='#008000' />
+              <Bar dataKey='item_total' fill='#008000' />
             </BarChart>
           </ResponsiveContainer>
           <p>
