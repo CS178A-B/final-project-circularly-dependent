@@ -11,7 +11,9 @@
 <Include project description>
 
 ## Team
-<a href="https://github.com/msalloum" target="_blank"><img src="https://avatars3.githubusercontent.com/u/1790819?s=400&v=4" align="left" height="30px">Mariam Salloum </a>
+<a href="https://github.com/GrayGorilla" target="_blank"><img src="https://avatars3.githubusercontent.com/u/1790819?s=400&v=4" align="left" height="30px">Nathan Brennan </a>
+<a href="https://github.com/jalec789" target="_blank"><img src="https://avatars3.githubusercontent.com/u/1790819?s=400&v=4" align="left" height="30px">Jason Chan </a>
+<a href="https://github.com/sha021" target="_blank"><img src="https://avatars3.githubusercontent.com/u/1790819?s=400&v=4" align="left" height="30px">Siena Seung Eun Ha </a>
 
 ## Usage
 Demo: <Link to youtube video>
@@ -99,4 +101,5 @@ Overall System Diagram
 
 ## Dependencies
 Install Node Package Manager (npm). [Helpful Documentation](https://www.npmjs.com/get-npm)
+Install MySQL (https://dev.mysql.com/downloads/mysql/)
 
