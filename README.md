@@ -8,24 +8,61 @@
 - [Dependencies](#dependencies)
 
 ## Overview
-<Include project description?
+<Include project description>
 
 ## Team
-<a href="https://github.com/msalloum" target="_blank"><img src="https://avatars3.githubusercontent.com/u/1790819?s=400&v=4" align="left" height="30px">Mariam Salloum </a>
+<a href="https://github.com/GrayGorilla" target="_blank"><img src="https://avatars2.githubusercontent.com/u/43688010?s=400&u=170fcd351efcc42441c6689c3221cabac286f520&v=4" align="left" height="30px">Nathan Brennan </a>
+
+<a href="https://github.com/jalec789" target="_blank"><img src="https://avatars0.githubusercontent.com/u/31293853?s=400&u=7659dcc0cdeeadfe836d2781844b34d80764c5f4&v=4" align="left" height="30px">Jason Chan </a>
+
+<a href="https://github.com/sha021" target="_blank"><img src="https://avatars2.githubusercontent.com/u/43655180?s=400&u=e858756c01f86ccbeae24090f24dc0045d6997d6&v=4" align="left" height="30px">Siena Seung Eun Ha </a>
 
 ## Usage
 Demo: <Link to youtube video>
 
 <Screenshot of application>
 
-## How To Run
-In the project directory, you can run:
+## How To Run 
+
+### Server:
+
+May need to configure MySQL first.<br />
+If this step is needed, run the following commands:<br />
+**`ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'CS178!CD!dc';`<br />
+`FLUSH PRIVILEGES;`<br />**
+This will downgrade MySQL authentication to match with NodeJS.
+
+In the project directory, you can satisfy dependencies with:
+
+#### `npm install`
+
+To run server in development mode:
 
 ### `npm start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Logging will be on the console you ran from.<br />
+Server will be listening on [http://localhost:4000](http://localhost:4000).
 
+Server will restart if you make edits.<br />
+You will also see any lint errors in the console.
+
+
+### Client:
+
+Start new terminal, seperate from the server.<br />
+In the project directory, change to client directory:
+
+#### `cd deep-capitalizer`
+
+You can satisfy dependencies with:
+
+#### `npm install`
+
+To run client in development mode:
+
+### `npm start`
+
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.<br />
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
@@ -54,6 +91,7 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+
 ## Diagrams
 
 Sequence Diagram
@@ -65,4 +103,6 @@ Overall System Diagram
 
 ## Dependencies
 Install Node Package Manager (npm). [Helpful Documentation](https://www.npmjs.com/get-npm)
+
+Install MySQL (https://dev.mysql.com/downloads/mysql/)
 
