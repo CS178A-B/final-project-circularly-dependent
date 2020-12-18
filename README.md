@@ -11,9 +11,11 @@
 <Include project description>
 
 ## Team
-<a href="https://github.com/GrayGorilla" target="_blank"><img src="https://avatars3.githubusercontent.com/u/1790819?s=400&v=4" align="left" height="30px">Nathan Brennan </a>
-<a href="https://github.com/jalec789" target="_blank"><img src="https://avatars3.githubusercontent.com/u/1790819?s=400&v=4" align="left" height="30px">Jason Chan </a>
-<a href="https://github.com/sha021" target="_blank"><img src="https://avatars3.githubusercontent.com/u/1790819?s=400&v=4" align="left" height="30px">Siena Seung Eun Ha </a>
+<a href="https://github.com/GrayGorilla" target="_blank"><img src="https://avatars2.githubusercontent.com/u/43688010?s=400&u=170fcd351efcc42441c6689c3221cabac286f520&v=4" align="left" height="30px">Nathan Brennan </a>
+
+<a href="https://github.com/jalec789" target="_blank"><img src="https://avatars0.githubusercontent.com/u/31293853?s=400&u=7659dcc0cdeeadfe836d2781844b34d80764c5f4&v=4" align="left" height="30px">Jason Chan </a>
+
+<a href="https://github.com/sha021" target="_blank"><img src="https://avatars2.githubusercontent.com/u/43655180?s=400&u=e858756c01f86ccbeae24090f24dc0045d6997d6&v=4" align="left" height="30px">Siena Seung Eun Ha </a>
 
 ## Usage
 Demo: <Link to youtube video>
@@ -101,5 +103,6 @@ Overall System Diagram
 
 ## Dependencies
 Install Node Package Manager (npm). [Helpful Documentation](https://www.npmjs.com/get-npm)
+
 Install MySQL (https://dev.mysql.com/downloads/mysql/)
 
