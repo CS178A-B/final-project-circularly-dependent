@@ -58,9 +58,9 @@ const Visualization = () => {
       console.log('Da rawData:', typeof(rawData), rawData);
       let g = [];
       for (let entry of rawData) {
-        console.log(typeof(entry))
-        console.log(`entry ${entry['entry_id']}:`, entry)
-        console.log('product name:', entry['product_name'])
+        // console.log(typeof(entry))
+        // console.log(`entry ${entry['entry_id']}:`, entry)
+        // console.log('product name:', entry['product_name'])
         if (entry['product_name'] === 'PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING ') {
           g.push(entry);
         }
