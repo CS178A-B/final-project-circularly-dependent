@@ -1285,6 +1285,13 @@
     "react-is" "^16.8.0"
     "react-transition-group" "^4.4.0"
 
+"@material-ui/icons@^4.9.1":
+  "integrity" "sha512-GBitL3oBWO0hzBhvA9KxqcowRUsA0qzwKkURyC8nppnC3fw54KPKZ+d4V1Eeg/UnDRSzDaI9nGCdel/eh9AQMg=="
+  "resolved" "https://registry.npmjs.org/@material-ui/icons/-/icons-4.9.1.tgz"
+  "version" "4.9.1"
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+
 "@material-ui/styles@^4.10.0":
   "integrity" "sha512-XPwiVTpd3rlnbfrgtEJ1eJJdFCXZkHxy8TrdieaTvwxNYj42VnnCyFzxYeNW9Lhj4V1oD8YtQ6S5Gie7bZDf7Q=="
   "resolved" "https://registry.npmjs.org/@material-ui/styles/-/styles-4.10.0.tgz"
