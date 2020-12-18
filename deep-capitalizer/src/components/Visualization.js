@@ -61,7 +61,7 @@ const Visualization = () => {
         // console.log(typeof(entry))
         // console.log(`entry ${entry['entry_id']}:`, entry)
         // console.log('product name:', entry['product_name'])
-        if (entry['product_name'] === 'PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING ') {
+        if (entry['product_name'] === 'PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING') {
           g.push(entry);
         }
       }
@@ -79,7 +79,7 @@ const Visualization = () => {
         // console.log(typeof(entry))
         // console.log(`entry ${entry['entry_id']}:`, entry)
         // console.log('product name:', entry['product_name'])
-        if (entry['PRODUCT_NAME'] === 'PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING ') {
+        if (entry['PRODUCT_NAME'] === 'PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING') {
           g.push(entry);
         }
       }
