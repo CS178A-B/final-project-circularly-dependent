@@ -28,14 +28,14 @@ const con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'CS178!CD!dc',
-  database: "mock"
+  // database: "mock"
 });
 
 con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
 
-  con.query("DROP DATABASE mock", function(err, result){
+  con.query("DROP DATABASE IF EXISTS mock", function(err, result){
     if(err) throw err;
     console.log("mock deleted")
   })
