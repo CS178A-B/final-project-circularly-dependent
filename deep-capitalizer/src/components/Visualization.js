@@ -39,7 +39,11 @@ const Visualization = () => {
     const readFile = async () => {
       if (read) {
         setRead(false);
-        console.log('Read request sent')
+        const requestOptions = {
+          method: 'GET',
+          body: 'select * from items where product_name = "PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING"'
+        }
+        console.log('Read request sent');
         await fetch(`http://localhost:${SERVER_PORT}/selectData`)
         .then(res => res.json())
         .then(
