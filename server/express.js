@@ -7,7 +7,7 @@ const cors = require('cors');
 const csv = require('csv-parser');
 const fs = require('fs');
 // const filePath = path.join(__dirname, 'RS-20170701-20190630.csv');
-const filePath = path.join(__dirname, 'out1.json');
+const filePath = path.join(__dirname, 'CoreNLPData.json');
 const mysql = require('mysql');
 
 // Initializing the express framework and save it to another constant 'app'
@@ -50,7 +50,8 @@ con.connect(function(err) {
     console.log("mock used")
   })
   
-  var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc VARCHAR(255), item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date VARCHAR(255), vendor_code INT, po_quality INT)";
+  var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date VARCHAR(255), vendor_code INT, po_quality INT)";
+  // var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date VARCHAR(255), vendor_code INT)";
 
   con.query(sql, function (err, result) {
     if (err) throw err;
@@ -73,24 +74,27 @@ con.connect(function(err) {
 
   jsonReader(filePath, (err, ret) => {
     if (err) {
-        console.log(err)
-        return 
-      }
+      return 
+    }
     data = ret.PURCHASES
     
     let values = []
     for (var i=0; i<data.length; i++) {
       cleanData(data[i])
       values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE, data[i].PO_QUANTITY])
+      // values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE/*, data[i].PO_QUANTITY*/])
+
     }
-  
     let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quality) VALUES ?'
+    // let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code) VALUES ?'
+    
     con.query(sql, [values], function(err,result) {
       if(err) {
-        console.log('error')
+        throw err;
+
       }
       else {
-        console.log("success")
+        console.log("success in")
       }
     }) 
   })   
@@ -133,25 +137,23 @@ function cleanData(data) {
   thisData.ITEM_DESC = (thisData.ITEM_DESC).replace("\"\\\"", "") 
   thisData.ITEM_DESC = (thisData.ITEM_DESC).replace("\"", "") 
   thisData.ITEM_DESC = thisData.ITEM_DESC.replace(/  |\r\n|\n|\r/gm, '');
-  if ((thisData.UNIT_PRICE).includes(",")) {
-    thisData.UNIT_PRICE = (thisData.UNIT_PRICE).replace(",", "")
-  }
+  
+  thisData.UNIT_PRICE = (thisData.UNIT_PRICE).replace(/\D/g,'');
   thisData.UNIT_PRICE = Number(thisData.UNIT_PRICE)
-  if ((thisData.ITEM_TOTAL_AMOUNT).includes(",")) {
-    thisData.ITEM_TOTAL_AMOUNT = (thisData.ITEM_TOTAL_AMOUNT).replace(",", "")
-  }
+
+  thisData.ITEM_TOTAL_AMOUNT = (thisData.ITEM_TOTAL_AMOUNT).replace(/\D/g,'');
   thisData.ITEM_TOTAL_AMOUNT = Number(thisData.ITEM_TOTAL_AMOUNT)
   if ((thisData.PO_NO).includes("\n")) {
     thisData.PO_NO = (thisData.PO_NO).replace("\n", "")
   }
+  thisData.PO_NO = (thisData.PO_NO).replace(/\D/g,'');
   thisData.PO_NO = Number(thisData.PO_NO)
   if ((thisData.ISSUE_DATE).includes("\\"))
     thisData.ISSUE_DATE = (thisData.ISSUE_DATE).replace("\\", "")
   thisData.VENDOR_CODE = (thisData.VENDOR_CODE).replace("V", "")
   thisData.VENDOR_CODE = Number(thisData.VENDOR_CODE)
-  if ((thisData.PO_QUANTITY).includes(",")) {
-    thisData.PO_QUANTITY = (thisData.PO_QUANTITY).replace(",", "")
-  }
+
+  thisData.PO_QUANTITY = (thisData.PO_QUANTITY).replace(/\D/g,'');
   thisData.PO_QUANTITY = Number(thisData.PO_QUANTITY)
 }
 
