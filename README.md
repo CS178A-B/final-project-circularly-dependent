@@ -31,8 +31,7 @@ If this step is needed, run the following commands:<br />
 **`ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'CS178!CD!dc';`<br />
 `FLUSH PRIVILEGES;`<br />
 `set global net_buffer_length=1000000;`<br />
-`set global max_allowed_packet=1000000000;`
-**
+`set global max_allowed_packet=1000000000;`**
 
 This will downgrade MySQL authentication to match with NodeJS.
 
