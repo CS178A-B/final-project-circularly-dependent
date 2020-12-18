@@ -29,7 +29,11 @@ Demo: <Link to youtube video>
 May need to configure MySQL first.<br />
 If this step is needed, run the following commands:<br />
 **`ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'CS178!CD!dc';`<br />
-`FLUSH PRIVILEGES;`<br />**
+`FLUSH PRIVILEGES;`<br />
+`set global net_buffer_length=1000000;`<br />
+`set global max_allowed_packet=1000000000;`
+**
+
 This will downgrade MySQL authentication to match with NodeJS.
 
 In the project directory, you can satisfy dependencies with:
@@ -105,4 +109,5 @@ Overall System Diagram
 Install Node Package Manager (npm). [Helpful Documentation](https://www.npmjs.com/get-npm)
 
 Install MySQL (https://dev.mysql.com/downloads/mysql/)
+
 
