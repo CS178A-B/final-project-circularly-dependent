@@ -121,15 +121,15 @@ public class CoreNlpExample {
 
 
     public static void main(String[] args) {
-        String in_file = "testdata";
-        String out_file = "outdata.txt";
+        String in_file = "testdata";        //FINAL FILE: FinalDoublePipeDelimited
+        String out_file = "outdata.txt";    //FINAL FILE: CoreNLPData.json
         String delimiter = "\\|\\|";  // using || double pipe as delimiter
 
 
         //Partitioning functionality: these 2 variables are for if we want to process a section of data from the csv
-        int startEntry = 15001;//this is not the exact cell in the csv. In the csv the exact cell is off by +1
+        int startEntry = 1;//this is not the exact cell in the csv. In the csv the exact cell is off by +1
         //ie: to specify cell 21 in the csv, type in 20.
-        int endEntry = 25000;//excluded entry
+        int endEntry = 20;//excluded entry
         //to stop at entry 33, type in 34, this will be 34 in the csv so this will be the exact cell in the csv
 
         //Generic Read and Write to file
