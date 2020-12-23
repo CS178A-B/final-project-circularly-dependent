@@ -15,18 +15,17 @@
 ###################################################################
 # A method for compiling the maven project (Not working I think...?)
 ###################################################################
-mvn compile
+##mvn compile
 ##mvn install
 mvn clean install
-mvn package
+##mvn package
 
 #skip tests
-mvn -Dmaven.test.skip=true package
+##mvn -Dmaven.test.skip=true package
 
 ##This is the part that deosnt currently work, check the target folder maybe?
-mvn exec:java -Dexec.mainClass=CoreNlpExample.main
-
-
+##mvn exec:java -Dexec.mainClass=CoreNlpExample.main
+mvn exec:java
 
 
 #Otherwise Run in Intellij...
