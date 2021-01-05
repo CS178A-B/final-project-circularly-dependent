@@ -8,19 +8,19 @@
 ##Check for maven
 ##mvn --version
 
-#Not sure if this works
+#Skip this block for now... (may be used later to add arguments, in and out files)
 #mvn compile
 #mvn exec:java -Dexec.main
 
 ###################################################################
-# A method for compiling the maven project (Not working I think...?)
+# A method for compiling the maven project (quick version just run uncommented lines)
 ###################################################################
 ##mvn compile
 ##mvn install
 mvn clean install
 ##mvn package
 
-#skip tests
+#testing (you can skip this)
 ##mvn -Dmaven.test.skip=true package
 
 ##This is the part that deosnt currently work, check the target folder maybe?
