@@ -25,8 +25,13 @@ mvn clean install
 
 ##This is the part that deosnt currently work, check the target folder maybe?
 ##mvn exec:java -Dexec.mainClass=CoreNlpExample.main
-mvn exec:java
 
+#mvn exec:java
+
+##Adding arguments
+#mvn exec:java -Dexec.args="<inputfile> <outputfile>"
+##For example
+mvn exec:java -Dexec.args="<inputfile> <outputfile>"
 
 #Otherwise Run in Intellij...
 # open Intellij

@@ -121,9 +121,22 @@ public class CoreNlpExample {
 
 
     public static void main(String[] args) {
-        String in_file = "testdata";        //FINAL FILE: FinalDoublePipeDelimited
-        String out_file = "outdata.txt";    //FINAL FILE: CoreNLPData.json
-        String delimiter = "\\|\\|";  // using || double pipe as delimiter
+
+        String in_file = null;
+        String out_file = null;
+        if(args.length == 2){
+            in_file = args[0];
+            out_file = args[1];
+        }
+        else{
+            System.out.println("Requires 2 arguments to be sepcified");
+            return;
+        }
+        System.out.println(in_file + " " + out_file);
+//        in_file = "testdata";
+//        out_file = "outdata.txt";
+        // using || double pipe as delimiter. This is the delimiter of the input data
+        String delimiter = "\\|\\|";
 
 
         //Partitioning functionality: these 2 variables are for if we want to process a section of data from the csv
