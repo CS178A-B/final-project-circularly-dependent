@@ -120,16 +120,31 @@ public class CoreNlpExample {
 
 
 
+    //JSON Generator and NLP Processor
+    //Turns a csv into a json and adds the necessary product data to the json output
+    //To run make sure maven is installed and have the following arguments
+    //Input args[0]:
+    //              An input file that has cells delimited by a special delimeter.
+    //              CSV's normally delimit with with a comma, here we are expecting
+    //              a file that delimits with a double pipe ||
+    //Output args[1]:
+    //              Name of a file this program will write to. This file will be
+    //              in JSON format.
+    //(Optional) args[2]:
+    //              This optional value is the range entry specifier. This value
+    //              if specified is the last entry this generator will process.
+    //              If not specified this program will default to a constant
+    //              value int endEntry.
     public static void main(String[] args) {
 
         String in_file = null;
         String out_file = null;
-        if(args.length == 2){
+        //Check args[] make sure we have 2 or 3.
+        if(args.length == 2 || args.length == 3){
             in_file = args[0];
             out_file = args[1];
-        }
-        else{
-            System.out.println("Requires 2 arguments to be sepcified");
+        } else{
+            System.out.println("Json generator requires 2 to 3 arguments to be specified");
             return;
         }
         System.out.println(in_file + " " + out_file);
@@ -142,7 +157,15 @@ public class CoreNlpExample {
         //Partitioning functionality: these 2 variables are for if we want to process a section of data from the csv
         int startEntry = 1;//this is not the exact cell in the csv. In the csv the exact cell is off by +1
         //ie: to specify cell 21 in the csv, type in 20.
-        int endEntry = 20;//excluded entry
+
+        //This is the max entry. If args[2] is not specified then this value will be the default value.
+        //If we want to attempt the entire file make this number very high, like 1000000
+        //There is control in place for overextending this value so don't worry
+        int endEntry = 10;//excluded entry
+        //get last argument if it is specified
+        if(args.length == 3){
+            endEntry = Integer.parseInt(args[2]);
+        }
         //to stop at entry 33, type in 34, this will be 34 in the csv so this will be the exact cell in the csv
 
         //Generic Read and Write to file
