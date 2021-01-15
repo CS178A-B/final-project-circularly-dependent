@@ -1,39 +1,22 @@
-//.xls Read, Excel 97-2003
-//...
-
-
-//Core NLP
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.*;
 import edu.stanford.nlp.util.CoreMap;
 
-//other
-import java.io.*;
 import java.util.*;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-//import java.util.Scanner;
 
 
 public class CoreNlpExample {
 
-
-    //This function will return a json object with 2 pieces of data when we pass in the purchase description
-    //1: PRODUCT_NAME: this is the first pattern of consecutive nouns in the purchase description
-    //2: DESCRIPTOR: this is all the adjectives that exist within the purchase description
-    public static JSONObject getGrouping(String text){
-        JSONObject group = new JSONObject();
-        group.put("PRODUCT_NAME", 0);
-        group.put("DESCRIPTOR", 0); //Do you want a json array???
-        boolean consecutive = true;//capture 1 set of consecutive nouns
-        boolean noun_fill = false;
-
+    public static void main(String[] args) {
         // creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+
+        // read some text in the text variable
+        String text = "Hello, my first name is Jason. Using my green compact car," +
+                " I drove to the store yesterday and bought some paleo groceries.";
 
         // create an empty Annotation just with the given text
         Annotation document = new Annotation(text);
@@ -42,7 +25,7 @@ public class CoreNlpExample {
         pipeline.annotate(document);
 
         // these are all the sentences in this document
-        // a CoreMap is essentially a Map that uses class objects as keys and has values with custom types
+// a CoreMap is essentially a Map that uses class objects as keys and has values with custom types
         List<CoreMap> sentences = document.get(CoreAnnotations.SentencesAnnotation.class);
 
         //System.out.println("[");
@@ -58,55 +41,14 @@ public class CoreNlpExample {
                 // this is the NER label of the token
                 String ne = token.get(CoreAnnotations.NamedEntityTagAnnotation.class);
 
-//                try{
-//                    System.out.println(String.format("Print: word: [%s] pos: [%s] ne: [%s]", word, pos, ne));//DEBUG
-//                } catch(NullPointerException no){
-//                    System.out.println("HERE");
-//                }
-
-                //capture nouns or adjectives otherwise check if we have nouns and break consecutive chain
-                if(pos.matches("JJ") ||
-                        pos.matches("NN") ||
-                        pos.matches("NNS")||
-                        pos.matches("NNP")||
-                        pos.matches("NNPS")) { //extract nouns and adjectives only
-                    //System.out.println(String.format("Print: word: [%s] pos: [%s] ne: [%s]", word, pos, ne));//DEBUG
-                    //System.out.print(String.format(" %s", word));//DEBUG
-                    //group += (String.format("%s ", word));
-
-                    //capture consecutive nouns
-                    if((pos.matches("NN") ||
-                            pos.matches("NNS")||
-                            pos.matches("NNP")||
-                            pos.matches("NNPS"))
-                            && consecutive){
-                        //System.out.println();
-                        //group.put("PRODUCT_NAME", String.format("%s ", word));
-                        if(group.get("PRODUCT_NAME").equals(0)){
-                            group.put("PRODUCT_NAME",String.format("%s", word));
-                        }
-                        else {
-                            group.put("PRODUCT_NAME",
-                                    group.get("PRODUCT_NAME").toString().concat(String.format(" %s", word)));
-                        }
-                        noun_fill = true;
-                    }
-
-                    //caputre adjectives
-                    if(pos.matches("JJ")){
-                        //System.out.println();
-                        if(group.get("DESCRIPTOR").equals(0)){
-                            group.put("DESCRIPTOR", String.format("%s", word));
-                        }
-                        else{
-                            group.put("DESCRIPTOR",
-                                    group.get("DESCRIPTOR").toString().concat(String.format(" %s", word)));
-                        }
+                if(pos.matches("JJ") || pos.matches("NN") || pos.matches("NNS")) { //extract nouns only
+                    //System.out.println(String.format("Print: word: [%s] pos: [%s] ne: [%s]", word, pos, ne));
+                    System.out.print(String.format(" %s", word));
+                    if(pos.matches("NN") || pos.matches("NNS")){
+                        System.out.println();
                     }
                 }
-                else if(noun_fill){
-                    consecutive = false;
-                }
+
             }
             //System.out.print(", ");
             // this is the parse tree of the current sentence
@@ -264,6 +206,6 @@ public class CoreNlpExample {
         writer.println(root.toJSONString());
 
         writer.close();
+
     }
 }
-
