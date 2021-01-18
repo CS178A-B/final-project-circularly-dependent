@@ -6,12 +6,15 @@ const path = require('path');
 const cors = require('cors');
 const csv = require('csv-parser');
 const fs = require('fs');
+var bodyParser = require('body-parser');
 // const filePath = path.join(__dirname, 'RS-20170701-20190630.csv');
 const filePath = path.join(__dirname, 'CoreNLPData.json');
 const mysql = require('mysql');
-
 // Initializing the express framework and save it to another constant 'app'
 const app = express();
+app.use(cors())
+const jsonParser = bodyParser.json()
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // Save the port of our sever into a constant 'PORT'
 // process.env.PORT checks our environment variables to see if we already have a PORT defined.
@@ -100,8 +103,7 @@ con.connect(function(err) {
   })   
 });
 
-// Removes CORS error
-app.use(cors());
+
 
 // Serves up static Client build (React App)
 app.use('/', express.static(path.join(__dirname, '../deep-capitalizer/build')));
@@ -121,8 +123,15 @@ app.get('/test', (req, res) => {
   delayedRes()
 });
 
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
+
 app.get('/selectData', (req, res) => {
-  con.query("SELECT * FROM items ORDER BY item_total DESC", function (err, result) {
+  console.log("test")
+  console.log(req.body.product_name)
+  con.query(req.body.product_name, function (err, result) {
     if (err) throw err;
     console.log(result);
     res.status(200).json(result)
