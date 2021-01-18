@@ -128,7 +128,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-app.get('/selectData', (req, res) => {
+app.post('/selectData', (req, res) => {
   let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\''
   console.log(sqlquery)
   con.query(sqlquery, function (err, result) {
