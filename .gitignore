@@ -2,3 +2,4 @@ node_modules/
 web-build/
 .vscode/
 server/log-file.txt
+nlpCore-app/target/
