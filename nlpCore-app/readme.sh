@@ -24,8 +24,9 @@
 	# (quick version: just run uncommented lines)
 	#####################################################
 ##mvn compile
-##mvn install
-mvn clean install
+##mvn clean install
+mvn clean 
+mvn install
 ##mvn package
 
 	#testing (you can skip this)
