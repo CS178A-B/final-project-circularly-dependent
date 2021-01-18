@@ -138,6 +138,15 @@ app.get('/selectData', (req, res) => {
   });
 })
 
+app.get('/productName', (req, res) => {
+  let sqlquery = 'SELECT DISTINCT product_name FROM items'
+  con.query(sqlquery, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+    res.status(200).json(result)
+  });
+})
+
 function cleanData(data) {
   let thisData = data
   if (thisData.DESCRIPTOR == 0)
