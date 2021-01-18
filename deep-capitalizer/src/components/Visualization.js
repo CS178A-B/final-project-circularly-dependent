@@ -40,7 +40,15 @@ const Visualization = () => {
       if (read) {
         setRead(false);
         console.log('Read request sent')
-        await fetch(`http://localhost:${SERVER_PORT}/selectData`)
+        await fetch(`http://192.168.0.185:${SERVER_PORT}/selectData`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'x-www-form-urlencoded',
+          },
+          body: JSON.stringify({
+            'product_name': 'PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING',
+          }),
+        })
         .then(res => res.json())
         .then(
           resp => setRaw(resp),
