@@ -40,10 +40,10 @@ const Visualization = () => {
       if (read) {
         setRead(false);
         console.log('Read request sent')
-        await fetch(`http://192.168.0.185:${SERVER_PORT}/selectData`, {
+        await fetch(`http://localhost:${SERVER_PORT}/selectData`, {
           method: 'POST',
           headers: {
-            'Content-Type': 'x-www-form-urlencoded',
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             'product_name': 'PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING',
@@ -63,18 +63,8 @@ const Visualization = () => {
   // Populate graphical data
   useEffect(() => {
     if (rawData) {
-      console.log('Da rawData:', typeof(rawData), rawData);
-      let g = [];
-      for (let entry of rawData) {
-        // console.log(typeof(entry))
-        // console.log(`entry ${entry['entry_id']}:`, entry)
-        // console.log('product name:', entry['product_name'])
-        if (entry['product_name'] === 'PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING') {
-          g.push(entry);
-        }
-      }
-      console.log('graphSTUFF:', g);
-      setGraph(g);
+      console.log('rawData:', typeof(rawData), rawData);
+      setGraph(rawData);
     }
   }, [rawData]);
 
