@@ -3,7 +3,7 @@ import { extendObservable} from 'mobx';
 class UserStore {
   constructor() {
     extendObservable(this, {
-      loading: true.valueOf,
+      loading: true,
       isLoggedIn: false,
       username: ''
     })
