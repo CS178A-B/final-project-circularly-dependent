@@ -137,11 +137,11 @@ app.post('/signIn', (req, res) => {
   const pass = req.body.password
   console.log(user)
   console.log(pass)
-  const sqlquery = 'SELECT COUNT(username) FROM users WHERE username = \'' + user + '\' AND password = \'' + pass + '\' LIMIT 0, 1'
+  const sqlquery = 'SELECT COUNT(username) as cnt FROM users WHERE username = \'' + user + '\' AND password = \'' + pass + '\' LIMIT 0, 1'
   con.query(sqlquery, function (err, result) {
     if (err) throw err;
-    console.log(result);
-    res.status(200).json(result)
+    results = (result[0].cnt)
+    res.status(200).json(results)
   });
 })
 
