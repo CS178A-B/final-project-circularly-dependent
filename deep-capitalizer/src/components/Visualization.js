@@ -31,11 +31,15 @@ const Visualization = () => {
   const [read, setRead] = useState(false);
   const [tmpread, setTmpread] = useState(false);
   const [rawData, setRaw] = useState(null);
+  const [prodName, setProd] = useState(null);
   const [graphData, setGraph] = useState(null);
   const [error, setError] = useState(null);
 
   // Fetch from "/selectData" end-point
   useEffect(() => {
+    if (!prodName) {
+      setProd('PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING');
+    }
     const readFile = async () => {
       if (read) {
         setRead(false);
@@ -46,7 +50,7 @@ const Visualization = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            'product_name': 'PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING',
+            'product_name': prodName,
           }),
         })
         .then(res => res.json())
@@ -58,7 +62,7 @@ const Visualization = () => {
       }
     }
     readFile();
-  }, [read, error]);
+  }, [read, prodName, error]);
 
   // Populate graphical data
   useEffect(() => {
