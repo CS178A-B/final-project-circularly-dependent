@@ -131,6 +131,13 @@ app.get('/test', (req, res) => {
   delayedRes()
 });
 
+app.get('/signIn', (req, res) => {
+  delayedRes = async () => {
+    
+  }
+})
+
+
 app.post('/selectData', (req, res) => {
   let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\''
   console.log(sqlquery)
@@ -149,6 +156,7 @@ app.get('/productName', (req, res) => {
     res.status(200).json(result)
   });
 })
+
 
 function cleanData(data) {
   let thisData = data

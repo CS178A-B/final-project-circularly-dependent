@@ -5,6 +5,7 @@ import Home from '../components/Home';
 import Visualization from '../components/Visualization';
 import ServerTest from '../components/ServerTest';
 import ButtonAppBar from '../components/shared-components/Navbar';
+import Login from '../components/Login'
 import { createBrowserHistory } from 'history';
 
 export const history = createBrowserHistory();
@@ -12,10 +13,11 @@ export const history = createBrowserHistory();
 const Routes = () => {
   return (
     <div className='App'>
-      <ButtonAppBar/>
       <Router history={history}>
+        <ButtonAppBar/>
         <Switch>
           <Route path='/' exact component={Home} />
+          <Route path='/login' exact component={Login} />
           <Route path='/visualization' exact component={Visualization} />
           <Route path='/server-test' exact component={ServerTest} />
         </Switch>
