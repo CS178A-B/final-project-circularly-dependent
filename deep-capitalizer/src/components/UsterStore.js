@@ -3,11 +3,14 @@ import { extendObservable} from 'mobx';
 class UserStore {
   constructor() {
     extendObservable(this, {
-      loading: true,
-      isLoggedIn: false,
-      username: ''
+      isLoggedIn: false
     })
+  }
+  setLoggedIn(newValue) {
+    this.isLoggedIn = newValue; 
   }
 }
 
-export default new UserStore();
+let stat = new UserStore();
+
+export default stat;
