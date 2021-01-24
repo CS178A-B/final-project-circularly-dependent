@@ -8,7 +8,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { createBrowserHistory } from 'history';
 import { Link } from 'react-router-dom';
-
+import UserStore from '../UsterStore'
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../../globals'
 
 export const history = createBrowserHistory();
 
@@ -26,6 +28,34 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
   const classes = useStyles();
+  const {value, setValue} = useContext(UserContext);
+  const [signedOut, setSignedOut] = useState(false);
+  let logStatus = 'SIGN IN'
+
+  let url = '/login'
+  console.log('reading the sign')
+  if (value) {
+    logStatus = 'SIGN OUT'
+    url = '/logout'    
+  } else {
+    logStatus = 'SIGN IN'
+    url = '/login'
+  }
+
+  // useEffect(() => {
+  //   // const statChange = async () => {
+  //     if (value) {
+  //       logStatus = 'SIGN OUT'
+  //       url = '/logout'         
+  //       setValue(false)
+  //     } else {
+  //       logStatus = 'SIGN IN'
+  //       url = '/login'
+  //     }
+  //   // }
+  //   // statChange()
+  // },  [value])
+
 
   return (
     <div className={classes.root}>
@@ -40,8 +70,8 @@ export default function ButtonAppBar() {
             </Link>
           </Typography>
 
-          <Link to="/login" style={{ textDecoration: 'none', color: '#FFF'  }}>
-            <Button color="inherit">Login</Button>
+          <Link to={url} style={{ textDecoration: 'none', color: '#FFF'  }}>
+            <Button color="inherit">{logStatus}</Button>
           </Link>
         </Toolbar>
       </AppBar>
