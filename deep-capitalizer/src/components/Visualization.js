@@ -31,16 +31,28 @@ const Visualization = () => {
   const [read, setRead] = useState(false);
   const [tmpread, setTmpread] = useState(false);
   const [rawData, setRaw] = useState(null);
+  const [prodName, setProd] = useState(null);
   const [graphData, setGraph] = useState(null);
   const [error, setError] = useState(null);
 
   // Fetch from "/selectData" end-point
   useEffect(() => {
+    if (!prodName) {
+      setProd('PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING');
+    }
     const readFile = async () => {
       if (read) {
         setRead(false);
         console.log('Read request sent')
-        await fetch(`http://localhost:${SERVER_PORT}/selectData`)
+        await fetch(`http://localhost:${SERVER_PORT}/selectData`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            'product_name': prodName,
+          }),
+        })
         .then(res => res.json())
         .then(
           resp => setRaw(resp),
@@ -50,23 +62,13 @@ const Visualization = () => {
       }
     }
     readFile();
-  }, [read, error]);
+  }, [read, prodName, error]);
 
   // Populate graphical data
   useEffect(() => {
     if (rawData) {
-      console.log('Da rawData:', typeof(rawData), rawData);
-      let g = [];
-      for (let entry of rawData) {
-        // console.log(typeof(entry))
-        // console.log(`entry ${entry['entry_id']}:`, entry)
-        // console.log('product name:', entry['product_name'])
-        if (entry['product_name'] === 'PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING') {
-          g.push(entry);
-        }
-      }
-      console.log('graphSTUFF:', g);
-      setGraph(g);
+      console.log('rawData:', typeof(rawData), rawData);
+      setGraph(rawData);
     }
   }, [rawData]);
 

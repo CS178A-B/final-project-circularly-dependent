@@ -6,12 +6,16 @@ const path = require('path');
 const cors = require('cors');
 const csv = require('csv-parser');
 const fs = require('fs');
+var bodyParser = require('body-parser');
 // const filePath = path.join(__dirname, 'RS-20170701-20190630.csv');
-const filePath = path.join(__dirname, 'CoreNLPData.json');
 const mysql = require('mysql');
 
 // Initializing the express framework and save it to another constant 'app'
 const app = express();
+
+const filePath = path.join(__dirname, 'CoreNLPData.json');
+const jsonParser = bodyParser.json();
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 // Save the port of our sever into a constant 'PORT'
 // process.env.PORT checks our environment variables to see if we already have a PORT defined.
@@ -34,17 +38,17 @@ const con = mysql.createConnection({
 con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
-
+  
   con.query("DROP DATABASE IF EXISTS mock", function(err, result){
     if(err) throw err;
     console.log("mock deleted")
   })
-
+  
   con.query("CREATE DATABASE mock", function(err, result){
     if(err) throw err;
     console.log("mock created")
   })
-    
+  
   con.query("USE mock", function(err, result){
     if(err) throw err;
     console.log("mock used")
@@ -52,12 +56,12 @@ con.connect(function(err) {
   
   var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date VARCHAR(255), vendor_code INT, po_quality INT)";
   // var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date VARCHAR(255), vendor_code INT)";
-
+  
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table created");
   });
-
+  
   async function jsonReader(filePath, cb) {
     fs.readFile(filePath, (err, fileData) => {
       if (err) {
@@ -65,13 +69,13 @@ con.connect(function(err) {
       }
       try {
         const object = JSON.parse(fileData)
-          return cb && cb(null, object)
-        } catch(err) {
-          return cb && cb(err)
+        return cb && cb(null, object)
+      } catch(err) {
+        return cb && cb(err)
       }
     })
   }
-
+  
   jsonReader(filePath, (err, ret) => {
     if (err) {
       return 
@@ -83,7 +87,6 @@ con.connect(function(err) {
       cleanData(data[i])
       values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE, data[i].PO_QUANTITY])
       // values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE/*, data[i].PO_QUANTITY*/])
-
     }
     let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quality) VALUES ?'
     // let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code) VALUES ?'
@@ -91,7 +94,6 @@ con.connect(function(err) {
     con.query(sql, [values], function(err,result) {
       if(err) {
         throw err;
-
       }
       else {
         console.log("success in")
@@ -100,15 +102,23 @@ con.connect(function(err) {
   })   
 });
 
-// Removes CORS error
-app.use(cors());
 
 // Serves up static Client build (React App)
 app.use('/', express.static(path.join(__dirname, '../deep-capitalizer/build')));
 
+// Removes CORS error
+app.use(cors());
+
+// Sets up server to parse url-encoded body
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Sets up server to parse json body
+app.use(bodyParser.json());
+
+// Spins up React App from Node Server
 app.get('/', (req, res) => { 
   res.sendFile(path.join(__dirname, '../deep-capitalizer/build', 'index.html'));
-})
+});
 
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
 
@@ -121,8 +131,19 @@ app.get('/test', (req, res) => {
   delayedRes()
 });
 
-app.get('/selectData', (req, res) => {
-  con.query("SELECT * FROM items ORDER BY item_total DESC", function (err, result) {
+app.post('/selectData', (req, res) => {
+  let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\''
+  console.log(sqlquery)
+  con.query(sqlquery, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+    res.status(200).json(result)
+  });
+})
+
+app.get('/productName', (req, res) => {
+  let sqlquery = 'SELECT DISTINCT product_name FROM items'
+  con.query(sqlquery, function (err, result) {
     if (err) throw err;
     console.log(result);
     res.status(200).json(result)
