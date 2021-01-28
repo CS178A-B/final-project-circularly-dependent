@@ -3,6 +3,7 @@ import { Router, Switch, Route } from 'react-router-dom';
 
 import Home from '../components/Home';
 import Visualization from '../components/Visualization';
+import SumChart from '../components/SumChart';
 import ServerTest from '../components/ServerTest';
 import ButtonAppBar from '../components/shared-components/Navbar';
 import Login from '../components/Login'
@@ -24,7 +25,8 @@ const Routes = () => {
             <Route path='/login' exact component={Login} />
             <Route path='/logout' exact component={Logout} />
             <Route path='/visualization' exact component={Visualization} />
-            <Route path='/server-test' exact component={ServerTest} />
+            <Route path='/server-test' exact component={SumChart} />
+            {/* <Route path='/server-test' exact component={ServerTest} /> */}
         </Switch>
         </UserContext.Provider>
       </Router>
