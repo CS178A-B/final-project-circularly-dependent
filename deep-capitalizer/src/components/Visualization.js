@@ -71,6 +71,9 @@ const Visualization = () => {
   // Populate graphical data
   useEffect(() => {
     if (rawData) {
+      for (let i=0; i<rawData.length; i++) {
+        rawData[i].issue_date = rawData[i].issue_date.substr(0,10)
+      }  
       console.log('rawData:', typeof(rawData), rawData);
       setGraph(rawData);
     }
@@ -107,7 +110,7 @@ const Visualization = () => {
               <ResponsiveContainer className={classes.graph}>
                 <BarChart width={730} height={250} data={graphData}>
                   <CartesianGrid strokeDasharray='3 3' />
-                  <XAxis dataKey='entry_id' />
+                  <XAxis dataKey='issue_date' />
                   <YAxis />
                   <Tooltip />
                   <Legend />
@@ -121,6 +124,7 @@ const Visualization = () => {
           <br />
           <Button onClick={() => { setRead(true) }} color="primary" variant='contained'>
             Get Results
+
           </Button>
         </header>
       </div>
