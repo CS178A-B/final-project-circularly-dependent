@@ -39,67 +39,67 @@ con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
   
-  con.query("DROP DATABASE IF EXISTS mock", function(err, result){
-    if(err) throw err;
-    console.log("mock deleted")
-  })
+  // con.query("DROP DATABASE IF EXISTS mock", function(err, result){
+  //   if(err) throw err;
+  //   console.log("mock deleted")
+  // })
   
-  con.query("CREATE DATABASE mock", function(err, result){
-    if(err) throw err;
-    console.log("mock created")
-  })
+  // con.query("CREATE DATABASE mock", function(err, result){
+  //   if(err) throw err;
+  //   console.log("mock created")
+  // })
   
   con.query("USE mock", function(err, result){
     if(err) throw err;
     console.log("mock used")
   })
   
-  var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date VARCHAR(255), vendor_code INT, po_quality INT)";
-  // var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date VARCHAR(255), vendor_code INT)";
+  // var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date VARCHAR(255), vendor_code INT, po_quality INT)";
+  // // var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date VARCHAR(255), vendor_code INT)";
   
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("Table created");
-  });
+  // con.query(sql, function (err, result) {
+  //   if (err) throw err;
+  //   console.log("Table created");
+  // });
   
-  async function jsonReader(filePath, cb) {
-    fs.readFile(filePath, (err, fileData) => {
-      if (err) {
-        return cb && cb(err)
-      }
-      try {
-        const object = JSON.parse(fileData)
-        return cb && cb(null, object)
-      } catch(err) {
-        return cb && cb(err)
-      }
-    })
-  }
+  // async function jsonReader(filePath, cb) {
+  //   fs.readFile(filePath, (err, fileData) => {
+  //     if (err) {
+  //       return cb && cb(err)
+  //     }
+  //     try {
+  //       const object = JSON.parse(fileData)
+  //       return cb && cb(null, object)
+  //     } catch(err) {
+  //       return cb && cb(err)
+  //     }
+  //   })
+  // }
   
-  jsonReader(filePath, (err, ret) => {
-    if (err) {
-      return 
-    }
-    data = ret.PURCHASES
+  // jsonReader(filePath, (err, ret) => {
+  //   if (err) {
+  //     return 
+  //   }
+  //   data = ret.PURCHASES
     
-    let values = []
-    for (var i=0; i<data.length; i++) {
-      cleanData(data[i])
-      values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE, data[i].PO_QUANTITY])
-      // values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE/*, data[i].PO_QUANTITY*/])
-    }
-    let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quality) VALUES ?'
-    // let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code) VALUES ?'
+  //   let values = []
+  //   for (var i=0; i<data.length; i++) {
+  //     cleanData(data[i])
+  //     values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE, data[i].PO_QUANTITY])
+  //     // values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE/*, data[i].PO_QUANTITY*/])
+  //   }
+  //   let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quality) VALUES ?'
+  //   // let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code) VALUES ?'
     
-    con.query(sql, [values], function(err,result) {
-      if(err) {
-        throw err;
-      }
-      else {
-        console.log("success in")
-      }
-    }) 
-  })   
+  //   con.query(sql, [values], function(err,result) {
+  //     if(err) {
+  //       throw err;
+  //     }
+  //     else {
+  //       console.log("success in")
+  //     }
+  //   }) 
+  // })   
 });
 
 
@@ -131,6 +131,21 @@ app.get('/test', (req, res) => {
   delayedRes()
 });
 
+app.post('/signIn', (req, res) => {
+  console.log('tryint to log in?')
+  const user = req.body.username
+  const pass = req.body.password
+  console.log(user)
+  console.log(pass)
+  const sqlquery = 'SELECT COUNT(username) as cnt FROM users WHERE username = \'' + user + '\' AND password = \'' + pass + '\' LIMIT 0, 1'
+  con.query(sqlquery, function (err, result) {
+    if (err) throw err;
+    results = (result[0].cnt)
+    res.status(200).json(results)
+  });
+})
+
+
 app.post('/selectData', (req, res) => {
   let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\''
   console.log(sqlquery)
@@ -149,6 +164,7 @@ app.get('/productName', (req, res) => {
     res.status(200).json(result)
   });
 })
+
 
 function cleanData(data) {
   let thisData = data

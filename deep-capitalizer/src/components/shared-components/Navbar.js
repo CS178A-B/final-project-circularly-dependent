@@ -6,6 +6,12 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import { createBrowserHistory } from 'history';
+import { Link } from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../../globals'
+
+export const history = createBrowserHistory();
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,6 +27,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
   const classes = useStyles();
+  const {value, setValue} = useContext(UserContext);
+  let logStatus = 'SIGN IN'
+
+  let url = '/login'
+  if (value) {
+    logStatus = 'SIGN OUT'
+    url = '/logout'    
+  } else {
+    logStatus = 'SIGN IN'
+    url = '/login'
+  }
 
   return (
     <div className={classes.root}>
@@ -30,11 +47,16 @@ export default function ButtonAppBar() {
             <MenuIcon/>
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Deep Capitalizer
+            <Link to="/" style={{ textDecoration: 'none', color: '#FFF'  }}>
+              Deep Capitalizer
+            </Link>
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Link to={url} style={{ textDecoration: 'none', color: '#FFF'  }}>
+            <Button color="inherit">{logStatus}</Button>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>
   );
 }
+
