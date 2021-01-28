@@ -4,6 +4,7 @@ import {
 } from 'recharts';
 // import rawData from '../resources/out1.json';
 import { SERVER_PORT } from './../globals';
+import ComboSearch from './shared-components/ComboSearch';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { useState, useEffect } from 'react';
@@ -94,6 +95,7 @@ const Visualization = () => {
   return (
       <div className={classes.root}>
         <header className={classes.header}>
+          <ComboSearch />
           <p>
             {graphData ? graphData[0]['product_name'] : ''}
           </p>
