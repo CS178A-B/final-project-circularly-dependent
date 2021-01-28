@@ -14,12 +14,12 @@ const Home = () => {
       <br />
       <Link to='/visualization' style={{ textDecoration: 'none'}}>
         <Button color="primary" variant='contained' style={{ margin: 50}}>
-          Visualization
+          Price per Unit
         </Button>
       </Link>
       <Link to='/server-test' style={{ textDecoration: 'none'}}>
         <Button color="default" variant='contained' style={{ margin: 50}}>
-          Server Test
+          Annual Spending
         </Button>
       </Link>    
       <br />

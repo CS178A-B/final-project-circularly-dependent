@@ -104,7 +104,8 @@ const Visualization = () => {
           <ComboSearch setItem={(item) => setProd(item)}/>
           <br />
           <p>
-            {graphData ? graphData[0]['product_name'] : ''}
+            {'Price per Unit'}
+            {graphData ? ' for ' + graphData[0]['product_name'] : ''}
           </p>
             { graphData ?
               <ResponsiveContainer className={classes.graph}>
