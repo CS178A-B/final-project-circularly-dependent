@@ -156,6 +156,16 @@ app.post('/selectData', (req, res) => {
   });
 })
 
+app.post('/overall', (req, res) => {
+  //let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\' ORDER BY ISSUE_DATE ASC, item_total'
+  let sqlquery  = 'SELECT SUM(item_total) AS Sum, YEAR(issue_date) as year FROM items WHERE product_name = \'' + req.body.product_name + '\'GROUP BY YEAR(issue_date) ORDER BY YEAR ASC'  
+  con.query(sqlquery, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+    res.status(200).json(result)
+  });
+})
+
 app.get('/productName', (req, res) => {
   let sqlquery = 'SELECT DISTINCT product_name FROM items'
   con.query(sqlquery, function (err, result) {
