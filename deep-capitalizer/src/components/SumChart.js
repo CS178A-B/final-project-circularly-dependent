@@ -137,7 +137,7 @@ const SumChart = () => {
 } */}
           <br />
           <p>
-            Annual Sum
+            Annual Spending
           </p>
           { graphData ?
             <ResponsiveContainer className={classes.graph}>
