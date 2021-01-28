@@ -56,7 +56,8 @@ export default function ComboSearch(props) {
       }}
       getOptionSelected={(option, value) => {props.setItem(value); return (option === value)}}
       getOptionLabel={option => option}
-      options={options}
+      options={options.sort((a, b) => -b.charAt(0).localeCompare(a.charAt(0)))}
+      groupBy={option => option.charAt(0)}
       loading={loading}
       renderInput={params => (
         <TextField
