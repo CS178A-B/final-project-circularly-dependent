@@ -11,10 +11,13 @@ OUT_FILE="../server/outdata.json"
 #OUT_FILE=$OUT_FILE.$CURRENT_TIME
 
 # How many entries do you want to process feel free to put 100000 here as the code base will stop at the EOF
-DATA_COUNT="5"
+#start entry 1 is the first data cell
+START_ENTRY="1"
+END_ENTRY="10"
+#DATA_COUNT="5"
 
 mvn clean install
-mvn exec:java -Dexec.args="${DATA_FILE} ${OUT_FILE} ${DATA_COUNT}"
+mvn exec:java -Dexec.args="${DATA_FILE} ${OUT_FILE} ${START_ENTRY} ${END_ENTRY}"
 
 echo "New JSON file: $OUT_FILE"
 

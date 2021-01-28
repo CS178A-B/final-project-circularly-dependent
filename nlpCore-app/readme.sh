@@ -36,9 +36,11 @@ mvn clean install
 
 	## Since this program has arguments
 	## Adding arguments
-#mvn exec:java -Dexec.args="<Input file> <Output file> <Last entry cell>"
+#mvn exec:java -Dexec.args="<Input file> <Output file> <start entry cell> <Last entry cell>"
 	##For example
-mvn exec:java -Dexec.args="../server/testdata outdata.txt 5"
+	#Both should work
+#mvn exec:java -Dexec.args="../server/testdata outdata.txt"
+mvn exec:java -Dexec.args="../server/testdata outdata.txt 1 5"
 ##Or example without the last entry number
 #mvn exec:java -Dexec.args="testfile outfile.txt"
 

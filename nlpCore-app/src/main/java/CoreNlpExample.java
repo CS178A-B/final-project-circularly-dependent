@@ -130,30 +130,22 @@ public class CoreNlpExample {
     //Output args[1]:
     //              Name of a file this program will write to. This file will be
     //              in JSON format.
-    //(Optional) args[2]:
+    //The next 2 arguments are optional but require each other. Cannot have one without the other
+    //(Optional with [3]) args[2]:
     //              This optional value is the range entry specifier. This value
-    //              if specified is the last entry this generator will process.
+    //              if specified is the START entry this generator will process.
+    //              If not specified this program will default to a constant
+    //              value int endEntry.
+    //(Optional with [2]) args[3]:
+    //              This optional value is the range entry specifier. This value
+    //              if specified is the END entry this generator will process.
     //              If not specified this program will default to a constant
     //              value int endEntry.
     public static void main(String[] args) {
 
         String in_file = null;
         String out_file = null;
-        //Check args[] make sure we have 2 or 3.
-        if(args.length == 2 || args.length == 3){
-            in_file = args[0];
-            out_file = args[1];
-        } else{
-            System.out.println("Json generator requires 2 to 3 arguments to be specified");
-            return;
-        }
-        System.out.println(in_file + " " + out_file);
-//        in_file = "testdata";
-//        out_file = "outdata.txt";
-        // using || double pipe as delimiter. This is the delimiter of the input data
-        String delimiter = "\\|\\|";
-
-
+        
         //Partitioning functionality: these 2 variables are for if we want to process a section of data from the csv
         int startEntry = 1;//this is not the exact cell in the csv. In the csv the exact cell is off by +1
         //ie: to specify cell 21 in the csv, type in 20.
@@ -163,24 +155,51 @@ public class CoreNlpExample {
         //There is control in place for overextending this value so don't worry
         int endEntry = 10;//excluded entry
         //get last argument if it is specified
-        if(args.length == 3){
-            endEntry = Integer.parseInt(args[2]);
-        }
+        
+//        in_file = "testdata";
+//        out_file = "outdata.txt";
+        // using || double pipe as delimiter. This is the delimiter of the input data
+        String delimiter = "\\|\\|";
+
+
         //to stop at entry 33, type in 34, this will be 34 in the csv so this will be the exact cell in the csv
+        //Check args[] make sure we have 2 or 4.
+        switch (args.length){
+            case 2:
+                in_file = args[0];
+                out_file = args[1];
+                //start and end entry default to above values
+                break;
+            case 4:
+                in_file = args[0];
+                out_file = args[1];
+                try{
+                    startEntry = Integer.parseInt(args[2]);
+                    endEntry = Integer.parseInt(args[3]);
+                }
+                catch(NumberFormatException nume){
+                    System.out.println("Arguments [2] and [3] are not in number format");
+                    nume.printStackTrace();
+                }
+                break;
+            default:
+                System.out.println("Json generator requires 2 or 4 arguments to be specified");
+                return;//exit program
+        }
 
         //Generic Read and Write to file
         PrintWriter writer = null;
         try {
             writer = new PrintWriter(out_file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException fe) {
+            fe.printStackTrace();
         }
 
         Scanner read = null;
         try{
             read = new Scanner (new File(in_file));
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
+        } catch (FileNotFoundException fe){
+           fe.printStackTrace();
         }
 
         //specified delimiter above
