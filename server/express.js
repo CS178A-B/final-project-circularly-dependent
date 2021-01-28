@@ -39,67 +39,67 @@ con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
   
-  // con.query("DROP DATABASE IF EXISTS mock", function(err, result){
-  //   if(err) throw err;
-  //   console.log("mock deleted")
-  // })
+  con.query("DROP DATABASE IF EXISTS mock", function(err, result){
+    if(err) throw err;
+    console.log("mock deleted")
+  })
   
-  // con.query("CREATE DATABASE mock", function(err, result){
-  //   if(err) throw err;
-  //   console.log("mock created")
-  // })
+  con.query("CREATE DATABASE mock", function(err, result){
+    if(err) throw err;
+    console.log("mock created")
+  })
   
   con.query("USE mock", function(err, result){
     if(err) throw err;
     console.log("mock used")
   })
   
-  // var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date VARCHAR(255), vendor_code INT, po_quality INT)";
-  // // var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date VARCHAR(255), vendor_code INT)";
+  var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date date, vendor_code INT, po_quantity INT)";
+  // var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date VARCHAR(255), vendor_code INT)";
   
-  // con.query(sql, function (err, result) {
-  //   if (err) throw err;
-  //   console.log("Table created");
-  // });
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Table created");
+  });
   
-  // async function jsonReader(filePath, cb) {
-  //   fs.readFile(filePath, (err, fileData) => {
-  //     if (err) {
-  //       return cb && cb(err)
-  //     }
-  //     try {
-  //       const object = JSON.parse(fileData)
-  //       return cb && cb(null, object)
-  //     } catch(err) {
-  //       return cb && cb(err)
-  //     }
-  //   })
-  // }
+  async function jsonReader(filePath, cb) {
+    fs.readFile(filePath, (err, fileData) => {
+      if (err) {
+        return cb && cb(err)
+      }
+      try {
+        const object = JSON.parse(fileData)
+        return cb && cb(null, object)
+      } catch(err) {
+        return cb && cb(err)
+      }
+    })
+  }
   
-  // jsonReader(filePath, (err, ret) => {
-  //   if (err) {
-  //     return 
-  //   }
-  //   data = ret.PURCHASES
+  jsonReader(filePath, (err, ret) => {
+    if (err) {
+      return 
+    }
+    data = ret.PURCHASES
     
-  //   let values = []
-  //   for (var i=0; i<data.length; i++) {
-  //     cleanData(data[i])
-  //     values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE, data[i].PO_QUANTITY])
-  //     // values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE/*, data[i].PO_QUANTITY*/])
-  //   }
-  //   let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quality) VALUES ?'
-  //   // let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code) VALUES ?'
+    let values = []
+    for (var i=0; i<data.length; i++) {
+      cleanData(data[i])
+      values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE, data[i].PO_QUANTITY])
+      // values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE/*, data[i].PO_QUANTITY*/])
+    }
+    let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quantity) VALUES ?'
+    // let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code) VALUES ?'
     
-  //   con.query(sql, [values], function(err,result) {
-  //     if(err) {
-  //       throw err;
-  //     }
-  //     else {
-  //       console.log("success in")
-  //     }
-  //   }) 
-  // })   
+    con.query(sql, [values], function(err,result) {
+      if(err) {
+        throw err;
+      }
+      else {
+        console.log("success in")
+      }
+    }) 
+  })   
 });
 
 
@@ -147,7 +147,7 @@ app.post('/signIn', (req, res) => {
 
 
 app.post('/selectData', (req, res) => {
-  let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\''
+  let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\' ORDER BY ISSUE_DATE ASC, item_total'
   console.log(sqlquery)
   con.query(sqlquery, function (err, result) {
     if (err) throw err;
@@ -185,8 +185,16 @@ function cleanData(data) {
   }
   thisData.PO_NO = (thisData.PO_NO).replace(/\D/g,'');
   thisData.PO_NO = Number(thisData.PO_NO)
-  if ((thisData.ISSUE_DATE).includes("\\"))
-    thisData.ISSUE_DATE = (thisData.ISSUE_DATE).replace("\\", "")
+
+  thisData.ISSUE_DATE = (thisData.ISSUE_DATE).split(" ")[0]
+  thisData.ISSUE_DATE = (thisData.ISSUE_DATE).replace("\\", "")
+  thisData.ISSUE_DATE = (thisData.ISSUE_DATE).replace("/", "-")
+  let year = thisData.ISSUE_DATE.substr(thisData.ISSUE_DATE.length - 4)
+  thisData.ISSUE_DATE = (thisData.ISSUE_DATE).slice(0, -5)
+  if (thisData.ISSUE_DATE.charAt(2) != "-") thisData.ISSUE_DATE = "0" + thisData.ISSUE_DATE
+  if (thisData.ISSUE_DATE.charAt(4) == "-") thisData.ISSUE_DATE = thisData.ISSUE_DATE.slice(0, 2) + "0" + thisData.ISSUE_DATE.slice(2, -1)
+  thisData.ISSUE_DATE = year + "-" + thisData.ISSUE_DATE
+
   thisData.VENDOR_CODE = (thisData.VENDOR_CODE).replace("V", "")
   thisData.VENDOR_CODE = Number(thisData.VENDOR_CODE)
 
