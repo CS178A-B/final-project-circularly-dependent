@@ -1,5 +1,3 @@
-// *https://www.registers.service.gov.uk/registers/country/use-the-api*
-// import fetch from 'cross-fetch';
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -12,7 +10,7 @@ function sleep(delay = 0) {
   });
 }
 
-export default function ComboSearch() {
+export default function ComboSearch(props) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
@@ -56,11 +54,11 @@ export default function ComboSearch() {
       onClose={() => {
         setOpen(false);
       }}
-      getOptionSelected={(option, value) => option === value}
-      getOptionLabel={(option) => option}
+      getOptionSelected={(option, value) => {props.setItem(value); return (option === value)}}
+      getOptionLabel={option => option}
       options={options}
       loading={loading}
-      renderInput={(params) => (
+      renderInput={params => (
         <TextField
           {...params}
           label="Product Name"
