@@ -14,8 +14,6 @@ export const history = createBrowserHistory();
 
 const Routes = () => {
   const [value, setValue] = useState(false);
-  const providerValue = useMemo(() => ({value, setValue}), [value, setValue]);
-
   return (
     <div className='App'>
       <Router history={history}>
