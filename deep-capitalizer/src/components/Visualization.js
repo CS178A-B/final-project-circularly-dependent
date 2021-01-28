@@ -124,7 +124,6 @@ const Visualization = () => {
           <br />
           <Button onClick={() => { setRead(true) }} color="primary" variant='contained'>
             Get Results
-
           </Button>
         </header>
       </div>
