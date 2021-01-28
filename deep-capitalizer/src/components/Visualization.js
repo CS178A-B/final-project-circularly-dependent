@@ -4,6 +4,7 @@ import {
 } from 'recharts';
 // import rawData from '../resources/out1.json';
 import { SERVER_PORT } from './../globals';
+import ComboSearch from './shared-components/ComboSearch';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { useState, useEffect } from 'react';
@@ -37,11 +38,14 @@ const Visualization = () => {
 
   // Fetch from "/selectData" end-point
   useEffect(() => {
-    if (!prodName) {
-      setProd('PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING');
-    }
     const readFile = async () => {
       if (read) {
+        // No product selected, abort fetch
+        if (!prodName) {
+          alert('Please select a Product.');
+          setRead(false);
+          return;
+        }
         setRead(false);
         console.log('Read request sent')
         await fetch(`http://localhost:${SERVER_PORT}/selectData`, {
@@ -97,24 +101,30 @@ const Visualization = () => {
   return (
       <div className={classes.root}>
         <header className={classes.header}>
+          <ComboSearch setItem={(item) => setProd(item)}/>
+          <br />
           <p>
             {graphData ? graphData[0]['product_name'] : ''}
           </p>
-          <ResponsiveContainer className={classes.graph}>
-            <BarChart width={730} height={250} data={graphData}>
-              <CartesianGrid strokeDasharray='3 3' />
-              <XAxis dataKey='issue_date' />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey='item_total' fill='#008000' />
-            </BarChart>
-          </ResponsiveContainer>
-          <p>
-            - Graphs go here -
-          </p>
-          <Button onClick={() => { setRead(true) }} variant='contained'>
-            Get da Data
+            { graphData ?
+              <ResponsiveContainer className={classes.graph}>
+                <BarChart width={730} height={250} data={graphData}>
+                  <CartesianGrid strokeDasharray='3 3' />
+                  <XAxis dataKey='issue_date' />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey='item_total' fill='#008000' />
+                </BarChart>
+              </ResponsiveContainer>
+            :
+              <br />
+            }
+
+          <br />
+          <Button onClick={() => { setRead(true) }} color="primary" variant='contained'>
+            Get Results
+
           </Button>
         </header>
       </div>

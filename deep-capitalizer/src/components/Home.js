@@ -5,13 +5,15 @@ import { Link } from 'react-router-dom'
 const Home = () => {
   return (
     <>
+      <br />
       <Link to='/visualization' style={{ textDecoration: 'none'}}>
         <Button>Goto Visualization page</Button>
       </Link>
       <Link to='/server-test' style={{ textDecoration: 'none'}}>
         <Button>Goto Server Test page</Button>
       </Link>    
-      <p>This is Home</p>
+      <br />
+      <p>Home</p>
     </>
   );
 }
