@@ -114,7 +114,7 @@ const Visualization = () => {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey='item_total' fill='#008000' />
+                  <Bar dataKey='unit_price' fill='#008000' />
                 </BarChart>
               </ResponsiveContainer>
             :

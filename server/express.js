@@ -56,12 +56,18 @@ con.connect(function(err) {
   
   var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date date, vendor_code INT, po_quantity INT)";
   // var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date VARCHAR(255), vendor_code INT)";
-  
+  const userPassTable = "CREATE TABLE users (username VARCHAR(255), password VARCHAR(255))"
+
   con.query(sql, function (err, result) {
     if (err) throw err;
-    console.log("Table created");
+    console.log("Table item created");
   });
   
+  con.query(userPassTable, function (err, result) {
+    if (err) throw err;
+    console.log("Table userPassword created");
+  });
+
   async function jsonReader(filePath, cb) {
     fs.readFile(filePath, (err, fileData) => {
       if (err) {
@@ -90,13 +96,22 @@ con.connect(function(err) {
     }
     let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quantity) VALUES ?'
     // let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code) VALUES ?'
-    
+    const userPass = 'INSERT INTO users VALUES (\'scotty@ucr.edu\', \'thebear\')'
     con.query(sql, [values], function(err,result) {
       if(err) {
         throw err;
       }
       else {
         console.log("success in")
+      }
+    }) 
+
+    con.query(userPass, function(err,result) {
+      if(err) {
+        throw err;
+      }
+      else {
+        console.log("success user In")
       }
     }) 
   })   
@@ -147,8 +162,20 @@ app.post('/signIn', (req, res) => {
 
 
 app.post('/selectData', (req, res) => {
-  let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\' ORDER BY ISSUE_DATE ASC, item_total'
+  // let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\' ORDER BY ISSUE_DATE ASC, unit_price'
+  let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\' ORDER BY unit_price LIMIT 30'
+
   console.log(sqlquery)
+  con.query(sqlquery, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+    res.status(200).json(result)
+  });
+})
+
+app.post('/overall', (req, res) => {
+  //let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\' ORDER BY ISSUE_DATE ASC, item_total'
+  let sqlquery  = 'SELECT SUM(item_total) AS Sum, YEAR(issue_date) as year FROM items WHERE product_name = \'' + req.body.product_name + '\'GROUP BY YEAR(issue_date) ORDER BY YEAR ASC'  
   con.query(sqlquery, function (err, result) {
     if (err) throw err;
     console.log(result);
