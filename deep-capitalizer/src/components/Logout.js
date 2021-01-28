@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import Typography from '@material-ui/core/Typography';
+import { UserContext } from '../globals'
+
 
 import { useDencrypt } from "use-dencrypt-effect";
 
@@ -8,7 +10,9 @@ const textValues = ["See You Again", "Come Back Soon!", "Good Bye", "Until Next 
 
 const Logout = () => {
   const { result, dencrypt } = useDencrypt();
+  const {value, setValue} = useContext(UserContext);
 
+  setValue(false)
   useEffect(() => {
     let i = 0;
     const action = setInterval(() => {

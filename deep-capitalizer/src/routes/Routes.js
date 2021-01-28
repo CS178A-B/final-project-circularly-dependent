@@ -19,15 +19,15 @@ const Routes = () => {
     <div className='App'>
       <Router history={history}>
         <UserContext.Provider value={{value, setValue}}>
-        <ButtonAppBar/>
-        <Switch>
-            <Route path='/' exact component={Home} />
-            <Route path='/login' exact component={Login} />
-            <Route path='/logout' exact component={Logout} />
-            <Route path='/visualization' exact component={Visualization} />
-            <Route path='/server-test' exact component={SumChart} />
-            {/* <Route path='/server-test' exact component={ServerTest} /> */}
-        </Switch>
+          <ButtonAppBar/>
+          <Switch>
+              <Route path='/' exact component={Home} />
+              <Route path='/login' exact component={Login} />
+              <Route path='/logout' exact component={Logout} />
+              <Route path='/visualization' exact component={Visualization} />
+              <Route path='/server-test' exact component={SumChart} />
+              {/* <Route path='/server-test' exact component={ServerTest} /> */}
+          </Switch>
         </UserContext.Provider>
       </Router>
     </div>
