@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import TimelineOutlinedIcon from '@material-ui/icons/TimelineOutlined';
 import { createBrowserHistory } from 'history';
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  menuButton: {
+  graphButton: {
     marginRight: theme.spacing(2),
   },
   title: {
@@ -43,9 +44,11 @@ export default function ButtonAppBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon/>
-          </IconButton>
+          <Link to="/visualization" style={{ textDecoration: 'none', color: '#FFF'  }}>
+            <IconButton edge="start" className={classes.graphButton} color="inherit" aria-label="menu">
+              <TimelineOutlinedIcon />
+            </IconButton>
+          </Link>
           <Typography variant="h6" className={classes.title}>
             <Link to="/" style={{ textDecoration: 'none', color: '#FFF'  }}>
               Deep Capitalizer
@@ -59,4 +62,3 @@ export default function ButtonAppBar() {
     </div>
   );
 }
-
