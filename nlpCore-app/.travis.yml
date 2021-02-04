@@ -1,0 +1,5 @@
+language: java
+#java:
+#	- "stable"
+#script: mvn clean install 
+#&& mvn exec:java -Dexec.args="../server/testdata outdata.txt 1 5"
