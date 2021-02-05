@@ -1,7 +1,6 @@
 language: java
 sudo: false
-script:
-	echo "hello world"
+script: echo "hello world"
 #	- mvn clean verify
 #	test
 #	- mvn clean install 
