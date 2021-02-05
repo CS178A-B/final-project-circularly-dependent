@@ -3,5 +3,6 @@ language: java
 sudo: false
 script:
     - mvn -v
-#    - mvn clean install 
-#    - mvn exec:java -Dexec.args="../server/testdata outdata.txt 1 5"
+    - cd nlpCore-app
+    - mvn clean install
+    - mvn exec:java -Dexec.args="../server/testdata ../server/TestOut.json 10 20"
