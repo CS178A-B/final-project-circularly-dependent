@@ -2,6 +2,6 @@
 language: java
 sudo: false
 script:
-    - mvn clean verify
+    - mvn verify
 #    - mvn clean install 
 #    - mvn exec:java -Dexec.args="../server/testdata outdata.txt 1 5"
