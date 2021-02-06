@@ -1,8 +1,8 @@
 # test this file using http://www.yamllint.com/
-language: java
+language: java nodejs
 sudo: false
 script:
     - mvn -v
-    - cd nlpCore-app
-    - mvn clean install
-    - mvn exec:java -Dexec.args="../server/testdata ../server/TestOut.json 10 20"
+#    - (cd nlpCore-app && mvn clean install && mvn exec:java -Dexec.args="../server/testdata ../server/TestOut.json 10 20")
+    - cd nlpCore-app && mvn -Dtest=testCoreNLP test #Tests all
+#    - mvn -Dtest=testCoreNLP # Test 1 function
