@@ -9,17 +9,26 @@ import edu.stanford.nlp.pipeline.*;
 import edu.stanford.nlp.util.CoreMap;
 
 //other
-import java.io.*;
+//import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
+import java.util.function.Consumer;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 //import java.util.Scanner;
+import java.io.*;
+import java.util.*;
+import org.json.simple.*;
+import org.json.simple.parser.*;
 
 
 public class CoreNlpExample {
-
-
     //This function will return a json object with 2 pieces of data when we pass in the purchase description
     //1: PRODUCT_NAME: this is the first pattern of consecutive nouns in the purchase description
     //2: DESCRIPTOR: this is all the adjectives that exist within the purchase description
@@ -145,22 +154,21 @@ public class CoreNlpExample {
 
         String in_file = null;
         String out_file = null;
-        
+
         //Partitioning functionality: these 2 variables are for if we want to process a section of data from the csv
-        int startEntry = 1;//this is not the exact cell in the csv. In the csv the exact cell is off by +1
-        //ie: to specify cell 21 in the csv, type in 20.
+        int startEntry = 4;//this is not the exact cell in the csv. In the csv the exact cell is off by +1
+        //ie: to specify row 21 in the csv, type in 20; 1 through size n
+        //ie: since row 1 is used for titles in the csv to specify row 2 (the first entry) type in 1.
+        //putting 0 will be out of bounds
 
         //This is the max entry. If args[2] is not specified then this value will be the default value.
         //If we want to attempt the entire file make this number very high, like 1000000
         //There is control in place for overextending this value so don't worry
         int endEntry = 10;//excluded entry
         //get last argument if it is specified
-        
-//        in_file = "testdata";
-//        out_file = "outdata.txt";
-        // using || double pipe as delimiter. This is the delimiter of the input data
-        String delimiter = "\\|\\|";
 
+        in_file = "jsonsmalll.json";
+        out_file = "TESTOUT.txt";
 
         //to stop at entry 33, type in 34, this will be 34 in the csv so this will be the exact cell in the csv
         //Check args[] make sure we have 2 or 4.
@@ -195,94 +203,76 @@ public class CoreNlpExample {
             fe.printStackTrace();
         }
 
-        Scanner read = null;
-        try{
-            read = new Scanner (new File(in_file));
-        } catch (FileNotFoundException fe){
-           fe.printStackTrace();
-        }
+        //INPUT JSON
+        String purchaseOrderData[] =
+                {"\uFEFF\"\"PO_NO\"\"","\"ISSUE_DATE\"","\"REQUESTOR_DEPARTMENT\"", "\"DEPARTMENT_DESC\"","\"VENDOR_CODE\"",
+                        "\"VENDOR_NAME\"","\"ITEM_DESC\"","\"PO_QUANTITY\"","\"UNIT_PRICE\"","\"ITEM_TOTAL_AMOUNT\""};
 
-        //specified delimiter above
-        read.useDelimiter(delimiter);
-
-        //init all the nested data
-        JSONObject product;
-        JSONObject root = new JSONObject();
-        String text = "";
-        String description = "";
-
-        //10 wide skip the titles on the csv
-        for(int i = 0; i < 10; i++){
-            text = read.next();
-            //System.out.println(text);//DEBUG
-        }
+        //OUTPUT JSON
         String purchaseData[] =
                 {"PO_NO","ISSUE_DATE","REQUESTOR_DEPARTMENT", "DEPARTMENT_DESC","VENDOR_CODE",
                         "VENDOR_NAME","ITEM_DESC","PO_QUANTITY","UNIT_PRICE","ITEM_TOTAL_AMOUNT"};
 
-        JSONArray purchases = new JSONArray();
-        JSONObject purchase;
-        int entryCount = 1;//track entries in the data
-        while(entryCount < startEntry){
-            for(int j = 0; j < 10; j++){
-                if(read.hasNext()){
-                    text = read.next();
-                }
-            }
-            entryCount++;
-        }
+        JSONObject root = new JSONObject();
+        int entryCount = startEntry;//track entries in the data
 
-        while(read.hasNext() && (entryCount <= endEntry)){
-            purchase = new JSONObject();
 
-            purchase.put("ENTRY_ID", entryCount);
-            for(int i = 0; i < 10; i++){
-                purchase.put(purchaseData[i], 0);
-                if(read.hasNext()){
-                    text = read.next();
-                    //System.out.println(text);//DEBUG
-                    if(i == 0){
-                        text = text.replace("\n","").replace("\r", "");
+        try (FileReader reader = new FileReader(in_file)) {
+
+            //Variables used to Read JSON file
+            JSONParser jsonParser = new JSONParser();
+            Object obj = jsonParser.parse(reader);
+            JSONArray purchaseList = (JSONArray) obj;
+            JSONObject traverse;//traverses through the JSON
+
+
+            //Variables used to Write JSON file
+            JSONArray purchases = new JSONArray();
+            JSONObject product = null;
+            JSONObject purchase = null;
+            String cell;
+
+
+            //iterate through the rows
+            for(int i = startEntry - 1; i < purchaseList.size() && (entryCount <= endEntry); i++){
+                traverse = (JSONObject) purchaseList.get(i);
+                purchase = new JSONObject();
+
+                purchase.put("ENTRY_ID", entryCount);
+                //iterate through each column
+                for(int j = 0; j < traverse.size(); j++){
+                    //purchase.put(purchaseData[i], 0);     //Wont need this anymore, since cell should always have something?
+                    cell = traverse.get(purchaseOrderData[j]).toString();
+                    purchase.put(purchaseData[j], cell);
+
+                    if(j == 6){
+                        try{
+                            product = getGrouping(cell);
+                            purchase.put("DESCRIPTOR", product.get("DESCRIPTOR"));
+                            purchase.put("PRODUCT_NAME", product.get("PRODUCT_NAME"));
+
+                        }catch (NullPointerException ne){
+                            System.out.println("***** ERROR AT ENTRY: " + entryCount);
+                            break;
+                        }
                     }
-                    purchase.put(purchaseData[i], text);
-
-                    //description
-                    if(i == 6){
-                        //System.out.println(text);//DEBUG
-                        description = text;
-                    }
                 }
+                //System.out.println(purchase);
+                purchases.add(purchase);
+                System.out.println("Entry: "+ entryCount);
+                entryCount++;
             }
-            try{
-                product = getGrouping(description);
-                purchase.put("DESCRIPTOR", product.get("DESCRIPTOR"));
-                purchase.put("PRODUCT_NAME", product.get("PRODUCT_NAME"));
-            }catch (NullPointerException ne){
-                System.out.println("***** ERROR AT ENTRY: " + entryCount);
-                break;
-            }
+//            System.out.println(purchases);
+            root.put("PURCHASES", purchases);
+            writer.println(root.toJSONString());
+            writer.close();
 
-
-            //option 1 (nested)
-            //purchase.put("PRODUCT", product);
-
-            //option 2 (not nested)
-//            purchase.put("DESCRIPTOR", product.get("DESCRIPTOR"));
-//            purchase.put("PRODUCT_NAME", product.get("PRODUCT_NAME"));
-
-
-            purchases.add(purchase);
-            //System.out.println(product.get("Product"));//DEBUG
-            //System.out.println(product.get("Descriptor"));//DEBUG
-            //System.out.println(product);//DEBUG
-            //writer.println(product);//if you want to write each entry separately. WARNING: This will not be in json format
-            System.out.println("Entry: "+ entryCount);
-            entryCount++;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        root.put("PURCHASES", purchases);
-        writer.println(root.toJSONString());
-
-        writer.close();
     }
 }
-
