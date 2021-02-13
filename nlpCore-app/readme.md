@@ -22,7 +22,7 @@ This is Deep capitalizer back end code base. Utilizing Stanford's CoreNLP Librar
 
 [Stanford Core NLP](https://stanfordnlp.github.io/CoreNLP/)
 
-### How to Run
+## How to Run
 To run make sure the dependencies are installed. Based on Ubuntu versions the Stanford CoreNLP version may need to be updated. The pom.xml is where this will be done
 * Ubuntu 20.04 (default) - pom.xml 
 ```
@@ -45,4 +45,8 @@ This file should execute (so you don't need to execute this)
 mvn clean install
 mvn exec:java -Dexec.args="../server/testdata outdata.txt 1 5"
 ```
+
 You may need to edit the arguments in the ```process_update.sh``` file depending on what entries cells you would like to process in the json file. More argument details are in the ```process_update.sh``` and ```CoreNlpExample.java```.
+
+## Errors and Crashes
+Strictly for this data processor, if a crash does occur the error log should state the last cell that was processed. Afterwards run the program either trying the cell that the program crashed on or by skipping that cell. If there is a crash due to poor data processing the processor should successfully write the json up to that cell.
