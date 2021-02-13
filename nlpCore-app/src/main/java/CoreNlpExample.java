@@ -130,12 +130,13 @@ public class CoreNlpExample {
 
 
     //JSON Generator and NLP Processor
-    //Turns a csv into a json and adds the necessary product data to the json output
+    //Processes a json input into a json with additional entities and adds
+    //the necessary product data to the json output
     //To run make sure maven is installed and have the following arguments
     //Input args[0]:
-    //              An input file that has cells delimited by a special delimeter.
-    //              CSV's normally delimit with with a comma, here we are expecting
-    //              a file that delimits with a double pipe ||
+    //              The input file that this program expects must be in json format.
+    //              This json should be pre-processed from a csv from
+    //              Riverside's city purchase data
     //Output args[1]:
     //              Name of a file this program will write to. This file will be
     //              in JSON format.
@@ -156,7 +157,7 @@ public class CoreNlpExample {
         String out_file = null;
 
         //Partitioning functionality: these 2 variables are for if we want to process a section of data from the csv
-        int startEntry = 4;//this is not the exact cell in the csv. In the csv the exact cell is off by +1
+        int startEntry = 1;//this is not the exact cell in the csv. In the csv the exact cell is off by +1
         //ie: to specify row 21 in the csv, type in 20; 1 through size n
         //ie: since row 1 is used for titles in the csv to specify row 2 (the first entry) type in 1.
         //putting 0 will be out of bounds
@@ -164,11 +165,11 @@ public class CoreNlpExample {
         //This is the max entry. If args[2] is not specified then this value will be the default value.
         //If we want to attempt the entire file make this number very high, like 1000000
         //There is control in place for overextending this value so don't worry
-        int endEntry = 10;//excluded entry
+        int endEntry = 1;//excluded entry
         //get last argument if it is specified
 
-        in_file = "jsonsmalll.json";
-        out_file = "TESTOUT.txt";
+//        in_file = "jsonsmalll.json";
+//        out_file = "TESTOUT.txt";
 
         //to stop at entry 33, type in 34, this will be 34 in the csv so this will be the exact cell in the csv
         //Check args[] make sure we have 2 or 4.
@@ -183,10 +184,11 @@ public class CoreNlpExample {
                 out_file = args[1];
                 try{
                     startEntry = Integer.parseInt(args[2]);
+                    if(startEntry < 1) throw new NumberFormatException("Argument [2] starts from Entry 1 or more");
                     endEntry = Integer.parseInt(args[3]);
                 }
                 catch(NumberFormatException nume){
-                    System.out.println("Arguments [2] and [3] are not in number format");
+                    System.out.println("Error with Arguments [2] and [3]");
                     nume.printStackTrace();
                 }
                 break;
@@ -215,7 +217,6 @@ public class CoreNlpExample {
 
         JSONObject root = new JSONObject();
         int entryCount = startEntry;//track entries in the data
-
 
         try (FileReader reader = new FileReader(in_file)) {
 
@@ -257,7 +258,7 @@ public class CoreNlpExample {
                         }
                     }
                 }
-                //System.out.println(purchase);
+//                System.out.println(purchase);
                 purchases.add(purchase);
                 System.out.println("Entry: "+ entryCount);
                 entryCount++;
