@@ -1,7 +1,7 @@
 #This should update the OUT_FILE in json format with the new data
 
 #Input file
-DATA_FILE="../server/testdata"
+DATA_FILE="../server/jsonsmalll.json"
 
 #Output file
 OUT_FILE="../server/outdata.json"
