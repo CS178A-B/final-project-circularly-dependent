@@ -12,6 +12,8 @@ const mysql = require('mysql');
 
 // Initializing the express framework and save it to another constant 'app'
 const app = express();
+const fileupload = require('express-fileupload')
+app.use(fileupload());
 
 const filePath = path.join(__dirname, 'CoreNLPData.json');
 const jsonParser = bodyParser.json();
@@ -189,6 +191,18 @@ app.get('/productName', (req, res) => {
     if (err) throw err;
     console.log(result);
     res.status(200).json(result)
+  });
+})
+
+app.post('/serverUpload', (req, res, next) => {
+  console.log(req.files);
+  const file = req.files.file;
+  file.mv("./uploads/" + file.name, function(err, result) {
+    if (err) throw err;
+    res.send({
+      success: true,
+      message: "File uploaded!"
+    });
   });
 })
 
