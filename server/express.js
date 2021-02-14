@@ -7,7 +7,7 @@ const cors = require('cors');
 const csv = require('csv-parser');
 const fs = require('fs');
 var bodyParser = require('body-parser');
-// const filePath = path.join(__dirname, 'RS-20170701-20190630.csv');
+const rawfile = path.join(__dirname, 'RS-20170701-20190630.csv');
 const mysql = require('mysql');
 
 // Initializing the express framework and save it to another constant 'app'
@@ -16,8 +16,6 @@ const fileupload = require('express-fileupload')
 app.use(fileupload());
 
 const filePath = path.join(__dirname, 'CoreNLPData.json');
-const jsonParser = bodyParser.json();
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 // Save the port of our sever into a constant 'PORT'
 // process.env.PORT checks our environment variables to see if we already have a PORT defined.
@@ -243,25 +241,52 @@ function cleanData(data) {
   thisData.PO_QUANTITY = Number(thisData.PO_QUANTITY)
 }
 
-  // for CSV - version outcome
-  // app.get('/rawData', (req, res) => {
-  //   const results = [];
+
+let results = [];
+app.get('/upload', (req, res) => {
   
-  //   console.log('File read')
-  //   delayedRes = async () => { 
-  //     fs.createReadStream(filePath)
-  //       .on('error', () => {
-  //           console.log("errorr")
-  //       })
-  //       .pipe(csv())
-  //       .on('data', (row) => {
-  //           results.push(row)
-  //       })
-  //       .on('end', () => {
-  //         console.log(results[0]);
-  //       })
-  //   }
-  //   res.status(200).json(results)
-  //   delayedRes()  
-  // });
+  console.log('File read')
+  delayedRes = async () => { 
+    fs.createReadStream(rawfile)
+      .on('error', () => {
+          console.log("errorr")
+      })
+      .pipe(csv())
+      .on('data', (row) => {
+          results.push(row)
+      })
+      .on('end', () => {
+        // console.log(results)
+        // res.status(200).json(results)
+        fs.writeFile('./server/jsonsmalll.json',  JSON.stringify(results.slice(0, 10)), function (err) {
+          if (err) throw err;
+          console.log(results)
+          console.log('Saved!');
+        });
+      })
+      
+
+    // const source = fs.createReadStream(rawfile, "utf8")
+    // const destination = fs.createWriteStream("bigfile2.json")
+
+    // source.on('data', function (chunk) {
+    // //write into the file  one piece at a time
+    //   destination.write(chunk)
+    // });
+    // source.on('end', function () {
+    //   //after that we read the all file piece  by piece we close the stram 
+    //   destination.end()
+    // });
+
+
+    // destination.on("finish", () => {
+    // //the function destination.end() will rise the finish event 
+    //   console.log("done write into bigfile2.txt")
+    // })
+  }
+
+  delayedRes()  
+});
+
+
   
