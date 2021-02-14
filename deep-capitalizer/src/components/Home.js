@@ -12,12 +12,17 @@ const Home = () => {
       height: "100vh"
     }}>
       <br />
-      <Link to='/visualization' style={{ textDecoration: 'none'}}>
+      <Link to='/dashboard' style={{ textDecoration: 'none'}}>
         <Button color="primary" variant='contained' style={{ margin: 50}}>
+          Kibana Dashboard
+        </Button>
+      </Link>
+      <Link to='/visualization' style={{ textDecoration: 'none'}}>
+        <Button color="default" variant='contained' style={{ margin: 50}}>
           Price per Unit
         </Button>
       </Link>
-      <Link to='/server-test' style={{ textDecoration: 'none'}}>
+      <Link to='/sum-chart' style={{ textDecoration: 'none'}}>
         <Button color="default" variant='contained' style={{ margin: 50}}>
           Annual Spending
         </Button>

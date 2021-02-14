@@ -44,7 +44,7 @@ export default function ButtonAppBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Link to="/visualization" style={{ textDecoration: 'none', color: '#FFF'  }}>
+          <Link to="/dashboard" style={{ textDecoration: 'none', color: '#FFF'  }}>
             <IconButton edge="start" className={classes.graphButton} color="inherit" aria-label="menu">
               <TimelineOutlinedIcon />
             </IconButton>
