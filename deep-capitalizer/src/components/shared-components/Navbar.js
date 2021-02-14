@@ -11,6 +11,7 @@ import { createBrowserHistory } from 'history';
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../globals'
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 
 export const history = createBrowserHistory();
 
@@ -48,6 +49,11 @@ export default function ButtonAppBar() {
             <IconButton edge="start" className={classes.graphButton} color="inherit" aria-label="menu">
               <TimelineOutlinedIcon />
             </IconButton>
+          </Link>
+          <Link to="/upload" style={{ textDecoration: 'none', color: '#FFF'  }}>
+            <InsertDriveFileIcon edge="start" className={classes.graphButton} color="inherit" aria-label="menu">
+              <TimelineOutlinedIcon />
+            </InsertDriveFileIcon>
           </Link>
           <Typography variant="h6" className={classes.title}>
             <Link to="/" style={{ textDecoration: 'none', color: '#FFF'  }}>
