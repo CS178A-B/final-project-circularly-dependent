@@ -1,5 +1,4 @@
 /* entry point for our application */
-
 // Bringing in the express framework and sotre it in a constant 'express'
 const express = require('express');
 const path = require('path');
@@ -9,10 +8,12 @@ const fs = require('fs');
 var bodyParser = require('body-parser');
 const rawfile = path.join(__dirname, 'RS-20170701-20190630.csv');
 const mysql = require('mysql');
-
+const cleanData = require('./CleanData')
 // Initializing the express framework and save it to another constant 'app'
 const app = express();
 const fileupload = require('express-fileupload')
+
+
 app.use(fileupload());
 
 const filePath = path.join(__dirname, 'CoreNLPData.json');
@@ -205,46 +206,45 @@ app.post('/serverUpload', (req, res, next) => {
 })
 
 
-function cleanData(data) {
-  let thisData = data
-  if (thisData.DESCRIPTOR == 0)
-    thisData.DESCRIPTOR = ""
-  thisData.REQUESTOR_DEPARTMENT = Number(thisData.REQUESTOR_DEPARTMENT)
-  thisData.ITEM_DESC = (thisData.ITEM_DESC).replace("\"\\\"", "") 
-  thisData.ITEM_DESC = (thisData.ITEM_DESC).replace("\"", "") 
-  thisData.ITEM_DESC = thisData.ITEM_DESC.replace(/  |\r\n|\n|\r/gm, '');
+// function cleanData(data) {
+//   let thisData = data
+//   if (thisData.DESCRIPTOR == 0)
+//     thisData.DESCRIPTOR = ""
+//   thisData.REQUESTOR_DEPARTMENT = Number(thisData.REQUESTOR_DEPARTMENT)
+//   thisData.ITEM_DESC = (thisData.ITEM_DESC).replace("\"\\\"", "") 
+//   thisData.ITEM_DESC = (thisData.ITEM_DESC).replace("\"", "") 
+//   thisData.ITEM_DESC = thisData.ITEM_DESC.replace(/  |\r\n|\n|\r/gm, '');
   
-  thisData.UNIT_PRICE = (thisData.UNIT_PRICE).replace(/\D/g,'');
-  thisData.UNIT_PRICE = Number(thisData.UNIT_PRICE)
+//   thisData.UNIT_PRICE = (thisData.UNIT_PRICE).replace(/\D/g,'');
+//   thisData.UNIT_PRICE = Number(thisData.UNIT_PRICE)
 
-  thisData.ITEM_TOTAL_AMOUNT = (thisData.ITEM_TOTAL_AMOUNT).replace(/\D/g,'');
-  thisData.ITEM_TOTAL_AMOUNT = Number(thisData.ITEM_TOTAL_AMOUNT)
-  if ((thisData.PO_NO).includes("\n")) {
-    thisData.PO_NO = (thisData.PO_NO).replace("\n", "")
-  }
-  thisData.PO_NO = (thisData.PO_NO).replace(/\D/g,'');
-  thisData.PO_NO = Number(thisData.PO_NO)
+//   thisData.ITEM_TOTAL_AMOUNT = (thisData.ITEM_TOTAL_AMOUNT).replace(/\D/g,'');
+//   thisData.ITEM_TOTAL_AMOUNT = Number(thisData.ITEM_TOTAL_AMOUNT)
+//   if ((thisData.PO_NO).includes("\n")) {
+//     thisData.PO_NO = (thisData.PO_NO).replace("\n", "")
+//   }
+//   thisData.PO_NO = (thisData.PO_NO).replace(/\D/g,'');
+//   thisData.PO_NO = Number(thisData.PO_NO)
 
-  thisData.ISSUE_DATE = (thisData.ISSUE_DATE).split(" ")[0]
-  thisData.ISSUE_DATE = (thisData.ISSUE_DATE).replace("\\", "")
-  thisData.ISSUE_DATE = (thisData.ISSUE_DATE).replace("/", "-")
-  let year = thisData.ISSUE_DATE.substr(thisData.ISSUE_DATE.length - 4)
-  thisData.ISSUE_DATE = (thisData.ISSUE_DATE).slice(0, -5)
-  if (thisData.ISSUE_DATE.charAt(2) != "-") thisData.ISSUE_DATE = "0" + thisData.ISSUE_DATE
-  if (thisData.ISSUE_DATE.charAt(4) == "-") thisData.ISSUE_DATE = thisData.ISSUE_DATE.slice(0, 2) + "0" + thisData.ISSUE_DATE.slice(2, -1)
-  thisData.ISSUE_DATE = year + "-" + thisData.ISSUE_DATE
+//   thisData.ISSUE_DATE = (thisData.ISSUE_DATE).split(" ")[0]
+//   thisData.ISSUE_DATE = (thisData.ISSUE_DATE).replace("\\", "")
+//   thisData.ISSUE_DATE = (thisData.ISSUE_DATE).replace("/", "-")
+//   let year = thisData.ISSUE_DATE.substr(thisData.ISSUE_DATE.length - 4)
+//   thisData.ISSUE_DATE = (thisData.ISSUE_DATE).slice(0, -5)
+//   if (thisData.ISSUE_DATE.charAt(2) != "-") thisData.ISSUE_DATE = "0" + thisData.ISSUE_DATE
+//   if (thisData.ISSUE_DATE.charAt(4) == "-") thisData.ISSUE_DATE = thisData.ISSUE_DATE.slice(0, 2) + "0" + thisData.ISSUE_DATE.slice(2, -1)
+//   thisData.ISSUE_DATE = year + "-" + thisData.ISSUE_DATE
 
-  thisData.VENDOR_CODE = (thisData.VENDOR_CODE).replace("V", "")
-  thisData.VENDOR_CODE = Number(thisData.VENDOR_CODE)
+//   thisData.VENDOR_CODE = (thisData.VENDOR_CODE).replace("V", "")
+//   thisData.VENDOR_CODE = Number(thisData.VENDOR_CODE)
 
-  thisData.PO_QUANTITY = (thisData.PO_QUANTITY).replace(/\D/g,'');
-  thisData.PO_QUANTITY = Number(thisData.PO_QUANTITY)
-}
+//   thisData.PO_QUANTITY = (thisData.PO_QUANTITY).replace(/\D/g,'');
+//   thisData.PO_QUANTITY = Number(thisData.PO_QUANTITY)
+// }
 
 
 let results = [];
 app.get('/upload', (req, res) => {
-  
   console.log('File read')
   delayedRes = async () => { 
     fs.createReadStream(rawfile)
