@@ -1,4 +1,4 @@
-const CleanData = (data) => {
+function CleanData(data) {
   let thisData = data
   if (thisData.DESCRIPTOR == 0)
     thisData.DESCRIPTOR = ""
@@ -32,6 +32,8 @@ const CleanData = (data) => {
 
   thisData.PO_QUANTITY = (thisData.PO_QUANTITY).replace(/\D/g,'');
   thisData.PO_QUANTITY = Number(thisData.PO_QUANTITY)
+
+  return thisData;
 }
 
 const pnHasThis = (data) => {
@@ -40,3 +42,5 @@ const pnHasThis = (data) => {
     data = data.replace(reg, "")
   }
 }
+
+module.exports = { CleanData, pnHasThis };
