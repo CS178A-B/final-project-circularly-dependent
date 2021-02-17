@@ -1,5 +1,4 @@
 /* entry point for our application */
-
 // Bringing in the express framework and sotre it in a constant 'express'
 const express = require('express');
 const path = require('path');
@@ -7,15 +6,17 @@ const cors = require('cors');
 const csv = require('csv-parser');
 const fs = require('fs');
 var bodyParser = require('body-parser');
-// const filePath = path.join(__dirname, 'RS-20170701-20190630.csv');
+const rawfile = path.join(__dirname, 'RS-20170701-20190630.csv');
 const mysql = require('mysql');
-
+const cleanData = require('./CleanData');
 // Initializing the express framework and save it to another constant 'app'
 const app = express();
+const fileupload = require('express-fileupload')
+
+
+app.use(fileupload());
 
 const filePath = path.join(__dirname, 'CoreNLPData.json');
-const jsonParser = bodyParser.json();
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 // Save the port of our sever into a constant 'PORT'
 // process.env.PORT checks our environment variables to see if we already have a PORT defined.
@@ -89,9 +90,10 @@ con.connect(function(err) {
     data = ret.PURCHASES
     
     let values = []
+    let cleanedData
     for (var i=0; i<data.length; i++) {
-      cleanData(data[i])
-      values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE, data[i].PO_QUANTITY])
+      cleanedData = cleanData.CleanData(data[i])
+      values.push([cleanedData.VENDOR_NAME, cleanedData.DESCRIPTOR, cleanedData.REQUESTOR_DEPARTMENT, cleanedData.ITEM_DESC, cleanedData.UNIT_PRICE, cleanedData.DEPARTMENT_DESC, cleanedData.ITEM_TOTAL_AMOUNT, cleanedData.PRODUCT_NAME, cleanedData.PO_NO, cleanedData.ENTRY_ID, cleanedData.ISSUE_DATE, cleanedData.VENDOR_CODE, cleanedData.PO_QUANTITY])
       // values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE/*, data[i].PO_QUANTITY*/])
     }
     let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quantity) VALUES ?'
@@ -192,62 +194,61 @@ app.get('/productName', (req, res) => {
   });
 })
 
+app.post('/serverUpload', (req, res, next) => {
+  console.log(req.files);
+  const file = req.files.file;
+  file.mv("./uploads/" + file.name, function(err, result) {
+    if (err) throw err;
+    res.send({
+      success: true,
+      message: "File uploaded!"
+    });
+  });
+})
 
-function cleanData(data) {
-  let thisData = data
-  if (thisData.DESCRIPTOR == 0)
-    thisData.DESCRIPTOR = ""
-  thisData.REQUESTOR_DEPARTMENT = Number(thisData.REQUESTOR_DEPARTMENT)
-  thisData.ITEM_DESC = (thisData.ITEM_DESC).replace("\"\\\"", "") 
-  thisData.ITEM_DESC = (thisData.ITEM_DESC).replace("\"", "") 
-  thisData.ITEM_DESC = thisData.ITEM_DESC.replace(/  |\r\n|\n|\r/gm, '');
-  
-  thisData.UNIT_PRICE = (thisData.UNIT_PRICE).replace(/\D/g,'');
-  thisData.UNIT_PRICE = Number(thisData.UNIT_PRICE)
+let results = [];
+app.get('/upload', (req, res) => {
+  console.log('File read')
+  delayedRes = async () => { 
+    fs.createReadStream(rawfile)
+      .on('error', () => {
+          console.log("errorr")
+      })
+      .pipe(csv())
+      .on('data', (row) => {
+          results.push(row)
+      })
+      .on('end', () => {
+        // console.log(results)
+        // res.status(200).json(results)
+        fs.writeFile('./server/jsonsmalll.json',  JSON.stringify(results.slice(0, 10)), function (err) {
+          if (err) throw err;
+          console.log(results)
+          console.log('Saved!');
+        });
+      })
+      
+    // const source = fs.createReadStream(rawfile, "utf8")
+    // const destination = fs.createWriteStream("bigfile2.json")
 
-  thisData.ITEM_TOTAL_AMOUNT = (thisData.ITEM_TOTAL_AMOUNT).replace(/\D/g,'');
-  thisData.ITEM_TOTAL_AMOUNT = Number(thisData.ITEM_TOTAL_AMOUNT)
-  if ((thisData.PO_NO).includes("\n")) {
-    thisData.PO_NO = (thisData.PO_NO).replace("\n", "")
+    // source.on('data', function (chunk) {
+    // //write into the file  one piece at a time
+    //   destination.write(chunk)
+    // });
+    // source.on('end', function () {
+    //   //after that we read the all file piece  by piece we close the stram 
+    //   destination.end()
+    // });
+
+
+    // destination.on("finish", () => {
+    // //the function destination.end() will rise the finish event 
+    //   console.log("done write into bigfile2.txt")
+    // })
   }
-  thisData.PO_NO = (thisData.PO_NO).replace(/\D/g,'');
-  thisData.PO_NO = Number(thisData.PO_NO)
 
-  thisData.ISSUE_DATE = (thisData.ISSUE_DATE).split(" ")[0]
-  thisData.ISSUE_DATE = (thisData.ISSUE_DATE).replace("\\", "")
-  thisData.ISSUE_DATE = (thisData.ISSUE_DATE).replace("/", "-")
-  let year = thisData.ISSUE_DATE.substr(thisData.ISSUE_DATE.length - 4)
-  thisData.ISSUE_DATE = (thisData.ISSUE_DATE).slice(0, -5)
-  if (thisData.ISSUE_DATE.charAt(2) != "-") thisData.ISSUE_DATE = "0" + thisData.ISSUE_DATE
-  if (thisData.ISSUE_DATE.charAt(4) == "-") thisData.ISSUE_DATE = thisData.ISSUE_DATE.slice(0, 2) + "0" + thisData.ISSUE_DATE.slice(2, -1)
-  thisData.ISSUE_DATE = year + "-" + thisData.ISSUE_DATE
+  delayedRes()  
+});
 
-  thisData.VENDOR_CODE = (thisData.VENDOR_CODE).replace("V", "")
-  thisData.VENDOR_CODE = Number(thisData.VENDOR_CODE)
 
-  thisData.PO_QUANTITY = (thisData.PO_QUANTITY).replace(/\D/g,'');
-  thisData.PO_QUANTITY = Number(thisData.PO_QUANTITY)
-}
-
-  // for CSV - version outcome
-  // app.get('/rawData', (req, res) => {
-  //   const results = [];
-  
-  //   console.log('File read')
-  //   delayedRes = async () => { 
-  //     fs.createReadStream(filePath)
-  //       .on('error', () => {
-  //           console.log("errorr")
-  //       })
-  //       .pipe(csv())
-  //       .on('data', (row) => {
-  //           results.push(row)
-  //       })
-  //       .on('end', () => {
-  //         console.log(results[0]);
-  //       })
-  //   }
-  //   res.status(200).json(results)
-  //   delayedRes()  
-  // });
   
