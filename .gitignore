@@ -5,3 +5,4 @@ server/log-file.txt
 nlpCore-app/target/
 nlpCore-app/outdata.txt
 uploads/
+server/ToNLP
