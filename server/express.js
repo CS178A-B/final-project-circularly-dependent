@@ -6,7 +6,6 @@ const cors = require('cors');
 const csv = require('csv-parser');
 const fs = require('fs');
 var bodyParser = require('body-parser');
-const rawfile = path.join(__dirname, 'RS-20170701-20190630.csv');
 const mysql = require('mysql');
 const cleanData = require('./CleanData');
 // Initializing the express framework and save it to another constant 'app'
@@ -194,23 +193,17 @@ app.get('/productName', (req, res) => {
   });
 })
 
+let results = [];
 app.post('/serverUpload', (req, res, next) => {
-  console.log(req.files);
   const file = req.files.file;
+  let fp;
+
   file.mv("./uploads/" + file.name, function(err, result) {
     if (err) throw err;
-    res.send({
-      success: true,
-      message: "File uploaded!"
-    });
-  });
-})
-
-let results = [];
-app.get('/upload', (req, res) => {
-  console.log('File read')
-  delayedRes = async () => { 
-    fs.createReadStream(rawfile)
+    fp = path.join(__dirname + '/../uploads/', file.name)
+    let [fileName, fileExtension] = (file.name).split('.')
+    delayedRes = async () => { 
+      fs.createReadStream(fp)
       .on('error', () => {
           console.log("errorr")
       })
@@ -219,36 +212,18 @@ app.get('/upload', (req, res) => {
           results.push(row)
       })
       .on('end', () => {
-        // console.log(results)
-        // res.status(200).json(results)
-        fs.writeFile('./server/jsonsmalll.json',  JSON.stringify(results.slice(0, 10)), function (err) {
+        fileName = './server/ToNLP/' + fileName + '.json'
+        fs.writeFile(fileName,  JSON.stringify(results), function (err) {
           if (err) throw err;
-          console.log(results)
           console.log('Saved!');
         });
       })
-      
-    // const source = fs.createReadStream(rawfile, "utf8")
-    // const destination = fs.createWriteStream("bigfile2.json")
+    }
+    delayedRes()
 
-    // source.on('data', function (chunk) {
-    // //write into the file  one piece at a time
-    //   destination.write(chunk)
-    // });
-    // source.on('end', function () {
-    //   //after that we read the all file piece  by piece we close the stram 
-    //   destination.end()
-    // });
-
-
-    // destination.on("finish", () => {
-    // //the function destination.end() will rise the finish event 
-    //   console.log("done write into bigfile2.txt")
-    // })
-  }
-
-  delayedRes()  
-});
-
-
-  
+    res.send({
+      success: true,
+      message: 'file Uploaded'
+    });
+  });
+})
