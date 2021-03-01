@@ -1,7 +1,7 @@
 #This should update the OUT_FILE in json format with the new data
 
 #Input file
-DATA_FILE="../server/jsonsmalll.json"
+DATA_FILE="../server/ToNLP/RS-20170701-20190630.json"
 
 #Output file
 OUT_FILE="../server/outdata.json"
@@ -31,6 +31,7 @@ mvn clean install
 # Adding arguments
 #mvn exec:java -Dexec.args="<Input file> <Output file> <start entry cell> <Last entry cell>"
 mvn exec:java -Dexec.args="${DATA_FILE} ${OUT_FILE} ${START_ENTRY} ${END_ENTRY}"
+#mvn exec:java -Dexec.args="../server/ToNLP/RS-20170701-20190630.json ../server/outdata.json 1 10"
 
 #For example
 #Both should work
