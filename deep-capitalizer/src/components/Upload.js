@@ -14,7 +14,7 @@ const Upload = () => {
       method: 'POST',
       body: formData
     }).then(res => res.json())
-    alert(JSON.stringify(res))
+    alert(JSON.stringify(res.message))
   }
 
   const useStyles = makeStyles(() => ({
@@ -44,8 +44,8 @@ const Upload = () => {
       boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.19), 0 6px 20px 0 rgba(0, 0, 0, 0.0)'
     }
   }));
-  const classes = useStyles();
 
+  const classes = useStyles();
 
   return (
     <div>
