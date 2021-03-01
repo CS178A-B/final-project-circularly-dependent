@@ -8,10 +8,8 @@ const fs = require('fs');
 var bodyParser = require('body-parser');
 const mysql = require('mysql');
 const cleanData = require('./CleanData');
-// Initializing the express framework and save it to another constant 'app'
 const app = express();
 const fileupload = require('express-fileupload')
-
 
 app.use(fileupload());
 
@@ -21,42 +19,35 @@ const filePath = path.join(__dirname, 'CoreNLPData.json');
 // process.env.PORT checks our environment variables to see if we already have a PORT defined.
 // if not, then we use PORT 4000
 const PORT = process.env.PORT || 4000;
+let city; 
 
 // Delay in mili-seconds
 const timeout = delay => {
   return new Promise(res => setTimeout(res, delay));
 }
 
-// sql works
 const con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'CS178!CD!dc',
-  // database: "mock"
 });
 
 con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
   
-  con.query("DROP DATABASE IF EXISTS mock", function(err, result){
+  con.query("CREATE DATABASE IF NOT EXISTS spendingData", function(err, result){
     if(err) throw err;
-    console.log("mock deleted")
+    console.log("spendingData created")
   })
   
-  con.query("CREATE DATABASE mock", function(err, result){
+  con.query("USE spendingData", function(err, result){
     if(err) throw err;
-    console.log("mock created")
+    console.log("spendingData used")
   })
   
-  con.query("USE mock", function(err, result){
-    if(err) throw err;
-    console.log("mock used")
-  })
-  
-  var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date date, vendor_code INT, po_quantity INT)";
-  // var sql = "CREATE TABLE items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date VARCHAR(255), vendor_code INT)";
-  const userPassTable = "CREATE TABLE users (username VARCHAR(255), password VARCHAR(255))"
+  var sql = "CREATE TABLE IF NOT EXISTS items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date date, vendor_code INT, po_quantity INT)";
+  const userPassTable = "CREATE TABLE IF NOT EXISTS users (username VARCHAR(255), password VARCHAR(255), city VARCHAR(255))"
 
   con.query(sql, function (err, result) {
     if (err) throw err;
@@ -93,11 +84,10 @@ con.connect(function(err) {
     for (var i=0; i<data.length; i++) {
       cleanedData = cleanData.CleanData(data[i])
       values.push([cleanedData.VENDOR_NAME, cleanedData.DESCRIPTOR, cleanedData.REQUESTOR_DEPARTMENT, cleanedData.ITEM_DESC, cleanedData.UNIT_PRICE, cleanedData.DEPARTMENT_DESC, cleanedData.ITEM_TOTAL_AMOUNT, cleanedData.PRODUCT_NAME, cleanedData.PO_NO, cleanedData.ENTRY_ID, cleanedData.ISSUE_DATE, cleanedData.VENDOR_CODE, cleanedData.PO_QUANTITY])
-      // values.push([data[i].VENDOR_NAME, data[i].DESCRIPTOR, data[i].REQUESTOR_DEPARTMENT, data[i].ITEM_DESC, data[i].UNIT_PRICE, data[i].DEPARTMENT_DESC, data[i].ITEM_TOTAL_AMOUNT, data[i].PRODUCT_NAME, data[i].PO_NO, data[i].ENTRY_ID, data[i].ISSUE_DATE, data[i].VENDOR_CODE/*, data[i].PO_QUANTITY*/])
     }
-    let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quantity) VALUES ?'
+    let sql = 'INSERT IGNORE INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quantity) VALUES ?'
     // let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code) VALUES ?'
-    const userPass = 'INSERT INTO users VALUES (\'scotty@ucr.edu\', \'thebear\')'
+    const userPass = 'INSERT IGNORE INTO users VALUES (\'scotty@ucr.edu\', \'thebear\', \'riverside\')'
     con.query(sql, [values], function(err,result) {
       if(err) {
         throw err;
@@ -153,10 +143,13 @@ app.post('/signIn', (req, res) => {
   const pass = req.body.password
   console.log(user)
   console.log(pass)
-  const sqlquery = 'SELECT COUNT(username) as cnt FROM users WHERE username = \'' + user + '\' AND password = \'' + pass + '\' LIMIT 0, 1'
+  // const sqlquery = 'SELECT COUNT(username) as cnt FROM users WHERE username = \'' + user + '\' AND password = \'' + pass + '\' LIMIT 0, 1'
+  const sqlquery = 'SELECT city FROM users WHERE username = \'' + user + '\' AND password = \'' + pass + '\''
+
   con.query(sqlquery, function (err, result) {
     if (err) throw err;
-    results = (result[0].cnt)
+    //results = (result[0].cnt)
+    console.log(result)
     res.status(200).json(results)
   });
 })
