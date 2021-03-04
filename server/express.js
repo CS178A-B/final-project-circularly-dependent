@@ -186,10 +186,22 @@ app.get('/productName', (req, res) => {
   });
 })
 
+app.get('/serverUpload', (req,res) => {
+  const fsH = require('fs');
+  const dir = path.join(__dirname + '/../uploads/')
+  let files = fsH.readdirSync(dir);  
+  let uploadList = []
+  for (const file of files) {
+    uploadList.push(file)
+  }
+  console.log(uploadList)
+  res.status(200).json(uploadList)
+})
+
+
 let results = [];
 app.post('/serverUpload', (req, res, next) => {
   const file = req.files.file;
-  let fp;
 
   file.mv("./uploads/" + file.name, function(err, result) {
     if (err) throw err;
