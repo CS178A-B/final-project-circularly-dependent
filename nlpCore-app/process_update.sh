@@ -53,3 +53,12 @@ mvn exec:java -Dexec.args="${DATA_FILE} ${OUT_FILE} ${START_ENTRY} ${END_ENTRY}"
 
 echo "New JSON file: $OUT_FILE"
 
+
+
+#perform POST Request, maybe?
+URL=""
+
+curl -F ${OUT_FILE} ${URL}
+
+
+
