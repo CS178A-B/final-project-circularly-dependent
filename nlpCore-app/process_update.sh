@@ -61,7 +61,7 @@ echo "New JSON file: $OUT_FILE"
 #perform POST Request, maybe?
 URL=""
 
-curl -F ${OUT_FILE} ${URL}
+curl -F data=@${OUT_FILE} ${URL}
 
 
 
