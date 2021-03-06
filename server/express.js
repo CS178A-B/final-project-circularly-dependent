@@ -202,33 +202,46 @@ app.get('/serverUpload', (req,res) => {
 let results = [];
 app.post('/serverUpload', (req, res, next) => {
   const file = req.files.file;
+  let toNLPfile = path.join(__dirname + './ToNLP/newData.json')
+  fp = path.join(__dirname + '/../uploads/', file.name)
+  
+  if (fs.existsSync(fp)) {
+    res.send({
+      success: false,
+      message: 'File Already Exists'
+    });
+  }
+  else {
+    file.mv("./uploads/" + file.name, function(err, result) {
+      if (err) throw err;
+      let [fileName, fileExtension] = (file.name).split('.')
 
-  file.mv("./uploads/" + file.name, function(err, result) {
-    if (err) throw err;
-    fp = path.join(__dirname + '/../uploads/', file.name)
-    let [fileName, fileExtension] = (file.name).split('.')
-    delayedRes = async () => { 
-      fs.createReadStream(fp)
-      .on('error', () => {
-          console.log("errorr")
-      })
-      .pipe(csv())
-      .on('data', (row) => {
-          results.push(row)
-      })
-      .on('end', () => {
-        fileName = './server/ToNLP/' + fileName + '.json'
-        fs.writeFile(fileName,  JSON.stringify(results), function (err) {
-          if (err) throw err;
-          console.log('Saved!');
-        });
-      })
-    }
-    delayedRes()
-
+      delayedRes = async() => { 
+        fs.createReadStream(fp)
+        .on('error', () => {
+            console.log("errorr")
+        })
+        .pipe(csv())
+        .on('data', (row) => {
+            results.push(row)
+        })
+        .on('end', () => {
+          fileName = './server/ToNLP/newData.json'
+          if (fs.existsSync(toNLPfile)) {
+            console.log("UNLINKINGGGG")
+            fs.unlinkSync(toNLPfile)
+          }
+          fs.writeFile(fileName, JSON.stringify(results), function (err) {
+            if (err) throw err;
+            console.log('Saved!');
+          });
+        })
+      }
+      delayedRes()
+    })
     res.send({
       success: true,
-      message: 'file Uploaded'
+      message: 'Successfuly Uploaded'
     });
-  });
+  }
 })
