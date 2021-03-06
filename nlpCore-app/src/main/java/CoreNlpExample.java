@@ -218,6 +218,14 @@ public class CoreNlpExample {
         JSONObject root = new JSONObject();
         int entryCount = startEntry;//track entries in the data
 
+
+        //Variables used to Write JSON file
+        JSONArray purchases = new JSONArray();
+        JSONObject product = null;
+        JSONObject purchase = null;
+        String cell;
+
+
         try (FileReader reader = new FileReader(in_file)) {
 
             //Variables used to Read JSON file
@@ -225,14 +233,6 @@ public class CoreNlpExample {
             Object obj = jsonParser.parse(reader);
             JSONArray purchaseList = (JSONArray) obj;
             JSONObject traverse;//traverses through the JSON
-
-
-            //Variables used to Write JSON file
-            JSONArray purchases = new JSONArray();
-            JSONObject product = null;
-            JSONObject purchase = null;
-            String cell;
-
 
             //iterate through the rows
             for(int i = startEntry - 1; i < purchaseList.size() && (entryCount <= endEntry); i++){
@@ -264,16 +264,21 @@ public class CoreNlpExample {
                 entryCount++;
             }
 //            System.out.println(purchases);
-            root.put("PURCHASES", purchases);
-            writer.println(root.toJSONString());
-            writer.close();
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            System.out.println("***** ERROR AT ENTRY: " + entryCount);
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("***** ERROR AT ENTRY: " + entryCount);
         } catch (ParseException e) {
             e.printStackTrace();
+            System.out.println("***** ERROR AT ENTRY: " + entryCount);
         }
+
+        //since we already test for writer to be in we can simply write to file
+        root.put("PURCHASES", purchases);
+        writer.println(root.toJSONString());
+        writer.close();
+
     }
 }
