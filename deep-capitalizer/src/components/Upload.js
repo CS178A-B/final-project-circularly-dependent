@@ -80,9 +80,6 @@ const Upload = () => {
         <Grid item xl={3}>
           <Cards CardName='File History' Files = {history}/>
         </Grid>
-        <Grid item xl={3}>
-
-        </Grid>     
       </Grid>
     <form onSubmit={handleSubmit(onSubmit)}>
       <input className={classes.label} ref={register} type='file' name='file' text-align='right' />
