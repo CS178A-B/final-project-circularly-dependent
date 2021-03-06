@@ -13,7 +13,7 @@ const fileupload = require('express-fileupload')
 
 app.use(fileupload());
 
-const filePath = path.join(__dirname, '/nlp-to-server/CoreNLPData.json');
+const filePath = path.join(__dirname, 'CoreNLPData.json');
 
 // Save the port of our sever into a constant 'PORT'
 // process.env.PORT checks our environment variables to see if we already have a PORT defined.

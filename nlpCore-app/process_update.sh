@@ -1,13 +1,10 @@
 #This should update the OUT_FILE in json format with the new data
 
 #Input file
-#DATA_FILE="../server/ToNLP/RS-20170701-20190630.json"
-#This should assign DATA_FILE the name of the most recently changed file
-DATA_FILE=$(ls -t ../server/client-to-nlp/*.json | head -1)
-#echo "$DATA_FILE"
+DATA_FILE="../server/ToNLP/RS-20170701-20190630.json"
 
 #Output file
-OUT_FILE="../server/nlp-to-server/outdata.json"
+OUT_FILE="../server/outdata.json"
 #Let me know if time is useful or not
 #CURRENT_TIME=$(date "+%Y.%m.%d-%H.%M.%S")
 #echo "Current Time: $CURRENT_TIME"
@@ -55,13 +52,4 @@ mvn exec:java -Dexec.args="${DATA_FILE} ${OUT_FILE} ${START_ENTRY} ${END_ENTRY}"
 # or you could "try" running the program and it may build it anyway.
 
 echo "New JSON file: $OUT_FILE"
-
-
-
-#perform POST Request, maybe?
-URL=""
-
-curl -F data=@${OUT_FILE} ${URL}
-
-
 
