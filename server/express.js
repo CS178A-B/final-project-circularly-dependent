@@ -38,7 +38,7 @@ con.connect(function(err) {
   
   con.query("CREATE DATABASE IF NOT EXISTS spendingData", function(err, result){
     if(err) throw err;
-    console.log("spendingData created")
+    console.log("spendingData created/exists")
   })
   
   con.query("USE spendingData", function(err, result){
@@ -51,12 +51,12 @@ con.connect(function(err) {
 
   con.query(sql, function (err, result) {
     if (err) throw err;
-    console.log("Table item created");
+    console.log("Table item created/exists");
   });
   
   con.query(userPassTable, function (err, result) {
     if (err) throw err;
-    console.log("Table userPassword created");
+    console.log("Table userPassword created/exists");
   });
 
   async function jsonReader(filePath, cb) {
