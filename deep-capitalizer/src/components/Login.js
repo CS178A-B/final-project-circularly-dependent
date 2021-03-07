@@ -27,6 +27,7 @@ function Copyright() {
     </Typography>
   );
 }
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
