@@ -95,9 +95,16 @@ app.post('/signIn', (req, res) => {
   con.query(sqlquery, function (err, result) {
     if (err) throw err;
     //results = (result[0].cnt)
-    if (result.length == 0) console.log('it is empty')
-
-    res.status(200).json(result)
+    if (result.length !== 0) {
+      console.log(result[0])
+      res.status(200).json({
+        "username" : user,
+        "city" : result[0].city
+      });
+    }
+    else {
+      res.status(409).json({"message" : "User/Password does not Match", "city" : ""})
+    }
   });
 })
 
@@ -146,7 +153,7 @@ app.get('/serverUpload', (req,res) => {
 let results = [];
 app.post('/serverUpload', (req, res, next) => {
   const file = req.files.file;
-  let toNLPfile = path.join(__dirname + './ToNLP/newData.json')
+  let toNLPfile = path.join(__dirname + './client-to-nlp/newData.json')
   fp = path.join(__dirname + '/../uploads/', file.name)
   
   if (fs.existsSync(fp)) {

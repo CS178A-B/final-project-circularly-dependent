@@ -29,11 +29,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
   const classes = useStyles();
-  const {value, setValue} = useContext(UserContext);
+  const {loggedIn, setLoggedIn} = useContext(UserContext);
   let logStatus = 'SIGN IN'
 
   let url = '/login'
-  if (value) {
+  if (loggedIn) {
     logStatus = 'SIGN OUT'
     url = '/logout'    
   } else {

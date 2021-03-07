@@ -14,32 +14,32 @@ const Home = () => {
         loop 
         muted
         style={{
-          position: "fixed",
-          top: "0",
-          left: "0",
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          // transform: "translate(-50%, -50%)",
-          // WebkitTransform: "translate(-50%, -50%)",
+          position: 'fixed',
+          top: '0',
+          left: '0',
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          // transform: 'translate(-50%, -50%)',
+          // WebkitTransform: 'translate(-50%, -50%)',
           zIndex: 0,
         }}
       >
-        <source src={AmazingBackground} type="video/mp4"/>
+        <source src={AmazingBackground} type='video/mp4'/>
       </video>
 
       <div style={{
-        position:"absolute",
+        position:'absolute',
         top:'0%',
-        width: "100%",
-        height: "100%",
+        width: '100%',
+        height: '100%',
         zIndex: 1,
       }}>
         <ButtonAppBar />
       </div>
 
       <div style={{
-        // position:"relative",
+        // position:'relative',
         // top:'50%',
         // left:'0',
         // alignItems: 'center',
@@ -53,20 +53,37 @@ const Home = () => {
         zIndex: 1,
       }}>
         <Link to='/dashboard' style={{ textDecoration: 'none'}}>
-          <Button color="primary" variant='contained' style={{ margin: 50}}>
+          <Button color='primary' variant='contained' style={{ margin: 50}}>
             Kibana Dashboard
           </Button>
         </Link>
         <Link to='/visualization' style={{ textDecoration: 'none'}}>
-          <Button color="default" variant='contained' style={{ margin: 50}}>
+          <Button color='default' variant='contained' style={{ margin: 50}}>
             Price per Unit
           </Button>
         </Link>
         <Link to='/sum-chart' style={{ textDecoration: 'none'}}>
-          <Button color="default" variant='contained' style={{ margin: 50}}>
+          <Button color='default' variant='contained' style={{ margin: 50}}>
             Annual Spending
           </Button>
         </Link>    
+        
+{/* 
+      <Link to='/dashboard' style={{ textDecoration: 'none'}}>
+        <Button variant='outlined' style={{ margin: 50, fontWeight: 'bold', color:'#171d78' }}>
+          Kibana Dashboard
+        </Button>
+      </Link>
+      <Link to='/visualization' style={{ textDecoration: 'none'}}>
+        <Button  variant='outlined' style={{ margin: 50,  fontWeight: 'bold', color:'#070a36'}}>
+          Price per Unit
+        </Button>
+      </Link>
+      <Link to='/sum-chart' style={{ textDecoration: 'none'}}>
+        <Button variant='outlined' style={{ margin: 50,  fontWeight: 'bold', color: '#070a36'}}>
+          Annual Spending
+        </Button>
+      </Link>   */}
       </div>
     </div>    
   );
