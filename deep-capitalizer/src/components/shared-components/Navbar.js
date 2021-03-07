@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../globals'
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-
+import './Link.css';
 export const history = createBrowserHistory();
 
 const useStyles = makeStyles((theme) => ({
@@ -21,10 +21,17 @@ const useStyles = makeStyles((theme) => ({
   },
   graphButton: {
     marginRight: theme.spacing(2),
+    backgroundColor: 'inherit !important',
   },
   title: {
     flexGrow: 1,
+    fontFamily : 'Verdana'
   },
+  button : {
+    color: 'white',
+    fontFamily : 'Verdana'
+
+  }
 }));
 
 export default function ButtonAppBar() {
@@ -55,13 +62,15 @@ export default function ButtonAppBar() {
               <TimelineOutlinedIcon />
             </InsertDriveFileIcon>
           </Link>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h5" className={classes.title}>
             <Link to="/" style={{ textDecoration: 'none', color: '#FFF'  }}>
-              Deep Capitalizer
+              {/* <Button className={classes.button}> */}
+                Deep Capitalizer
+              {/* </Button> */}
             </Link>
           </Typography>
           <Link to={url} style={{ textDecoration: 'none', color: '#FFF'  }}>
-            <Button color="inherit">{logStatus}</Button>
+            <Button className={classes.button} color="inherit">{logStatus}</Button>
           </Link>
         </Toolbar>
       </AppBar>
