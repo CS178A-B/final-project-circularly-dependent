@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-    fontFamily : 'Optima'
+    fontFamily : 'Verdana'
   },
   button : {
     color: 'white',
