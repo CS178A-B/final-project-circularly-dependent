@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Cards from './shared-components/Card';
 import Grid from '@material-ui/core/Grid';
+import ButtonAppBar from './shared-components/Navbar';
 
 
 const Upload = () => {
@@ -72,6 +73,7 @@ const Upload = () => {
 
   return (
     <div>
+      <ButtonAppBar />
       <Grid container
         spacing={3}
         justify="center"
@@ -80,9 +82,6 @@ const Upload = () => {
         <Grid item xl={3}>
           <Cards CardName='File History' Files = {history}/>
         </Grid>
-        <Grid item xl={3}>
-
-        </Grid>     
       </Grid>
     <form onSubmit={handleSubmit(onSubmit)}>
       <input className={classes.label} ref={register} type='file' name='file' text-align='right' />

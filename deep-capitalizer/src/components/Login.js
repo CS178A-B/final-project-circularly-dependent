@@ -15,6 +15,7 @@ import { SERVER_PORT, timeout } from '../globals';
 import { UserContext } from '../globals'
 import { createBrowserHistory } from 'history';
 import { useDencrypt } from "use-dencrypt-effect";
+import ButtonAppBar from './shared-components/Navbar';
 
 export const history = createBrowserHistory({forceRefresh:true});
 
@@ -79,7 +80,7 @@ export default function Login() {
         let success = result;
         
         try{
-          if (success) {
+          if (success.length > 0) {
             setValue(true)
           } 
           else {
@@ -109,87 +110,91 @@ export default function Login() {
   
   if (!value) {
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              value={ID} 
-              onChange={(e) => setID(e.target.value)}
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="current-password"
-            />
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={() => {
-                setAttempted(true);
-              }}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
+      <div>
+        <ButtonAppBar />
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <form className={classes.form} noValidate>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                value={ID} 
+                onChange={(e) => setID(e.target.value)}
+                autoFocus
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+              />
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={() => {
+                  setAttempted(true);
+                }}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="#" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </form>
-        </div>
-        <Box mt={8}>
-          <Copyright />
-        </Box>
-      </Container>
+            </form>
+          </div>
+          <Box mt={8}>
+            <Copyright />
+          </Box>
+        </Container>
+      </div>
     );
   }      
   else {
     return (
-      <div> 
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <Typography 
-        align='center'  
-        style={{ wordWrap: "break-word" }} 
-        variant='h4'>
-          {result}
-      </Typography>
-    </div>
+      <div>
+        <ButtonAppBar /> 
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <Typography 
+          align='center'  
+          style={{ wordWrap: "break-word" }} 
+          variant='h4'>
+            {result}
+        </Typography>
+      </div>
     );
   }
 }

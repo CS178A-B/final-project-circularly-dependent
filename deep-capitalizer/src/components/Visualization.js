@@ -8,13 +8,14 @@ import ComboSearch from './shared-components/ComboSearch';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { useState, useEffect } from 'react';
+import ButtonAppBar from './shared-components/Navbar';
 
 const useStyles = makeStyles({
   root: {
     textAlign: 'center',
   },
   header: {
-    minHeight: '100vh',
+    minHeight: '85vh',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -100,6 +101,7 @@ const Visualization = () => {
 
   return (
       <div className={classes.root}>
+        <ButtonAppBar />
         <header className={classes.header}>
           <ComboSearch setItem={(item) => setProd(item)}/>
           <br />
