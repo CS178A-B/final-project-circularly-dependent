@@ -1,9 +1,9 @@
 #This should update the OUT_FILE in json format with the new data
 
 #Input file
-#DATA_FILE="../server/ToNLP/RS-20170701-20190630.json"
+DATA_FILE="../server/client-to-nlp/newData.json"
 #This should assign DATA_FILE the name of the most recently changed file
-DATA_FILE=$(ls -t ../server/client-to-nlp/*.json | head -1)
+#DATA_FILE=$(ls -t ../server/client-to-nlp/*.json | head -1)
 #echo "$DATA_FILE"
 
 #Output file
@@ -61,7 +61,7 @@ echo "New JSON file: $OUT_FILE"
 #perform POST Request, maybe?
 URL=""
 
-curl -F data=@${OUT_FILE} ${URL}
+#curl -F data=@${OUT_FILE} ${URL}
 
 
 
