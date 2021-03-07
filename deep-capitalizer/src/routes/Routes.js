@@ -11,6 +11,7 @@ import Login from '../components/Login'
 import Logout from '../components/Logout'
 import { createBrowserHistory } from 'history';
 import { UserContext } from '../globals';
+import Upload from '../components/Upload'
 
 export const history = createBrowserHistory();
 
@@ -29,6 +30,8 @@ const Routes = () => {
               <Route path='/visualization' exact component={Visualization} />
               <Route path='/sum-chart' exact component={SumChart} />
               <Route path='/server-test' exact component={ServerTest} />
+              <Route path='/upload' exact component={Upload} />
+              {/* <Route path='/server-test' exact component={ServerTest} /> */}
           </Switch>
         </UserContext.Provider>
       </Router>
