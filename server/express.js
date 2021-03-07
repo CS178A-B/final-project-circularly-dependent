@@ -88,6 +88,7 @@ con.connect(function(err) {
     let sql = 'INSERT IGNORE INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code, po_quantity) VALUES ?'
     // let sql = 'INSERT INTO items (vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, entry_id, issue_date, vendor_code) VALUES ?'
     const userPass = 'INSERT IGNORE INTO users VALUES (\'scotty@ucr.edu\', \'thebear\', \'riverside\')'
+    
     con.query(sql, [values], function(err,result) {
       if(err) {
         throw err;
@@ -149,8 +150,10 @@ app.post('/signIn', (req, res) => {
   con.query(sqlquery, function (err, result) {
     if (err) throw err;
     //results = (result[0].cnt)
-    console.log(result)
-    res.status(200).json(results)
+    if (result.length == 0) console.log('it is empty')
+
+
+    res.status(200).json(result)
   });
 })
 
