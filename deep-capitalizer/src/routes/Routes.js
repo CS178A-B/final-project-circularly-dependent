@@ -21,7 +21,7 @@ const Routes = () => {
     <div className='App'>
       <Router history={history}>
         <UserContext.Provider value={{value, setValue}}>
-          <ButtonAppBar/>
+          {/* <ButtonAppBar/> */}
           <Switch>
               <Route path='/' exact component={Home} />
               <Route path='/login' exact component={Login} />

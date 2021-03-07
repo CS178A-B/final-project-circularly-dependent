@@ -9,13 +9,15 @@ import { SERVER_PORT } from './../globals';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { useState, useEffect } from 'react';
+import ButtonAppBar from './shared-components/Navbar';
+
 
 const useStyles = makeStyles({
   root: {
     textAlign: 'center',
   },
   header: {
-    minHeight: '100vh',
+    height: '85vh',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -109,46 +111,15 @@ const SumChart = () => {
 
   return (
       <div className={classes.root}>
+        <ButtonAppBar />
         <header className={classes.header}>
-        <ComboSearch setItem={(item) => setProd(item)}/>
-
-          {/* <p>
-            {graphData ? graphData[0]['dep_desc'] : ''}
-          </p> */}
-          {/* <ResponsiveContainer className={classes.graph}>
-            <BarChart width={730} height={250} data={graphData}>
-              <CartesianGrid strokeDasharray='3 3' />
-              <XAxis dataKey='dep_desc' />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey='Sum' fill='#005599' />
-            </BarChart>
-          </ResponsiveContainer>
-          <p>
-            - Graphs go here -
-          </p>
-          <Button onClick={() => { setRead(true) }} variant='contained'>
-            Get da Data
-          </Button>
-        </header>
-      </div>
-  );
-} */}
+          <ComboSearch setItem={(item) => setProd(item)}/>
           <br />
           <p>
             Annual Spending
           </p>
           { graphData ?
             <ResponsiveContainer className={classes.graph}>
-              {/* <BarChart width={730} height={250} data={graphData}>
-                <CartesianGrid strokeDasharray='3 3' />
-                <XAxis dataKey='dep_desc' />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey='Sum' fill='#008000' data='year'/>
-              </BarChart> */}
               <LineChart
                 width={500}
                 height={300}
@@ -159,14 +130,9 @@ const SumChart = () => {
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="year" />
-                {/* <XAxis tickLine={true} xAxisId={0} dy={0} dx={-0} label={{ value: '', angle: 0, position: 'bottom' }} interval={0} dataKey="dep_desc" tickLine={false} tick={{fontSize: 9, angle: 0 }} />
-                <XAxis xAxisId={1} dy={-15} dx={0} label={{ value: '', angle: 0, position: 'bottom' }} interval={10} dataKey="year" tickLine={false} tick={{fontSize: 9, angle: 0}} /> */}
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                {/* {graphData.map(() => {
-                                        return (<Line  dataKey={`${graphData.dep_desc}`} />)
-                                    })     }            */}
                 <Line type="monotone" dataKey='Sum' stroke="#82ca9d" />
               </LineChart>
             </ResponsiveContainer>
