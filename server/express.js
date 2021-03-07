@@ -151,9 +151,11 @@ app.post('/signIn', (req, res) => {
     if (err) throw err;
     //results = (result[0].cnt)
     if (result.length == 0) console.log('it is empty')
-
-
-    res.status(200).json(result)
+    console.log(result[0].city)
+    res.send({
+      username: user,
+      city: result[0].city
+    });
   });
 })
 
