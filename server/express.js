@@ -50,10 +50,37 @@ app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
 app.get('/test', (req, res) => {
   delayedRes = async () => {
     await timeout(500);
-    res.status(200).json({ "message" : "> Counter poke from Server <" })
-    console.log('Counter poke initiated')
+    res.status(200).json({ "message" : "> Counter poke from Server <" });
+    console.log('Counter poke initiated');
   }
   delayedRes()
+});
+
+app.post('/signUp', (req, res) => {
+  const user = req.body.username;
+  const pass = req.body.password;
+  const city = req.body.city;
+
+  // Check if proposed user already exists
+  let sqlquery = 'SELECT username FROM users';
+  con.query(sqlquery, (err, result) => {
+    console.log('New user attempting sign up...')
+    if (err) throw err;
+    const existingUsers = result.map(entry => entry.username);
+
+    if (existingUsers.includes(user)) {
+      console.log(`Sign-up Unsucessful: sign-up attempted with existing username "${user}"`);
+      res.status(409).json({ "message" : "This username already exists" });
+    } else {
+      // Add new user into database
+      sqlquery = `INSERT INTO users VALUES ('${user}', '${pass}', '${city}')`;
+      con.query(sqlquery, (err, result) => {
+        if (err) throw err;
+        console.log(result, `\nSign-up Sucessful: added "${user}" to user table from city "${city}"`);
+        res.status(200).json({ "message" : "Sucessfully created new account" });
+      });
+    }
+  });
 });
 
 app.post('/signIn', (req, res) => {
