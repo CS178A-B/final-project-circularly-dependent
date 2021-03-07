@@ -59,8 +59,8 @@ echo "New JSON file: $OUT_FILE"
 
 
 #perform POST Request, maybe?
-URL=""
-
+URL="http://localhost:4000/nlpSignal"
+curl -v ${URL}
 #curl -F data=@${OUT_FILE} ${URL}
 
 
