@@ -48,8 +48,8 @@ con.connect(function(err) {
     console.log("spendingData used")
   })
   
-  var sql = "CREATE TABLE IF NOT EXISTS items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date date, vendor_code INT, po_quantity INT)";
-  const userPassTable = "CREATE TABLE IF NOT EXISTS users (username VARCHAR(255), password VARCHAR(255), city VARCHAR(255))"
+  var sql = "CREATE TABLE IF NOT EXISTS items (vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, entry_id INT, issue_date date, vendor_code INT, po_quantity INT, PRIMARY KEY(entry_id))";
+  const userPassTable = "CREATE TABLE IF NOT EXISTS users (username VARCHAR(255), password VARCHAR(255), city VARCHAR(255), PRIMARY KEY(username))"
 
   con.query(sql, function (err, result) {
     if (err) throw err;
