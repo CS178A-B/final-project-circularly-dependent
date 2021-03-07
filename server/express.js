@@ -5,114 +5,29 @@ const path = require('path');
 const cors = require('cors');
 const csv = require('csv-parser');
 const fs = require('fs');
-var bodyParser = require('body-parser');
-const mysql = require('mysql');
-const cleanData = require('./CleanData');
-const app = express();
-const fileupload = require('express-fileupload')
-
-app.use(fileupload());
-
-const filePath = path.join(__dirname, '/nlp-to-server/CoreNLPData.json');
+const bodyParser = require('body-parser');
+const fileupload = require('express-fileupload');
+const database = require('./database');
 
 // Save the port of our sever into a constant 'PORT'
 // process.env.PORT checks our environment variables to see if we already have a PORT defined.
 // if not, then we use PORT 4000
 const PORT = process.env.PORT || 4000;
-let city; 
+const app = express();
+const con = database.mySql();
 
 // Delay in mili-seconds
 const timeout = delay => {
   return new Promise(res => setTimeout(res, delay));
 }
 
-/* -------------------- MySQL Implementation -------------------- */
-
-const con = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'CS178!CD!dc',
-});
-
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-  
-  con.query("CREATE DATABASE IF NOT EXISTS spendingData", function(err, result){
-    if(err) throw err;
-    console.log("spendingData created")
-  })
-  
-  con.query("USE spendingData", function(err, result){
-    if(err) throw err;
-    console.log("spendingData used")
-  })
-  
-  const userPassTable = "CREATE TABLE IF NOT EXISTS users (username VARCHAR(255), password VARCHAR(255), city VARCHAR(255), PRIMARY KEY(username))";
-  const itemTable = "CREATE TABLE IF NOT EXISTS items (entry_id INT, username VARCHAR(255), vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, issue_date date, vendor_code INT, po_quantity INT, PRIMARY KEY(entry_id), FOREIGN KEY(username) REFERENCES users(username))";
-
-  con.query(userPassTable, function (err, result) {
-    if (err) throw err;
-    console.log("Table userPassword created");
-  });
-
-  con.query(itemTable, function (err, result) {
-    if (err) throw err;
-    console.log("Table item created");
-  });  
-  
-  async function jsonReader(filePath, cb) {
-    fs.readFile(filePath, (err, fileData) => {
-      if (err) {
-        return cb && cb(err)
-      }
-      try {
-        const object = JSON.parse(fileData)
-        return cb && cb(null, object)
-      } catch(err) {
-        return cb && cb(err)
-      }
-    })
-  }
-  
-  jsonReader(filePath, (err, ret) => {
-    if (err) {
-      return 
-    }
-    data = ret.PURCHASES;
-    const values = [];
-
-    for (var i=0; i<data.length; i++) {
-      let cleanedData = cleanData.CleanData(data[i])
-      values.push([cleanedData.ENTRY_ID, 'scotty@ucr.edu', cleanedData.VENDOR_NAME, cleanedData.DESCRIPTOR, cleanedData.REQUESTOR_DEPARTMENT, cleanedData.ITEM_DESC, cleanedData.UNIT_PRICE, cleanedData.DEPARTMENT_DESC, cleanedData.ITEM_TOTAL_AMOUNT, cleanedData.PRODUCT_NAME, cleanedData.PO_NO, cleanedData.ISSUE_DATE, cleanedData.VENDOR_CODE, cleanedData.PO_QUANTITY])
-    }
-    const sql = 'INSERT IGNORE INTO items (entry_id, username, vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, issue_date, vendor_code, po_quantity) VALUES ?'
-    // let sql = 'INSERT INTO items (entry_id, vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, issue_date, vendor_code) VALUES ?'
-    const userPass = 'INSERT IGNORE INTO users VALUES (\'scotty@ucr.edu\', \'thebear\', \'riverside\')'
-    con.query(sql, [values], function(err,result) {
-      if(err) {
-        throw err;
-      }
-      else {
-        console.log("success in")
-      }
-    }) 
-
-    con.query(userPass, function(err,result) {
-      if(err) {
-        throw err;
-      }
-      else {
-        console.log("success user In")
-      }
-    }) 
-  })   
-});
-
 /* -------------------- Server Configuration -------------------- */
 
 // Serves up static Client build (React App)
 app.use('/', express.static(path.join(__dirname, '../deep-capitalizer/build')));
+
+// Allows server to upload data files
+app.use(fileupload());
 
 // Removes CORS error
 app.use(cors());
@@ -158,7 +73,6 @@ app.post('/signIn', (req, res) => {
   });
 })
 
-
 app.post('/selectData', (req, res) => {
   // let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\' ORDER BY ISSUE_DATE ASC, unit_price'
   let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\' ORDER BY unit_price LIMIT 30'
@@ -191,9 +105,8 @@ app.get('/productName', (req, res) => {
 })
 
 app.get('/serverUpload', (req,res) => {
-  const fsH = require('fs');
   const dir = path.join(__dirname + '/../uploads/')
-  let files = fsH.readdirSync(dir);  
+  let files = fs.readdirSync(dir);  
   let uploadList = []
   for (const file of files) {
     uploadList.push(file)
@@ -201,7 +114,6 @@ app.get('/serverUpload', (req,res) => {
   console.log(uploadList)
   res.status(200).json(uploadList)
 })
-
 
 let results = [];
 app.post('/serverUpload', (req, res, next) => {
