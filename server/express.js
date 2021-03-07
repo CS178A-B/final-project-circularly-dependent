@@ -56,6 +56,11 @@ app.get('/test', (req, res) => {
   delayedRes()
 });
 
+app.get('/nlpSignal', (req, res) => {
+  database.mySql();
+  res.status(200).json({"message": "you poke meee"})
+});
+
 app.post('/signUp', (req, res) => {
   const user = req.body.username;
   const pass = req.body.password;
