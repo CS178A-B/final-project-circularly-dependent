@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Router, Switch, Route } from 'react-router-dom';
+import { Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import Home from '../components/Home';
 import Dashboard from '../components/Dashboard';
@@ -16,21 +16,32 @@ import Upload from '../components/Upload'
 export const history = createBrowserHistory();
 
 const Routes = () => {
-  const [value, setValue] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
   return (
     <div className='App'>
       <Router history={history}>
-        <UserContext.Provider value={{value, setValue}}>
+        <UserContext.Provider value={{loggedIn, setLoggedIn}}>
           {/* <ButtonAppBar/> */}
           <Switch>
               <Route path='/' exact component={Home} />
-              <Route path='/login' exact component={Login} />
+              <Route path='/login' exact component={Login}>
+                {(loggedIn)? <Redirect to='/' /> : <Login />}
+              </Route> 
               <Route path='/logout' exact component={Logout} />
-              <Route path='/dashboard' exact component={Dashboard} />
-              <Route path='/visualization' exact component={Visualization} />
-              <Route path='/sum-chart' exact component={SumChart} />
+              <Route path='/dashboard' exact component={Dashboard}>
+                {(!loggedIn)? <Redirect to='/login' /> : <Dashboard />}
+              </Route>
+              <Route path='/visualization' exact component={Visualization}>
+                {(!loggedIn)? <Redirect to='/login' /> : <Visualization />}
+              </Route>
+              <Route path='/sum-chart' exact component={SumChart}>
+                {(!loggedIn)? <Redirect to='/login' /> : <SumChart />}
+              </Route>
               <Route path='/server-test' exact component={ServerTest} />
-              <Route path='/upload' exact component={Upload} />
+              <Route path='/upload' exact component={Upload}>
+                {(!loggedIn)? <Redirect to='/login' /> : <Upload />} 
+              </Route>
               {/* <Route path='/server-test' exact component={ServerTest} /> */}
           </Switch>
         </UserContext.Provider>
