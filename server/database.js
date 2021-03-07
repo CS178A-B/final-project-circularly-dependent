@@ -29,7 +29,7 @@ function mySql() {
     });
     
     const userPassTable = "CREATE TABLE IF NOT EXISTS users (username VARCHAR(255), password VARCHAR(255), city VARCHAR(255), PRIMARY KEY(username))";
-    const itemTable = "CREATE TABLE IF NOT EXISTS items (entry_id INT, username VARCHAR(255), vendor_name VARCHAR(255), descriptor VARCHAR(255), req_department INT, item_desc TEXT, unit_price INT, dep_desc TEXT, item_total INT, product_name TEXT, po_no INT, issue_date date, vendor_code INT, po_quantity INT, PRIMARY KEY(entry_id), FOREIGN KEY(username) REFERENCES users(username))";
+    const itemTable = "CREATE TABLE IF NOT EXISTS items (entry_id INT, username VARCHAR(255), product_name TEXT, descriptor VARCHAR(255), issue_date date, po_no INT, po_quantity INT, unit_price INT, item_total INT, vendor_name VARCHAR(255), vendor_code INT, dep_desc TEXT, req_department INT, item_desc TEXT, PRIMARY KEY(entry_id), FOREIGN KEY(username) REFERENCES users(username))";
 
     con.query(userPassTable, (err, result) => {
       if (err) throw err;
@@ -64,10 +64,9 @@ function mySql() {
 
       for (let i = 0; i < data.length; i++) {
         let cleanedData = cleanData.CleanData(data[i]);
-        values.push([cleanedData.ENTRY_ID, 'scotty@ucr.edu', cleanedData.VENDOR_NAME, cleanedData.DESCRIPTOR, cleanedData.REQUESTOR_DEPARTMENT, cleanedData.ITEM_DESC, cleanedData.UNIT_PRICE, cleanedData.DEPARTMENT_DESC, cleanedData.ITEM_TOTAL_AMOUNT, cleanedData.PRODUCT_NAME, cleanedData.PO_NO, cleanedData.ISSUE_DATE, cleanedData.VENDOR_CODE, cleanedData.PO_QUANTITY]);
+        values.push([cleanedData.ENTRY_ID, 'scotty@ucr.edu', cleanedData.PRODUCT_NAME, cleanedData.DESCRIPTOR, cleanedData.ISSUE_DATE, cleanedData.PO_NO, cleanedData.PO_QUANTITY, cleanedData.UNIT_PRICE, cleanedData.ITEM_TOTAL_AMOUNT, cleanedData.VENDOR_NAME, cleanedData.VENDOR_CODE, cleanedData.DEPARTMENT_DESC, cleanedData.REQUESTOR_DEPARTMENT, cleanedData.ITEM_DESC]);
       }
-      const items = 'INSERT IGNORE INTO items (entry_id, username, vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, issue_date, vendor_code, po_quantity) VALUES ?';
-      // let items = 'INSERT INTO items (entry_id, vendor_name, descriptor, req_department, item_desc, unit_price, dep_desc, item_total, product_name, po_no, issue_date, vendor_code) VALUES ?'
+      const items = 'INSERT IGNORE INTO items (entry_id, username, product_name, descriptor, issue_date, po_no, po_quantity, unit_price, item_total, vendor_name, vendor_code, dep_desc, req_department, item_desc) VALUES ?';
       const userPass = 'INSERT IGNORE INTO users VALUES (\'scotty@ucr.edu\', \'thebear\', \'riverside\')';
       
       con.query(userPass, (err, result) => {
