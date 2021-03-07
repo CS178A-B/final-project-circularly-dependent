@@ -110,7 +110,6 @@ con.connect(function(err) {
   })   
 });
 
-
 /* -------------------- Server Configuration -------------------- */
 
 // Serves up static Client build (React App)
@@ -131,7 +130,6 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
-
 
 /* -------------------- Server API Endpoints -------------------- */
 
