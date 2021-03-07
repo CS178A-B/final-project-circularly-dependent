@@ -20,7 +20,7 @@ const Dashboard = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <iframe className={classes.kibana} src="http://localhost:5601/goto/1f8156863dfef58f37f100b021a88c9c" />
+      <iframe className={classes.kibana} src="http://localhost:5601/goto/89ce5e2fd5370d0b335dd2d7ea07fdd7" />
     </div>
   );
 }
