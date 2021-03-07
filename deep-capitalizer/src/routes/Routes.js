@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Router, Switch, Route } from 'react-router-dom';
 
 import Home from '../components/Home';
+import Dashboard from '../components/Dashboard';
 import Visualization from '../components/Visualization';
 import SumChart from '../components/SumChart';
 import ServerTest from '../components/ServerTest';
@@ -25,8 +26,10 @@ const Routes = () => {
               <Route path='/' exact component={Home} />
               <Route path='/login' exact component={Login} />
               <Route path='/logout' exact component={Logout} />
+              <Route path='/dashboard' exact component={Dashboard} />
               <Route path='/visualization' exact component={Visualization} />
-              <Route path='/server-test' exact component={SumChart} />
+              <Route path='/sum-chart' exact component={SumChart} />
+              <Route path='/server-test' exact component={ServerTest} />
               <Route path='/upload' exact component={Upload} />
               {/* <Route path='/server-test' exact component={ServerTest} /> */}
           </Switch>
