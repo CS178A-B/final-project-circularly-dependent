@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const path = require('path');
 const fs = require('fs');
-const cleanData = require('./CleanData');
+const cleanData = require('./cleanData');
 
 const nlpDataPath = path.join(__dirname, '/nlp-to-server/CoreNLPData.json');
 
@@ -63,8 +63,23 @@ function mySql() {
       const values = [];
 
       for (let i = 0; i < data.length; i++) {
-        let cleanedData = cleanData.CleanData(data[i]);
-        values.push([cleanedData.ENTRY_ID, 'scotty@ucr.edu', cleanedData.PRODUCT_NAME, cleanedData.DESCRIPTOR, cleanedData.ISSUE_DATE, cleanedData.PO_NO, cleanedData.PO_QUANTITY, cleanedData.UNIT_PRICE, cleanedData.ITEM_TOTAL_AMOUNT, cleanedData.VENDOR_NAME, cleanedData.VENDOR_CODE, cleanedData.DEPARTMENT_DESC, cleanedData.REQUESTOR_DEPARTMENT, cleanedData.ITEM_DESC]);
+        let cleanedData = cleanData.postProcess(data[i]);
+        values.push([ 
+          cleanedData.ENTRY_ID, 
+          'scotty@ucr.edu', 
+          cleanedData.PRODUCT_NAME, 
+          cleanedData.DESCRIPTOR, 
+          cleanedData.ISSUE_DATE, 
+          cleanedData.PO_NO, 
+          cleanedData.PO_QUANTITY, 
+          cleanedData.UNIT_PRICE, 
+          cleanedData.ITEM_TOTAL_AMOUNT, 
+          cleanedData.VENDOR_NAME, 
+          cleanedData.VENDOR_CODE, 
+          cleanedData.DEPARTMENT_DESC, 
+          cleanedData.REQUESTOR_DEPARTMENT, 
+          cleanedData.ITEM_DESC,
+        ]);
       }
       const items = 'INSERT IGNORE INTO items (entry_id, username, product_name, descriptor, issue_date, po_no, po_quantity, unit_price, item_total, vendor_name, vendor_code, dep_desc, req_department, item_desc) VALUES ?';
       const userPass = 'INSERT IGNORE INTO users VALUES (\'scotty@ucr.edu\', \'thebear\', \'riverside\')';
