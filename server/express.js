@@ -26,6 +26,8 @@ const timeout = delay => {
   return new Promise(res => setTimeout(res, delay));
 }
 
+/* -------------------- MySQL Implementation -------------------- */
+
 const con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -109,6 +111,8 @@ con.connect(function(err) {
 });
 
 
+/* -------------------- Server Configuration -------------------- */
+
 // Serves up static Client build (React App)
 app.use('/', express.static(path.join(__dirname, '../deep-capitalizer/build')));
 
@@ -127,6 +131,9 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
+
+
+/* -------------------- Server API Endpoints -------------------- */
 
 app.get('/test', (req, res) => {
   delayedRes = async () => {
