@@ -2,41 +2,77 @@ import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { UserContext } from '../globals'
-
-
-import { useDencrypt } from "use-dencrypt-effect";
-
-const textValues = ["See You Again", "Come Back Soon!", "Good Bye", "Until Next Time"]
+import { Redirect } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import ButtonAppBar from './shared-components/Navbar';
 
 const Logout = () => {
-  const { result, dencrypt } = useDencrypt();
-  const {value, setValue} = useContext(UserContext);
+  const {loggedIn, setLoggedIn} = useContext(UserContext);
+  const [redirect, setRedirect] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(null);
 
-  setValue(false)
+  const useStyles = makeStyles(() => ({
+    main: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+    },
+    sub: {
+      position:'absolute',
+      top: 0, left: 0, bottom:0, right: 0, width: '100%',
+      height: '40%',
+      overflow: 'auto',
+      margin: 'auto',
+    },
+    inner: {
+      position:'absolute',
+      top: 0, left: 0, bottom:0, right: 0, width: '100%',
+      height: '15%',
+      overflow: 'auto',
+      margin: 'auto',
+      color: 'black',
+    }
+  }))
+  
+  const classes = useStyles();
   useEffect(() => {
-    let i = 0;
-    const action = setInterval(() => {
-      dencrypt (textValues[i]);
-      i = i === textValues.length - 1 ? 0 : i + 1;
-    }, 2000);
-
-    return () => clearInterval(action);
-  }, []);
-
-  return (
-    <div> 
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <Typography 
-        align='center'  
-        style={{ wordWrap: "break-word" }} 
-        variant='h4'>
-          {result}
-      </Typography>
-    </div>
-  );
+    if(timeLeft===0) {
+      console.log("TIME LEFT IS 0");
+      setRedirect(true)
+      setTimeLeft(null)
+    }
+    if (!timeLeft) return;
+    const intervalId = setInterval(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+    return () => intervalId ? clearInterval(intervalId) : null;
+  }, [timeLeft]);
+  
+  useEffect(() => {
+    if (!loggedIn) setTimeLeft(3)
+  }, [loggedIn])
+  
+  setLoggedIn(false)
+  
+  if (redirect) {
+    return <Redirect to='/' />
+  }
+  else {
+    return (
+      <div className={classes.main}>
+        <ButtonAppBar />
+        <div className={classes.sub}>
+          <div className={classes.inner}>
+            <Typography>
+              Redirecting to Main Page After {timeLeft} Seconds. 
+            </Typography>
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
 export default Logout;
