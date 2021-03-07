@@ -205,7 +205,7 @@ app.get('/serverUpload', (req,res) => {
 let results = [];
 app.post('/serverUpload', (req, res, next) => {
   const file = req.files.file;
-  let toNLPfile = path.join(__dirname + './ToNLP/newData.json')
+  let toNLPfile = path.join(__dirname + './client-to-nlp/newData.json')
   fp = path.join(__dirname + '/../uploads/', file.name)
   
   if (fs.existsSync(fp)) {
