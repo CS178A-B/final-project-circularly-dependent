@@ -44,7 +44,7 @@ const Home = () => {
         // left:'0',
         // alignItems: 'center',
         // justifyItems: 'center',
-        width: '50%',
+        width: '100%',
         height: '50%',
         overflow: 'auto',
         margin: 'auto',
@@ -52,22 +52,22 @@ const Home = () => {
         top: 0, left: 0, bottom: 0, right: 0,
         zIndex: 1
         }}>
-        <Link 
-        to='/visualization' 
-        style={{ 
-          textDecoration: 'none',
-          zIndex: 10
-        }}>
-          <Button color="primary" variant='contained' style={{ margin: 50 }}>
-            Price per Unit
-          </Button>
-        </Link>
-
-        <Link to='/server-test' style={{ textDecoration: 'none', zIndex: '10'}}>
-          <Button color="default" variant='contained' style={{ margin: 50 }}>
-            Annual Spending
-          </Button>
-        </Link>    
+      <Link to='/dashboard' style={{ textDecoration: 'none'}}>
+        <Button color="primary" variant='contained' style={{ margin: 50}}>
+          Kibana Dashboard
+        </Button>
+      </Link>
+      <Link to='/visualization' style={{ textDecoration: 'none'}}>
+        <Button color="default" variant='contained' style={{ margin: 50}}>
+          Price per Unit
+        </Button>
+      </Link>
+      <Link to='/sum-chart' style={{ textDecoration: 'none'}}>
+        <Button color="default" variant='contained' style={{ margin: 50}}>
+          Annual Spending
+        </Button>
+      </Link>    
+ 
       </div>
     </div>    
   );
