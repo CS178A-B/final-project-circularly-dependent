@@ -12,7 +12,6 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../globals'
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import './Link.css';
 export const history = createBrowserHistory();
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-    fontFamily : 'Verdana'
+    fontFamily : 'Optima'
   },
   button : {
     color: 'white',
