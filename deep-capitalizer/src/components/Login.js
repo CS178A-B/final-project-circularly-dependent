@@ -11,9 +11,13 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useState, useEffect, useContext } from 'react';
-import { SERVER_PORT} from '../globals';
+import { SERVER_PORT, timeout } from '../globals';
 import { UserContext } from '../globals'
+import { createBrowserHistory } from 'history';
+import { useDencrypt } from "use-dencrypt-effect";
 import ButtonAppBar from './shared-components/Navbar';
+
+export const history = createBrowserHistory({forceRefresh:true});
 
 function Copyright() {
   return (
@@ -50,10 +54,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
   const [attempted, setAttempted] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState(null);
   const [ID, setID] = useState('');
   const [password, setPassword] = useState('');
-  const {loggedIn, setLoggedIn} = useContext(UserContext);
+  const {value, setValue} = useContext(UserContext);
 
   useEffect(() => {
     const signInAttempt = async () => {
@@ -72,68 +77,81 @@ export default function Login() {
         })
 
         let result = await res.json();
-        let city = result.city;
-        console.log(city)
-
+        let success = result;
+        
         try{
-          if (city !== '') {
-            setLoggedIn(true)
+          if (success.length > 0) {
+            setValue(true)
           } 
           else {
             console.log("here to change setvalue")
-            alert("username and password do not match")
+            alert('username and password do not match')
           }
         }
         catch(e) {} 
       }
     }
     signInAttempt()
-  }, [attempted]);
+  }, [attempted, error]);
+
+  const textValues = ["You are signed in", "WELCOME"]
+  const { result, dencrypt } = useDencrypt();
+
+  useEffect(() => {
+    let i = 0;
+    const action = setInterval(() => {
+      dencrypt (textValues[i]);
+      i = i === textValues.length - 1 ? 0 : i + 1;
+    }, 2000);
+
+    return () => clearInterval(action);
+  }, []);
   
-  if (!loggedIn) {
+  
+  if (!value) {
     return (
       <div>
         <ButtonAppBar />
-        <Container component='main' maxWidth='xs'>
+        <Container component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component='h1' variant='h5'>
+            <Typography component="h1" variant="h5">
               Sign in
             </Typography>
             <form className={classes.form} noValidate>
               <TextField
-                variant='outlined'
-                margin='normal'
+                variant="outlined"
+                margin="normal"
                 required
                 fullWidth
-                id='email'
-                label='Email Address'
-                name='email'
-                autoComplete='email'
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
                 value={ID} 
                 onChange={(e) => setID(e.target.value)}
                 autoFocus
               />
               <TextField
-                variant='outlined'
-                margin='normal'
+                variant="outlined"
+                margin="normal"
                 required
                 fullWidth
-                name='password'
-                label='Password'
-                type='password'
-                id='password'
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)}
-                autoComplete='current-password'
+                autoComplete="current-password"
               />
               <Button
                 fullWidth
-                variant='contained'
-                color='primary'
+                variant="contained"
+                color="primary"
                 className={classes.submit}
                 onClick={() => {
                   setAttempted(true);
@@ -143,12 +161,12 @@ export default function Login() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href='#' variant='body2'>
+                  <Link href="#" variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href='#' variant='body2'>
+                  <Link href="#" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
@@ -172,10 +190,9 @@ export default function Login() {
         <br/>
         <Typography 
           align='center'  
-          style={{ wordWrap: 'break-word' }} 
+          style={{ wordWrap: "break-word" }} 
           variant='h4'>
-            HI {ID}
-            {/* {result} */}
+            {result}
         </Typography>
       </div>
     );
