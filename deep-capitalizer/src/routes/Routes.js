@@ -26,7 +26,7 @@ const Routes = () => {
           {/* <ButtonAppBar/> */}
           <Switch>
               <Route path='/' exact component={Home} />
-              <Route path='/signup' component={SignUp} >
+              <Route path='/signup' exact component={SignUp} >
                 {(loggedIn)? <Redirect to='/' /> : <SignUp />}
               </Route>
               <Route path='/login' exact component={Login}>

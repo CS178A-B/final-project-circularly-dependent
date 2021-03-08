@@ -58,7 +58,7 @@ export default function SignUp() {
   const [confirmPass, setConfirmPass] = useState('');
   const [serverMsg, setServerMsg] = useState('');
   const [error, setError] = useState('');
-  const {loggedIn, setLoggedIn} = useContext(UserContext);
+  const {_loggedIn, setLoggedIn} = useContext(UserContext);
 
   const clearFormState = () => {
     setCity('');
@@ -232,7 +232,7 @@ export default function SignUp() {
               </Grid>
             </Grid>
             <Button
-              type='submit'
+              // type='submit'    // This will break this code
               fullWidth
               variant='contained'
               color='primary'
