@@ -105,10 +105,6 @@ Frontend Structure
 Overall System Diagram
 
 ## Dependencies
-inotify-tools
-`
-sudo apt install inotify-tools
-`
 
 Install Node Package Manager (npm). [Helpful Documentation](https://www.npmjs.com/get-npm)
 
