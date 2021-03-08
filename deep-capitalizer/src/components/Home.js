@@ -53,17 +53,17 @@ const Home = () => {
         zIndex: 1,
       }}>
         <Link to='/dashboard' style={{ textDecoration: 'none'}}>
-          <Button color='primary' variant='contained' style={{ margin: 50}}>
+          <Button color='primary' variant='contained' style={{ margin: 50, fontFamily: 'Arial '}}>
             Kibana Dashboard
           </Button>
         </Link>
         <Link to='/visualization' style={{ textDecoration: 'none'}}>
-          <Button color='default' variant='contained' style={{ margin: 50}}>
+          <Button color='default' variant='contained' style={{ margin: 50, fontFamily: 'Arial '}}>
             Price per Unit
           </Button>
         </Link>
         <Link to='/sum-chart' style={{ textDecoration: 'none'}}>
-          <Button color='default' variant='contained' style={{ margin: 50}}>
+          <Button color='default' variant='contained' style={{ margin: 50, fontFamily: 'Arial '}}>
             Annual Spending
           </Button>
         </Link>    

@@ -38,21 +38,38 @@ const Upload = () => {
   }
 
   const useStyles = makeStyles(() => ({
+    main: {
+      position: 'fixed',
+      top: 0, left: 0, bottom:0, right: 0, 
+      width: '100%',
+      height: '100%',
+    },
+    sub: {
+      position: 'relative',
+      top: 40, left: 0, bottom:0, right: 0,       
+      height: '100%',
+    },
+    form : {      
+      position: 'relative',
+      top: 30, left: 0, bottom:0, right: 0, 
+    },
+
     label: {
-      backgroundColor: 'white',
-      color: 'black',
-      padding: '0.5rem',
-      fontFamily: 'sans-serif',
-      borderRadius: '0.3rem',
-      cursor: 'pointer',
-      marginTop: '3vh',
-      alignItems: 'center',
-      paddingLeft: '6rem',
-      paddingTop: '2rem',
-      paddingBottom: '2rem',
-      boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.19), 0 6px 20px 0 rgba(0, 0, 0, 0.0)'
+
+      top: '30%',
+      padding: '1rem'
     },
     button: {
+      // margin: 0,
+      // top: 30, left: 0, bottom:0, right: 0, 
+      // height: '5%',
+      // width: '13.8%',
+      // position: 'relative',
+      // top: '30%',
+      // left: '50%',
+      // marginRight: '-50%',
+      // transform: 'translate(-50%, -50%)' ,
+
       backgroundColor: '#363396',
       color: 'white',
       padding: '0.5rem',
@@ -72,22 +89,27 @@ const Upload = () => {
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes.main}>
       <ButtonAppBar />
-      <Grid container
-        spacing={3}
-        justify="center"
-        // style={{ minHeight: '60vh'}}
-        >
-        <Grid item xl={3}>
-          <Cards CardName='File History' Files = {history}/>
+      <div className={classes.sub}>
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+            <input className={classes.label} ref={register} type='file' name='file' />
+            <button className={classes.button}>SUBMIT</button>      
+        </form>
+        
+        <Grid container
+          spacing={3}
+          justify="center"
+          style={{     
+            position: 'relative',
+            top: 90, left: 0, bottom:0, right: 0, 
+          }}>
+          <Grid item xl={3}>
+            <Cards CardName='File History' Files = {history}/>
+          </Grid>
         </Grid>
-      </Grid>
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input className={classes.label} ref={register} type='file' name='file' text-align='right' />
-      <br/>
-      <button className={classes.button}>SUBMIT</button>
-    </form>
+
+      </div>
     </div>
   )
 }
