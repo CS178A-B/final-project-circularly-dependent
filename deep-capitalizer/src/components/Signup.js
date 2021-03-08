@@ -106,10 +106,12 @@ export default function SignUp() {
           })
           .then(res => res.json())
           .then(
-            res => setServerMsg(res),
+            res => setServerMsg(res.message),
             err => setError(err)
           );
-          if (error) { console.log(error); }  
+          if (error) { 
+            console.log(error); 
+          }
         } else {
           clearFormState();
         }
@@ -119,7 +121,7 @@ export default function SignUp() {
   }, [attempted]);
 
   useEffect(() => {
-    if (serverMsg.length) {
+    if (serverMsg && serverMsg !== '') {
       alert(serverMsg);
       clearFormState();
     }
