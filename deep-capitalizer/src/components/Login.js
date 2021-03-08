@@ -143,12 +143,15 @@ export default function Login() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href='#' variant='body2'>
+                  <Link 
+                    href='#' 
+                    variant='body2' 
+                    onClick={() => alert('Just make a new account!\nWe don\'t have that feature yet')}>
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href='#' variant='body2'>
+                  <Link href='/signup' variant='body2'>
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

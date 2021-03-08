@@ -57,6 +57,7 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
   const [serverMsg, setServerMsg] = useState('');
+  const [promos, setPromos] = useState(false);
   const [error, setError] = useState('');
   const {_loggedIn, setLoggedIn} = useContext(UserContext);
 
@@ -178,7 +179,7 @@ export default function SignUp() {
                   label='City'
                   autoComplete='city'
                   value={city} 
-                  onChange={(e) => setCity(e.target.value)}
+                  onChange={e => setCity(e.target.value)}
                   />
               </Grid>
               <Grid item xs={12}>
@@ -192,7 +193,7 @@ export default function SignUp() {
                   label='Email Address'
                   autoComplete='email'
                   value={username} 
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={e => setUsername(e.target.value)}
                   />
               </Grid>
               <Grid item xs={12}>
@@ -206,7 +207,7 @@ export default function SignUp() {
                   label='Password'
                   autoComplete='current-password'
                   value={password} 
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={e => setPassword(e.target.value)}
                   />
               </Grid>
               <Grid item xs={12}>
@@ -220,19 +221,25 @@ export default function SignUp() {
                   label='Confirm Password'
                   autoComplete='current-password'
                   value={confirmPass} 
-                  onChange={(e) => setConfirmPass(e.target.value)}
+                  onChange={e => setConfirmPass(e.target.value)}
                   />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value='allowExtraEmails' color='primary' />}
                   label='I want to receive inspiration, marketing promotions and updates via email.'
-                  onChange={() => console.log('Promotional emails not implemented yet')}
+                  onClick={() => {
+                    let isMsg = !promos;
+                    if (isMsg) {
+                      setPromos(isMsg);
+                      console.log('Promotional emails not implemented yet');
+                      alert('Thanks for the enthusiasm!\nUnfortunately we don\'t have these yet');
+                    }
+                  }}
                 />
               </Grid>
             </Grid>
             <Button
-              // type='submit'    // This will break this code
               fullWidth
               variant='contained'
               color='primary'
@@ -243,7 +250,7 @@ export default function SignUp() {
             </Button>
             <Grid container justify='flex-end'>
               <Grid item>
-                <Link href='#' variant='body2'>
+                <Link href='/login' variant='body2'>
                   Already have an account? Sign in
                 </Link>
               </Grid>
