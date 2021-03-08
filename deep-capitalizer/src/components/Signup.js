@@ -66,29 +66,53 @@ export default function SignUp() {
     setPassword('');
     setServerMsg('');
   }
+  
+  const isValid = () => {
+    if (city.length < 1) {
+      alert('Please enter a valid city');
+      return false;
+    }
+    if (username.length < 5) {
+      alert('Please enter a valid email');
+      return false;
+    }
+    if (password.length < 6) {
+      alert('Password must be at least 6 characters');
+      return false;
+    }
+    if (password !== confirmPass) {
+      alert('Passwords do not match');
+      return false;
+    }
+    return true;
+  }
 
   useEffect(() => {
     const signUpAttempt = async () => {
       if (attempted) {
         setAttempted(false);
-        await fetch(`http://localhost:${SERVER_PORT}/signUp`, {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            "city" : city,
-            "username" : username,
-            "password" : password,
+        if (isValid()) {
+          await fetch(`http://localhost:${SERVER_PORT}/signUp`, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              "city" : city.toLowerCase(),
+              "username" : username.toLowerCase(),
+              "password" : password,
+            })
           })
-        })
-        .then(res => res.json())
-        .then(
-          res => setServerMsg(res),
-          err => setError(err)
-        );
-        if (error) { console.log(error); }
+          .then(res => res.json())
+          .then(
+            res => setServerMsg(res),
+            err => setError(err)
+          );
+          if (error) { console.log(error); }  
+        } else {
+          clearFormState();
+        }
       }
     }
     signUpAttempt();
