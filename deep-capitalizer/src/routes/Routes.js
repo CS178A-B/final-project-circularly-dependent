@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import Home from '../components/Home';
@@ -19,7 +19,15 @@ export const history = createBrowserHistory();
 
 const Routes = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    const data = localStorage.getItem('logInStat');
+    if (data) setLoggedIn(JSON.parse(data))
+  }, [])
 
+  useEffect(() => {
+    localStorage.setItem('logInStat', JSON.stringify(loggedIn))
+  })
+  
   return (
     <div className='App'>
       <Router history={history}>
