@@ -63,5 +63,3 @@ URL="http://localhost:4000/nlpSignal"
 curl -v ${URL}
 #curl -F data=@${OUT_FILE} ${URL}
 
-
-
