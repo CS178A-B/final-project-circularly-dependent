@@ -12,7 +12,7 @@ while [ 1 ]; do
 	echo "Executing process.sh"
 	# We can add multi processing functionality here...
 	# sh or exec ? then exit or something idr
-	#./process_update.sh
+	./process_update.sh
 	curl -v ${URL}
 	#curl -F data=@${OUT_FILE} ${URL}
 done
