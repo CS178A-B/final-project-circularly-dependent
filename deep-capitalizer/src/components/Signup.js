@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { SERVER_PORT } from '../globals';
+import { UserContext } from '../globals';
 import ButtonAppBar from './shared-components/Navbar';
 
 function Copyright() {
@@ -49,6 +51,55 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  const [attempted, setAttempted] = useState(false);
+  const [city, setCity] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
+  const [serverMsg, setServerMsg] = useState('');
+  const [error, setError] = useState('');
+  const {loggedIn, setLoggedIn} = useContext(UserContext);
+
+  const clearFormState = () => {
+    setCity('');
+    setUsername('');
+    setPassword('');
+    setServerMsg('');
+  }
+
+  useEffect(() => {
+    const signUpAttempt = async () => {
+      if (attempted) {
+        setAttempted(false);
+        await fetch(`http://localhost:${SERVER_PORT}/signUp`, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            "city" : city,
+            "username" : username,
+            "password" : password,
+          })
+        })
+        .then(res => res.json())
+        .then(
+          res => setServerMsg(res),
+          err => setError(err)
+        );
+        if (error) { console.log(error); }
+      }
+    }
+    signUpAttempt();
+  }, [attempted]);
+
+  useEffect(() => {
+    if (serverMsg.length) {
+      alert(serverMsg);
+      clearFormState();
+    }
+  }, [serverMsg]);
 
   return (
     <>
@@ -97,7 +148,9 @@ export default function SignUp() {
                   type='text'
                   label='City'
                   autoComplete='city'
-                />
+                  value={city} 
+                  onChange={(e) => setCity(e.target.value)}
+                  />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -109,7 +162,9 @@ export default function SignUp() {
                   type='email'
                   label='Email Address'
                   autoComplete='email'
-                />
+                  value={username} 
+                  onChange={(e) => setUsername(e.target.value)}
+                  />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -121,7 +176,23 @@ export default function SignUp() {
                   type='password'
                   label='Password'
                   autoComplete='current-password'
-                />
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)}
+                  />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant='outlined'
+                  required
+                  fullWidth
+                  id='confirm-password'
+                  name='confirm-password'
+                  type='password'
+                  label='Confirm Password'
+                  autoComplete='current-password'
+                  value={confirmPass} 
+                  onChange={(e) => setConfirmPass(e.target.value)}
+                  />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
@@ -136,6 +207,7 @@ export default function SignUp() {
               variant='contained'
               color='primary'
               className={classes.submit}
+              onClick={() => { setAttempted(true); }}
             >
               Sign Up
             </Button>
