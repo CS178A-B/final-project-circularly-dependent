@@ -12,6 +12,7 @@ import Logout from '../components/Logout'
 import { createBrowserHistory } from 'history';
 import { UserContext } from '../globals';
 import Upload from '../components/Upload'
+import SignUp from '../components/Signup';
 
 export const history = createBrowserHistory();
 
@@ -25,6 +26,9 @@ const Routes = () => {
           {/* <ButtonAppBar/> */}
           <Switch>
               <Route path='/' exact component={Home} />
+              <Route path='/signup' exact component={SignUp} >
+                {(loggedIn)? <Redirect to='/' /> : <SignUp />}
+              </Route>
               <Route path='/login' exact component={Login}>
                 {(loggedIn)? <Redirect to='/' /> : <Login />}
               </Route> 
@@ -42,7 +46,6 @@ const Routes = () => {
               <Route path='/upload' exact component={Upload}>
                 {(!loggedIn)? <Redirect to='/login' /> : <Upload />} 
               </Route>
-              {/* <Route path='/server-test' exact component={ServerTest} /> */}
           </Switch>
         </UserContext.Provider>
       </Router>
