@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,8 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { useState, useEffect, useContext } from 'react';
-import { SERVER_PORT} from '../globals';
+import { SERVER_PORT } from '../globals';
 import { UserContext } from '../globals'
 import ButtonAppBar from './shared-components/Navbar';
 
@@ -27,6 +26,7 @@ function Copyright() {
     </Typography>
   );
 }
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -143,12 +143,15 @@ export default function Login() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href='#' variant='body2'>
+                  <Link 
+                    href='#' 
+                    variant='body2' 
+                    onClick={() => alert('Just make a new account!\nWe don\'t have that feature yet')}>
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href='#' variant='body2'>
+                  <Link href='/signup' variant='body2'>
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

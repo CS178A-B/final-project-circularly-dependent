@@ -13,6 +13,7 @@ import { createBrowserHistory } from 'history';
 import { UserContext } from '../globals';
 import Upload from '../components/Upload'
 import Goal from '../components/Goal'
+import SignUp from '../components/Signup';
 
 export const history = createBrowserHistory();
 
@@ -26,6 +27,9 @@ const Routes = () => {
           {/* <ButtonAppBar/> */}
           <Switch>
               <Route path='/' exact component={Home} />
+              <Route path='/signup' exact component={SignUp} >
+                {(loggedIn)? <Redirect to='/' /> : <SignUp />}
+              </Route>
               <Route path='/login' exact component={Login}>
                 {(loggedIn)? <Redirect to='/' /> : <Login />}
               </Route> 
