@@ -6,12 +6,14 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import TimelineOutlinedIcon from '@material-ui/icons/TimelineOutlined';
 import { createBrowserHistory } from 'history';
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../globals'
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+import WbIncandescentTwoToneIcon from '@material-ui/icons/WbIncandescentTwoTone';
 export const history = createBrowserHistory();
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   graphButton: {
-    marginRight: theme.spacing(2),
+    // marginRight: theme.spacing(2),
+    margin: 'auto',
     backgroundColor: 'inherit !important',
   },
   title: {
@@ -58,8 +61,12 @@ export default function ButtonAppBar() {
           </Link>
           <Link to="/upload" style={{ textDecoration: 'none', color: '#FFF'  }}>
             <InsertDriveFileIcon edge="start" className={classes.graphButton} color="inherit" aria-label="menu">
-              <TimelineOutlinedIcon />
             </InsertDriveFileIcon>
+          </Link>
+          <Link to="/goal" style={{ textDecoration: 'none', color: '#FFF'  }}>
+            <IconButton edge="start" className={classes.graphButton} color="inherit" aria-label="menu">
+              <WbIncandescentTwoToneIcon />
+            </IconButton>
           </Link>
           <Typography variant="h5" className={classes.title}>
             <Link to="/" style={{ textDecoration: 'none', color: '#FFF'  }}>
