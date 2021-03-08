@@ -70,14 +70,20 @@ app.post('/signUp', (req, res) => {
 
     if (existingUsers.includes(user)) {
       console.log(`Sign-up Unsucessful: sign-up attempted with existing username "${user}"`);
-      res.status(409).json({ "message" : "This username already exists" });
+      res.status(409).json({ 
+        "message" : "This username already exists",
+        "isSignedUp" : false,
+      });
     } else {
       // Add new user into database
       sqlquery = `INSERT INTO users VALUES ('${user}', '${pass}', '${city}')`;
       con.query(sqlquery, (err, result) => {
         if (err) throw err;
         console.log(result, `\nSign-up Sucessful: added "${user}" to user table from city "${city}"`);
-        res.status(200).json({ "message" : "Sucessfully created new account" });
+        res.status(200).json({ 
+          "message" : "Sucessfully created new account",
+          "isSignedUp" : true,
+        });
       });
     }
   });

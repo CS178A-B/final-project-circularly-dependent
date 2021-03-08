@@ -106,7 +106,10 @@ export default function SignUp() {
           })
           .then(res => res.json())
           .then(
-            res => setServerMsg(res.message),
+            res => { 
+              setServerMsg(res.message);
+              setLoggedIn(res.isSignedUp);
+            },
             err => setError(err)
           );
           if (error) { 
@@ -224,6 +227,7 @@ export default function SignUp() {
                 <FormControlLabel
                   control={<Checkbox value='allowExtraEmails' color='primary' />}
                   label='I want to receive inspiration, marketing promotions and updates via email.'
+                  onChange={() => console.log('Promotional emails not implemented yet')}
                 />
               </Grid>
             </Grid>
