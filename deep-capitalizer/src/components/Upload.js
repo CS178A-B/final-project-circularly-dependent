@@ -34,7 +34,9 @@ const Upload = () => {
       method: 'POST',
       body: formData
     }).then(res => res.json())
+    setTried(false)
     alert(JSON.stringify(res.message))
+    
   }
 
   const useStyles = makeStyles(() => ({
@@ -96,7 +98,6 @@ const Upload = () => {
             <input className={classes.label} ref={register} type='file' name='file' />
             <button className={classes.button}>SUBMIT</button>      
         </form>
-        
         <Grid container
           spacing={3}
           justify="center"
