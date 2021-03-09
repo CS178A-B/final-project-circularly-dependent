@@ -164,7 +164,7 @@ app.get('/serverUpload', (req,res) => {
 let results = [];
 app.post('/serverUpload', (req, res, next) => {
   const file = req.files.file;
-  let toNLPfile = path.join(__dirname + './client-to-nlp/newData.json')
+  let toNLPfile = path.join(__dirname + '/client-to-nlp/newData.json')
   fp = path.join(__dirname + '/../uploads/', file.name)
   
   if (fs.existsSync(fp)) {
@@ -188,7 +188,7 @@ app.post('/serverUpload', (req, res, next) => {
             results.push(row)
         })
         .on('end', () => {
-          fileName = './server/ToNLP/newData.json'
+          fileName = './server/client-to-nlp/newData.json'
           if (fs.existsSync(toNLPfile)) {
             console.log("UNLINKINGGGG")
             fs.unlinkSync(toNLPfile)
