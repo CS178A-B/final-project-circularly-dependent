@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import Home from '../components/Home';
@@ -6,14 +6,13 @@ import Dashboard from '../components/Dashboard';
 import Visualization from '../components/Visualization';
 import SumChart from '../components/SumChart';
 import ServerTest from '../components/ServerTest';
-import ButtonAppBar from '../components/shared-components/Navbar';
 import Login from '../components/Login'
 import Logout from '../components/Logout'
 import { createBrowserHistory } from 'history';
 import { UserContext } from '../globals';
 import Upload from '../components/Upload'
-import Goal from '../components/Goal'
 import SignUp from '../components/Signup';
+import About from '../components/About';
 
 export const history = createBrowserHistory();
 
@@ -27,7 +26,7 @@ const Routes = () => {
   useEffect(() => {
     localStorage.setItem('logInStat', JSON.stringify(loggedIn))
   })
-  
+
   return (
     <div className='App'>
       <Router history={history}>
@@ -55,7 +54,8 @@ const Routes = () => {
               <Route path='/upload' exact component={Upload}>
                 {(!loggedIn)? <Redirect to='/login' /> : <Upload />} 
               </Route>
-              <Route path='/goal' exact component={Goal} />
+              {/* <Route path='/goal' exact component={Goal} /> */}
+              <Route path='/aboutUs' exact component={About} />
               <Route path='/server-test' exact component={ServerTest} />
           </Switch>
         </UserContext.Provider>
