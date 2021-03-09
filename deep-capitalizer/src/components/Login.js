@@ -36,11 +36,13 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: 'black',
+    // backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
+
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -132,27 +134,33 @@ export default function Login() {
               />
               <Button
                 fullWidth
-                variant='contained'
-                color='primary'
+                variant='outlined'
                 className={classes.submit}
+                style={{
+                  backgroundColor:'rgba(0, 0, 0, 0.7)',
+                  color: '#FFF'
+                }}
                 onClick={() => {
                   setAttempted(true);
                 }}
               >
                 Sign In
               </Button>
-              <Grid container>
-                <Grid item xs>
+              <Grid container spacing={26}>
+                <Grid item xs={4}>
                   <Link 
                     href='#' 
                     variant='body2' 
+                    style={{
+                      color: '#000000',
+                    }}
                     onClick={() => alert('Just make a new account!\nWe don\'t have that feature yet')}>
-                    Forgot password?
+                    {"Forgot password?"}
                   </Link>
                 </Grid>
-                <Grid item>
-                  <Link href='/signup' variant='body2'>
-                    {"Don't have an account? Sign Up"}
+                <Grid item md justify='flex-end'>
+                  <Link href='/signup' variant='body2' style={{ color: '#000000' }}>
+                    {"Don't have an account? Sign Up Here"}
                   </Link>
                 </Grid>
               </Grid>
