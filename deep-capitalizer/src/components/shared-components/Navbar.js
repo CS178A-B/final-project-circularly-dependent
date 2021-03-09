@@ -14,24 +14,36 @@ import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../globals'
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import WbIncandescentTwoToneIcon from '@material-ui/icons/WbIncandescentTwoTone';
+import InsertChartIcon from '@material-ui/icons/InsertChart';
+import PublishIcon from '@material-ui/icons/Publish';
+
 export const history = createBrowserHistory();
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    // flexGrow: 1,
+  },
+  appbar:{
+    position: 'static',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    // opacity: 0.5,
+    boxShadow: 'none',
   },
   graphButton: {
-    // marginRight: theme.spacing(2),
+    marginRight: theme.spacing(2),
     margin: 'auto',
     backgroundColor: 'inherit !important',
   },
   title: {
-    flexGrow: 1,
-    fontFamily : 'Verdana'
+    // flexGrow: 1,
+    fontFamily: 'Maven Pro', 
+    fontWeight: 700, 
+
   },
   button : {
-    color: 'white',
-    fontFamily : 'Verdana'
+    color: '#FFF',
+    fontFamily: 'Maven Pro',
+    fontWeight: 400, 
 
   }
 }));
@@ -52,30 +64,39 @@ export default function ButtonAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar className={classes.appbar} >
         <Toolbar>
-          <Link to="/dashboard" style={{ textDecoration: 'none', color: '#FFF'  }}>
-            <IconButton edge="start" className={classes.graphButton} color="inherit" aria-label="menu">
-              <TimelineOutlinedIcon />
-            </IconButton>
-          </Link>
-          <Link to="/upload" style={{ textDecoration: 'none', color: '#FFF'  }}>
-            <InsertDriveFileIcon edge="start" className={classes.graphButton} color="inherit" aria-label="menu">
-            </InsertDriveFileIcon>
-          </Link>
-          <Link to="/goal" style={{ textDecoration: 'none', color: '#FFF'  }}>
-            <IconButton edge="start" className={classes.graphButton} color="inherit" aria-label="menu">
-              <WbIncandescentTwoToneIcon />
-            </IconButton>
-          </Link>
           <Typography variant="h5" className={classes.title}>
             <Link to="/" style={{ textDecoration: 'none', color: '#FFF'  }}>
+            {/* <Link to="/" style={{ textDecoration: 'none', color: '#1a063d'  }}> */}
               {/* <Button className={classes.button}> */}
-                Deep Capitalizer
+                Capitalizer
               {/* </Button> */}
             </Link>
-          </Typography>
-          <Link to={url} style={{ textDecoration: 'none', color: '#FFF'  }}>
+          </Typography>      
+          <div className={classes.graphButton}>
+            {/* <Link to="/dashboard" style={{ textDecoration: 'none', color: '#14173d'  }}> */}
+            <Link to="/dashboard" style={{ textDecoration: 'none', color: '#FFF'  }}>
+
+              <IconButton  color="inherit" aria-label="menu">
+                <TimelineOutlinedIcon />
+              </IconButton>
+            </Link>
+
+            <Link to="/upload" style={{ textDecoration: 'none', color: '#FFF'  }}>
+              <IconButton  color="inherit" aria-label="menu">
+                <PublishIcon />
+              </IconButton>
+            </Link>
+            
+            <Link to="/aboutUs" style={{ textDecoration: 'none', color: '#FFF'  }}>
+              <IconButton  color="inherit" aria-label="menu">
+                <WbIncandescentTwoToneIcon />
+              </IconButton>
+            </Link>
+          </div>    
+
+          <Link to={url} style={{ textDecoration: 'none' }}>
             <Button className={classes.button} color="inherit">{logStatus}</Button>
           </Link>
         </Toolbar>
