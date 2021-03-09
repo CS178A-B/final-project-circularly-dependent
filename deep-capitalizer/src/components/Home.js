@@ -3,7 +3,6 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import ButtonAppBar from './shared-components/Navbar';
 import { UserContext } from '../globals';
-import AmazingBackground from './video/pexels-mikhail-nilov-6930815.mp4'
 import dataVisual from './video/dataVisual.mp4'
 import graphGoDown from './video/graphGoDown.mp4'
 import graphsOnTable from './video/graphsOnTable.mp4'
