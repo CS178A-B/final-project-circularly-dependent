@@ -12,7 +12,7 @@ const Cards = (props) => {
       textAlign: 'center',
       alignItems: 'center',
       justifyItems: 'center',
-      height: "250%",
+      height: "100%",
       width: "30rem",
     },
   }))
