@@ -10,10 +10,15 @@ mvn --version
 sudo apt install default-jdk
 javac -version
 ```
-* Crontab: Automate tasks on a scheduled basis
-```
+* Crontab: Automate tasks on a scheduled basis (Not using cron anymore)
+```bash
 sudo apt-get install cron
 0 */2 * * *  /home/user/process_update.sh
+```
+
+* inotify-tools
+```bash
+sudo apt install inotify-tools
 ```
 
 
