@@ -37,15 +37,52 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: 'black',
-    // backgroundColor: theme.palette.secondary.main,
+    backgroundColor: 'rgba(65, 176, 18)',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
-
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: 'rgba(30, 99, 0, 0.8)',
+    color: 'white',
+    "& .MuiTouchRipple-root span":{
+      backgroundColor: 'rgba(30, 99, 0)!important',
+      opacity: .1,
+    },
+    "&:hover": {
+      backgroundColor: 'rgba(65, 176, 18)'
+    },
+  },
+  root: {
+    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "gray"
+    },
+    "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "green"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "green"
+    },
+    "& .MuiOutlinedInput-input": {
+      color: "black"
+    },
+    "&:hover .MuiOutlinedInput-input": {
+      color: "green"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
+      color: "black"
+    },
+    "& .MuiInputLabel-outlined": {
+      color: "gray"
+    },
+    "&:hover .MuiInputLabel-outlined": {
+      color: "black"
+    },
+    "& .MuiInputLabel-outlined.Mui-focused": {
+      color: "gray"
+    },
   },
 }));
 
@@ -56,6 +93,7 @@ export default function Login() {
   const [ID, setID] = useState('');
   const [password, setPassword] = useState('');
   const {loggedIn, setLoggedIn} = useContext(UserContext);
+  const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset" };
 
   useEffect(() => {
     const signInAttempt = async () => {
@@ -107,6 +145,7 @@ export default function Login() {
             </Typography>
             <form className={classes.form} noValidate>
               <TextField
+                className={classes.root}
                 variant='outlined'
                 margin='normal'
                 required
@@ -118,8 +157,11 @@ export default function Login() {
                 value={ID} 
                 onChange={(e) => setID(e.target.value)}
                 autoFocus
+                inputProps={{ style: inputStyle }}
               />
               <TextField
+                className={classes.root}
+                inputProps={{ style: inputStyle }}
                 variant='outlined'
                 margin='normal'
                 required
@@ -136,14 +178,10 @@ export default function Login() {
                 fullWidth
                 variant='outlined'
                 className={classes.submit}
-                style={{
-                  backgroundColor:'rgba(0, 0, 0, 0.7)',
-                  color: '#FFF'
-                }}
+
                 onClick={() => {
                   setAttempted(true);
-                }}
-              >
+                }}>
                 Sign In
               </Button>
               <Grid container spacing={26}>

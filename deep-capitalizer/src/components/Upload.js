@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Cards from './shared-components/Card';
 import Grid from '@material-ui/core/Grid';
 import ButtonAppBar from './shared-components/Navbar';
+import Button from '@material-ui/core/Button';
 
 
 const Upload = () => {
@@ -36,7 +37,6 @@ const Upload = () => {
     }).then(res => res.json())
     setTried(false)
     alert(JSON.stringify(res.message))
-    
   }
 
   const useStyles = makeStyles(() => ({
@@ -57,7 +57,6 @@ const Upload = () => {
     },
 
     label: {
-
       top: '30%',
       padding: '1rem'
     },
@@ -72,20 +71,29 @@ const Upload = () => {
       // marginRight: '-50%',
       // transform: 'translate(-50%, -50%)' ,
 
-      backgroundColor: '#363396',
+      backgroundColor: 'rgba(30, 99, 0, 0.8)',
+      // color: 'white',
+      // padding: '0.5rem',
+      // fontFamily: 'sans-serif',
+      // borderRadius: '0.3rem',
+      // cursor: 'pointer',
+      // marginTop: '1rem',
+      // borderStyle: 'none',
+      boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.19), 0 6px 20px 0 rgba(0, 0, 0, 0.0)',
+
+      // background: 'linear-gradient(45deg, #177000 30%, #0b8a00 90%)',
+      borderRadius: 3,
+      border: 0,
       color: 'white',
-      padding: '0.5rem',
-      fontFamily: 'sans-serif',
-      borderRadius: '0.3rem',
-      cursor: 'pointer',
-      marginTop: '1rem',
-      borderStyle: 'none',
-      boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.19), 0 6px 20px 0 rgba(0, 0, 0, 0.0)'
+      height: 48,
+      padding: '0 30px',
+      // boxShadow: '0 3px 5px 2px rgba(41, 84, 30, .3)',
     },
-    gridContainer: {
+      gridContainer: {
       paddingLeft: '2px',
       paddingRight: '2px',
-    }
+    },
+    
   }));
 
   const classes = useStyles();

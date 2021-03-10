@@ -16,6 +16,7 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import WbIncandescentTwoToneIcon from '@material-ui/icons/WbIncandescentTwoTone';
 import InsertChartIcon from '@material-ui/icons/InsertChart';
 import PublishIcon from '@material-ui/icons/Publish';
+import { useLocation } from 'react-router-dom'
 
 export const history = createBrowserHistory();
 
@@ -25,7 +26,14 @@ const useStyles = makeStyles((theme) => ({
   },
   appbar:{
     position: 'static',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'white',
+    //backgroundColor: 'rgba(0, 0, 0, 1)',
+    // opacity: 0.5,
+    boxShadow: 'none',
+  },
+  homeappbar:{
+    position: 'static',
+    backgroundColor: 'transparent',
     // opacity: 0.5,
     boxShadow: 'none',
   },
@@ -40,18 +48,35 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700, 
 
   },
-  button : {
+  loginHome: {
     color: '#FFF',
     fontFamily: 'Maven Pro',
     fontWeight: 400, 
-
-  }
+    textDecoration: 'none', 
+  }, 
+  loginOther: {
+    color: '#000000',
+    fontFamily: 'Maven Pro',
+    fontWeight: 400, 
+    textDecoration: 'none', 
+  }, 
+  linkHome: {
+    textDecoration: 'none', 
+    color: '#FFF'  
+  },
+  linkOther: {
+    textDecoration: 'none', 
+    color: '#000000'  
+  },
 }));
 
 export default function ButtonAppBar() {
   const classes = useStyles();
   const {loggedIn, setLoggedIn} = useContext(UserContext);
   let logStatus = 'SIGN IN'
+  let background = 'rgba(0, 0, 0, 1)'
+  const location = useLocation();
+  console.log(location.pathname);
 
   let url = '/login'
   if (loggedIn) {
@@ -64,10 +89,10 @@ export default function ButtonAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar className={classes.appbar} >
+      <AppBar className={(location.pathname === '/')? classes.homeappbar : classes.appbar} >
         <Toolbar>
           <Typography variant="h5" className={classes.title}>
-            <Link to="/" style={{ textDecoration: 'none', color: '#FFF'  }}>
+            <Link to="/" className={(location.pathname === '/')? classes.linkHome : classes.linkOther}>
             {/* <Link to="/" style={{ textDecoration: 'none', color: '#1a063d'  }}> */}
               {/* <Button className={classes.button}> */}
                 Capitalizer
@@ -76,27 +101,27 @@ export default function ButtonAppBar() {
           </Typography>      
           <div className={classes.graphButton}>
             {/* <Link to="/dashboard" style={{ textDecoration: 'none', color: '#14173d'  }}> */}
-            <Link to="/dashboard" style={{ textDecoration: 'none', color: '#FFF'  }}>
+            <Link to="/dashboard" className={(location.pathname === '/')? classes.linkHome : classes.linkOther}>
 
               <IconButton  color="inherit" aria-label="menu">
                 <TimelineOutlinedIcon />
               </IconButton>
             </Link>
 
-            <Link to="/upload" style={{ textDecoration: 'none', color: '#FFF'  }}>
+            <Link to="/upload" className={(location.pathname === '/')? classes.linkHome : classes.linkOther}>
               <IconButton  color="inherit" aria-label="menu">
                 <PublishIcon />
               </IconButton>
             </Link>
             
-            <Link to="/aboutUs" style={{ textDecoration: 'none', color: '#FFF'  }}>
+            <Link to="/aboutUs" className={(location.pathname === '/')? classes.linkHome : classes.linkOther}>
               <IconButton  color="inherit" aria-label="menu">
                 <WbIncandescentTwoToneIcon />
               </IconButton>
             </Link>
           </div>    
 
-          <Link to={url} style={{ textDecoration: 'none' }}>
+          <Link to={url} className={(location.pathname === '/')? classes.loginHome : classes.loginOther}>
             <Button className={classes.button} color="inherit">{logStatus}</Button>
           </Link>
         </Toolbar>
