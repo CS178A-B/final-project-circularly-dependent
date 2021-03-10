@@ -37,7 +37,6 @@ const Upload = () => {
     }).then(res => res.json())
     setTried(false)
     alert(JSON.stringify(res.message))
-    
   }
 
   const useStyles = makeStyles(() => ({
@@ -72,7 +71,7 @@ const Upload = () => {
       // marginRight: '-50%',
       // transform: 'translate(-50%, -50%)' ,
 
-      backgroundColor: '#145e00',
+      backgroundColor: 'rgba(30, 99, 0, 0.8)',
       // color: 'white',
       // padding: '0.5rem',
       // fontFamily: 'sans-serif',
