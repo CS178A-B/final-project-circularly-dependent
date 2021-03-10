@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: 'black',
-    // backgroundColor: theme.palette.secondary.main,
+    backgroundColor: 'rgba(65, 176, 18)',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -45,6 +45,15 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: 'rgba(30, 99, 0, 0.8)',
+    color: 'white',
+    "& .MuiTouchRipple-root span":{
+      backgroundColor: 'rgba(30, 99, 0)!important',
+      opacity: .1,
+    },
+    "&:hover": {
+      backgroundColor: 'rgba(65, 176, 18)'
+    },
   },
   root: {
     "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
@@ -169,10 +178,7 @@ export default function Login() {
                 fullWidth
                 variant='outlined'
                 className={classes.submit}
-                style={{
-                  backgroundColor:'rgba(30, 99, 0, 0.8)',
-                  color: '#FFF'
-                }}
+
                 onClick={() => {
                   setAttempted(true);
                 }}>
