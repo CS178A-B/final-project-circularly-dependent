@@ -75,17 +75,17 @@ const Home = () => {
           <>
             {/* Signed In */}
             <Link to='/dashboard' style={{ textDecoration: 'none'}}>
-              <Button color='primary' variant='contained' style={{ margin: 50, fontFamily: 'Arial '}}>
+              <Button color='primary' variant='contained' size='large' style={{ margin: 50, fontFamily: 'Maven Pro', backgroundColor: '#262626'}}>
                 Kibana Dashboard
               </Button>
             </Link>
             <Link to='/visualization' style={{ textDecoration: 'none'}}>
-              <Button color='default' variant='contained' style={{ margin: 50, fontFamily: 'Arial '}}>
+              <Button color='default' variant='contained' size='large' style={{ margin: 50, fontFamily: 'Maven Pro'}}>
                 Price per Unit
               </Button>
             </Link>
             <Link to='/sum-chart' style={{ textDecoration: 'none'}}>
-              <Button color='default' variant='contained' style={{ margin: 50, fontFamily: 'Arial '}}>
+              <Button color='default' variant='contained' size='large' style={{ margin: 50, fontFamily: 'Maven Pro'}}>
                 Annual Spending
               </Button>
             </Link>  
