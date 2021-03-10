@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: 'rgba(65, 176, 18)',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -46,6 +46,44 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: 'rgba(30, 99, 0, 0.8)',
+    color: 'white',
+    "& .MuiTouchRipple-root span":{
+      backgroundColor: 'rgba(30, 99, 0)!important',
+      opacity: .1,
+    },
+    "&:hover": {
+      backgroundColor: 'rgba(65, 176, 18)'
+    },
+  },
+  root: {
+    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "gray"
+    },
+    "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "green"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "green"
+    },
+    "& .MuiOutlinedInput-input": {
+      color: "black"
+    },
+    "&:hover .MuiOutlinedInput-input": {
+      color: "green"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
+      color: "black"
+    },
+    "& .MuiInputLabel-outlined": {
+      color: "gray"
+    },
+    "&:hover .MuiInputLabel-outlined": {
+      color: "black"
+    },
+    "& .MuiInputLabel-outlined.Mui-focused": {
+      color: "gray"
+    },
   },
 }));
 
@@ -60,6 +98,7 @@ export default function SignUp() {
   const [promos, setPromos] = useState(false);
   const [error, setError] = useState('');
   const {_loggedIn, setLoggedIn} = useContext(UserContext);
+  const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset" };
 
   const clearFormState = () => {
     setCity('');
@@ -170,6 +209,8 @@ export default function SignUp() {
               </Grid> */}
               <Grid item xs={12}>
                 <TextField
+                  className={classes.root}
+                  inputProps={{ style: inputStyle }}
                   variant='outlined'
                   required
                   fullWidth
@@ -180,10 +221,13 @@ export default function SignUp() {
                   autoComplete='city'
                   value={city} 
                   onChange={e => setCity(e.target.value)}
+                  
                   />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  className={classes.root}
+                  inputProps={{ style: inputStyle }}
                   variant='outlined'
                   required
                   fullWidth
@@ -198,6 +242,8 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  className={classes.root}
+                  inputProps={{ style: inputStyle }}
                   variant='outlined'
                   required
                   fullWidth
@@ -212,6 +258,8 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  className={classes.root}
+                  inputProps={{ style: inputStyle }}
                   variant='outlined'
                   required
                   fullWidth
@@ -226,7 +274,7 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value='allowExtraEmails' color='primary' />}
+                  control={<Checkbox value='allowExtraEmails' color='green' />}
                   label='I want to receive inspiration, marketing promotions and updates via email.'
                   onClick={() => {
                     let isMsg = !promos;
@@ -242,7 +290,6 @@ export default function SignUp() {
             <Button
               fullWidth
               variant='contained'
-              color='primary'
               className={classes.submit}
               onClick={() => { setAttempted(true); }}
             >
@@ -250,7 +297,7 @@ export default function SignUp() {
             </Button>
             <Grid container justify='flex-end'>
               <Grid item>
-                <Link href='/login' variant='body2'>
+                <Link href='/login' variant='body2' style = {{color: 'black'}}>
                   Already have an account? Sign in
                 </Link>
               </Grid>
