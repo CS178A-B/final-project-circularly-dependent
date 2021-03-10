@@ -9,7 +9,11 @@ const Cards = (props) => {
 
   const useStyles = makeStyles( () => ({
     root: {
-      marginTop: '30px',
+      textAlign: 'center',
+      alignItems: 'center',
+      justifyItems: 'center',
+      height: "250%",
+      width: "30rem",
     },
   }))
 
@@ -18,10 +22,10 @@ const Cards = (props) => {
     <Card className={classes.root}>
       <CardActionArea>
         <CardContent>
-          <Typography gutterBottom variant="h7" component="h2">
+          <Typography gutterBottom variant="h7" component="h3">
             {props.CardName}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body3" color="textSecondary" component="p">
             {props.Files?.map(file=> <p>{file}</p>)}
           </Typography>
         </CardContent>

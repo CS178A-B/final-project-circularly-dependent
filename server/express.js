@@ -75,14 +75,20 @@ app.post('/signUp', (req, res) => {
 
     if (existingUsers.includes(user)) {
       console.log(`Sign-up Unsucessful: sign-up attempted with existing username "${user}"`);
-      res.status(409).json({ "message" : "This username already exists" });
+      res.status(409).json({ 
+        "message" : "This username already exists",
+        "isSignedUp" : false,
+      });
     } else {
       // Add new user into database
       sqlquery = `INSERT INTO users VALUES ('${user}', '${pass}', '${city}')`;
       con.query(sqlquery, (err, result) => {
         if (err) throw err;
         console.log(result, `\nSign-up Sucessful: added "${user}" to user table from city "${city}"`);
-        res.status(200).json({ "message" : "Sucessfully created new account" });
+        res.status(200).json({ 
+          "message" : "Sucessfully created new account",
+          "isSignedUp" : true,
+        });
       });
     }
   });
@@ -158,7 +164,7 @@ app.get('/serverUpload', (req,res) => {
 let results = [];
 app.post('/serverUpload', (req, res, next) => {
   const file = req.files.file;
-  let toNLPfile = path.join(__dirname + './client-to-nlp/newData.json')
+  let toNLPfile = path.join(__dirname + '/client-to-nlp/newData.json')
   fp = path.join(__dirname + '/../uploads/', file.name)
   
   if (fs.existsSync(fp)) {
@@ -182,7 +188,7 @@ app.post('/serverUpload', (req, res, next) => {
             results.push(row)
         })
         .on('end', () => {
-          fileName = './server/ToNLP/newData.json'
+          fileName = './server/client-to-nlp/newData.json'
           if (fs.existsSync(toNLPfile)) {
             console.log("UNLINKINGGGG")
             fs.unlinkSync(toNLPfile)
