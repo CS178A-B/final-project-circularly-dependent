@@ -26,7 +26,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       {/* <Link color="inherit" href="https://material-ui.com/"> */}
-        Capitalizer
+        Circularly Dependent {' '}
       {/* </Link>{' '} */}
       {new Date().getFullYear()}
       {'.'}
@@ -133,7 +133,7 @@ const Album =() => {
               Fast, Dynamic, Intuitive
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" style={{ fontFamily: 'Manjari' }} paragraph>
-              Make money Management fit to your interest{<br />}
+              Make money management fit to your interest{<br />}
               Analyze your data by timeline, items, unit price, or all {<br />}
             </Typography>
             <img className={classes.contentImage} src={Kibana} />
@@ -146,8 +146,8 @@ const Album =() => {
                 Circularly Dependent
               </Typography>
               <Typography className={classes.developerHeader} variant="h5" align="center" color="textSecondary" paragraph>
-                A team that brings your need to reality{<br />}
-                Feel free to reach out for more{<br />}
+                A team that brings your needs to reality{<br />}
+                Reach out for more{<br />}
               </Typography>
               {/* <Button variant="contained" className={classes.submit}>
                 Main call to action
@@ -194,7 +194,7 @@ const Album =() => {
       {/* Footer */}
       <footer className={classes.footer}>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          We Value Your Time
+          We value your time
         </Typography>
         <Copyright />
       </footer>
