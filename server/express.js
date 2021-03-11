@@ -121,7 +121,7 @@ app.post('/signIn', (req, res) => {
 
 app.post('/selectData', (req, res) => {
   // let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\' ORDER BY ISSUE_DATE ASC, unit_price'
-  let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\' ORDER BY unit_price LIMIT 30'
+  let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\' ORDER BY unit_price LIMIT 20'
 
   console.log(sqlquery)
   con.query(sqlquery, function (err, result) {

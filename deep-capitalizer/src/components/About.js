@@ -18,15 +18,16 @@ import ButtonAppBar from './shared-components/Navbar';
 import Siena from "./video/sienaSEHa.jpg";
 import Nate from "./video/nateBrennan.jpg";
 import Jason from "./video/jasonChan.jpg";
+import Kibana  from "./video/kibana.png"
 
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
+      {/* <Link color="inherit" href="https://material-ui.com/"> */}
+        Circularly Dependent {' '}
+      {/* </Link>{' '} */}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -64,10 +65,31 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
+  developerHeader: {
+    fontFamily: 'Manjari',
+    fontWeight: '400',
+    marginBottom: theme.spacing(4),
+  },
   header: {
     fontFamily: 'Manjari',
     fontWeight: '400',
+  },
+  contentImage: {
+    flex:1,
+    marginTop: theme.spacing(4),
   }, 
+  submit: {
+    // margin: theme.spacing(3, 0, 2),
+    backgroundColor: 'rgba(30, 99, 0, 0.8)',
+    color: 'white',
+    "& .MuiTouchRipple-root span":{
+      backgroundColor: 'rgba(30, 99, 0)!important',
+      opacity: .1,
+    },
+    "&:hover": {
+      backgroundColor: 'rgba(65, 176, 18)'
+    },
+  }
 }));
 
 const cards = [0, 1, 2];
@@ -77,19 +99,22 @@ const developers = [
     id : "nate",
     face: Nate,
     name: "Nathan Brennan",
-    content: "nbren004@ucr.edu"
+    content: "nbren004@ucr.edu",
+    title: "",
   },
   {
     id : "json",
     face: Jason,
     name: "Jason Chan",
-    content: "jchan190@ucr.edu"
+    content: "jchan190@ucr.edu",
+    title: "",
   },
   {
     id : "siena",
     face: Siena,
     name: "Siena Seung Eun Ha",
-    content: "sha021@ucr.edu"
+    content: "sha021@ucr.edu",
+    title: "",
   }]
 
 const Album =() => {
@@ -105,30 +130,35 @@ const Album =() => {
         <div className={classes.heroContent}>
           <Container maxWidth="lg">
             <Typography className={classes.header} component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Watch Wisely, Spend Smart
+              Fast, Dynamic, Intuitive
             </Typography>
-            <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              Experience our fast, dynamic analyzer on your spending.{<br />}
+            <Typography variant="h5" align="center" color="textSecondary" style={{ fontFamily: 'Manjari' }} paragraph>
+              Make money management fit to your interest{<br />}
               Analyze your data by timeline, items, unit price, or all {<br />}
             </Typography>
-
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                  <Button variant="contained" color="primary">
-                    Main call to action
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Secondary action
-                  </Button>
-                </Grid>
-              </Grid>
-            </div>
+            <img className={classes.contentImage} src={Kibana} />
           </Container>
         </div>
         <Container className={classes.cardGrid} maxWidth="md">
+          <Grid container spacing={2} justify="center">
+            <Grid item>
+              <Typography className={classes.developerHeader} component="h1" variant="h3" align="center" color="textPrimary" gutterBottom>
+                Circularly Dependent
+              </Typography>
+              <Typography className={classes.developerHeader} variant="h5" align="center" color="textSecondary" paragraph>
+                A team that brings your needs to reality{<br />}
+                Reach out for more{<br />}
+              </Typography>
+              {/* <Button variant="contained" className={classes.submit}>
+                Main call to action
+              </Button> */}
+            </Grid>
+                {/* <Grid item>
+                  <Button variant="outlined" className={classes.submit}>
+                    Secondary action
+                  </Button>
+                </Grid> */}
+          </Grid>
           {/* End hero unit */}
           <Grid container spacing={4}>
             {developers.map((developer) => (
@@ -137,7 +167,7 @@ const Album =() => {
                   <CardMedia
                     className={classes.cardMedia}
                     image={developer.face}
-                    title="Image title"
+                    title={developer.title}
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography  variant="h5" component="h2" gutterBottom>
@@ -163,11 +193,8 @@ const Album =() => {
       </main>
       {/* Footer */}
       <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Something here to give the footer a purpose!
+          We value your time
         </Typography>
         <Copyright />
       </footer>

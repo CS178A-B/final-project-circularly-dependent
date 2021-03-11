@@ -5,6 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import Box from '@material-ui/core/Box';
 import MenuIcon from '@material-ui/icons/Menu';
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import TimelineOutlinedIcon from '@material-ui/icons/TimelineOutlined';
@@ -16,7 +17,9 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import WbIncandescentTwoToneIcon from '@material-ui/icons/WbIncandescentTwoTone';
 import InsertChartIcon from '@material-ui/icons/InsertChart';
 import PublishIcon from '@material-ui/icons/Publish';
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
+import LogoWhite from '../../resources/logo11trans-BlackBck-sml.png';
+import LogoBlack from '../../resources/logo11trans-whiteBck-sml.png';
 
 export const history = createBrowserHistory();
 
@@ -46,7 +49,8 @@ const useStyles = makeStyles((theme) => ({
     // flexGrow: 1,
     fontFamily: 'Maven Pro', 
     fontWeight: 700, 
-
+    marginTop: 7,
+    marginLeft: 5,
   },
   loginHome: {
     color: '#FFF',
@@ -73,10 +77,8 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
   const classes = useStyles();
   const {loggedIn, setLoggedIn} = useContext(UserContext);
-  let logStatus = 'SIGN IN'
-  let background = 'rgba(0, 0, 0, 1)'
   const location = useLocation();
-  console.log(location.pathname);
+  let logStatus = 'SIGN IN';
 
   let url = '/login'
   if (loggedIn) {
@@ -91,14 +93,11 @@ export default function ButtonAppBar() {
     <div className={classes.root}>
       <AppBar className={(location.pathname === '/')? classes.homeappbar : classes.appbar} >
         <Toolbar>
-          <Typography variant="h5" className={classes.title}>
+          <Box className={classes.title}>
             <Link to="/" className={(location.pathname === '/')? classes.linkHome : classes.linkOther}>
-            {/* <Link to="/" style={{ textDecoration: 'none', color: '#1a063d'  }}> */}
-              {/* <Button className={classes.button}> */}
-                Capitalizer
-              {/* </Button> */}
+              {(location.pathname === '/') ? <img src={LogoWhite} /> : <img src={LogoBlack} />}
             </Link>
-          </Typography>      
+          </Box>      
           <div className={classes.graphButton}>
             {/* <Link to="/dashboard" style={{ textDecoration: 'none', color: '#14173d'  }}> */}
             <Link to="/dashboard" className={(location.pathname === '/')? classes.linkHome : classes.linkOther}>

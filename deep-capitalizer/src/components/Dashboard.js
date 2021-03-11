@@ -22,7 +22,7 @@ const Dashboard = () => {
   return (
     <div className={classes.root}>
       <ButtonAppBar />
-      <iframe className={classes.kibana} src="http://localhost:5601/goto/89ce5e2fd5370d0b335dd2d7ea07fdd7" />
+      <iframe className={classes.kibana} frameBorder='0' src="http://localhost:5601/goto/89ce5e2fd5370d0b335dd2d7ea07fdd7" />
     </div>
   );
 }

@@ -3,12 +3,9 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import ButtonAppBar from './shared-components/Navbar';
 import { UserContext } from '../globals';
-import dataVisual from './video/dataVisual.mp4'
-import graphGoDown from './video/graphGoDown.mp4'
-import graphsOnTable from './video/graphsOnTable.mp4'
-import postItGirl from './video/postItGirl.mp4'
-import typingWithGraphLeft from './video/typingWithGraphLeft.mp4'
+import typingWithGraphLeft from './video/typingWithGraphLeft.mp4';
 import Typography from '@material-ui/core/Typography';
+import Logo from '../resources/logo11trans-BlackBck-med.png';
 
 const imageLink = 'https://wallpapercave.com/wp/wp4831635.jpg';
 
@@ -51,8 +48,9 @@ const Home = () => {
         // left:'0',
         // alignItems: 'center',
         // justifyItems: 'center',
+        textAlign: 'center',
         width: '100%',
-        height: '60%',
+        height: '60%',  // 40% for 1440p centering
         overflow: 'auto',
         margin: 'auto',
         position: 'absolute',
@@ -63,19 +61,21 @@ const Home = () => {
           From Number to Visual {<br />}
           Start today
         </h1> */}
-
-        <Typography style={{color: 'white', fontFamily: 'Maven Pro', fontWeight: 500}} component="h1" variant="h1" align="center" color="textPrimary" gutterBottom>
+        {/* <Box align='center' marginBottom={5}>
+          <img src={Logo} />
+        </Box> */}
+        {/* <Typography style={{color: 'white', fontFamily: 'Maven Pro', fontWeight: 500}} component="h1" variant="h1" align="center" color="textPrimary" gutterBottom>
           Capitalizer
-        </Typography>
-        <Typography style={{color: 'white', fontFamily: 'Commissioner', fontWeight: 400}} component="h4" variant="h4" align="center" color="textPrimary" gutterBottom>
-          Watch Wise, 
+        </Typography> */}
+        <Typography style={{color: 'white', fontFamily: 'Commissioner', fontWeight: 400}} component="h1" variant="h1" align="center" color="textPrimary" gutterBottom>
+          Watch Wise {<br />}
           Spend Smart
         </Typography>
         {loggedIn ?
           <>
             {/* Signed In */}
             <Link to='/dashboard' style={{ textDecoration: 'none'}}>
-              <Button color='primary' variant='contained' size='large' style={{ margin: 50, fontFamily: 'Maven Pro', backgroundColor: '#262626'}}>
+              <Button color='primary' variant='contained' size='large' style={{ margin: 50, fontFamily: 'Maven Pro', backgroundColor: '#1e6300'}}>
                 Kibana Dashboard
               </Button>
             </Link>
@@ -94,7 +94,7 @@ const Home = () => {
           <>
             {/* Signed Off */}
             <Link to='/signup' style={{ textDecoration: 'none'}}>
-              <Button color='primary' variant='contained' size='large' style={{ margin: 50, fontFamily: 'Maven Pro', backgroundColor: '#262626'}}>
+              <Button color='primary' variant='contained' size='large' style={{ margin: 50, fontFamily: 'Maven Pro', backgroundColor: '#1e6300'}}>
                 Sign Up
               </Button>
             </Link>
