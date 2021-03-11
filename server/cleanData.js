@@ -24,6 +24,7 @@ function postProcess(data) {
   if (thisData.PRODUCT_NAME.indexOf(" ") === 0) thisData.PRODUCT_NAME = thisData.PRODUCT_NAME.slice(1);
   thisData.PRODUCT_NAME = thisData.PRODUCT_NAME.replace(/\d\d\\\//, "");
 
+  if (thisData.PRODUCT_NAME === '0') thisData.PRODUCT_NAME = 'Misc.';
 
   // console.log(thisData.ENTRY_ID, thisData.PRODUCT_NAME.charAt(0) !== '.')
   
