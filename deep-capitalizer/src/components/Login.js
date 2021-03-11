@@ -89,7 +89,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
   const [attempted, setAttempted] = useState(false);
-  const [error, setError] = useState(null);
   const [ID, setID] = useState('');
   const [password, setPassword] = useState('');
   const {loggedIn, setLoggedIn} = useContext(UserContext);
