@@ -15,6 +15,33 @@ import ButtonAppBar from './shared-components/Navbar';
 const useStyles = makeStyles({
   root: {
     textAlign: 'center',
+    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "gray"
+    },
+    "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "green"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "green"
+    },
+    "& .MuiOutlinedInput-input": {
+      color: "black"
+    },
+    "&:hover .MuiOutlinedInput-input": {
+      color: "green"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
+      color: "black"
+    },
+    "& .MuiInputLabel-outlined": {
+      color: "gray"
+    },
+    "&:hover .MuiInputLabel-outlined": {
+      color: "black"
+    },
+    "& .MuiInputLabel-outlined.Mui-focused": {
+      color: "gray"
+    },
   },
   header: {
     height: '85vh',
@@ -28,6 +55,18 @@ const useStyles = makeStyles({
     minHeight: '40vh',
     maxWidth: '80vw',
   },
+  submit: {
+    // margin: theme.spacing(3, 0, 2),
+    backgroundColor: 'rgba(30, 99, 0, 0.8)',
+    color: 'white',
+    "& .MuiTouchRipple-root span":{
+      backgroundColor: 'rgba(30, 99, 0)!important',
+      opacity: .1,
+    },
+    "&:hover": {
+      backgroundColor: 'rgba(65, 176, 18)'
+    },
+  },
 });
 
 const SumChart = () => {
@@ -38,7 +77,7 @@ const SumChart = () => {
   const [graphData, setGraph] = useState(null);
   const [error, setError] = useState(null);
   const [prodName, setProd] = useState(null);
-
+  const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset" };
   
   // Fetch from "/selectData" end-point
   useEffect(() => {
@@ -113,7 +152,9 @@ const SumChart = () => {
       <div className={classes.root}>
         <ButtonAppBar />
         <header className={classes.header}>
-          <ComboSearch setItem={(item) => setProd(item)}/>
+          <ComboSearch             
+            inputProps={{ style: inputStyle }}
+            setItem={(item) => setProd(item)}/>
           <br />
           <p>
             Annual Spending
@@ -122,11 +163,9 @@ const SumChart = () => {
             <ResponsiveContainer className={classes.graph}>
               <LineChart
                 width={500}
-                height={300}
+                height={250}
                 data={graphData}
-                margin={{
-                  top: 5, right: 30, left: 20, bottom: 5,
-                }}
+
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="year" />
@@ -141,7 +180,7 @@ const SumChart = () => {
           }
 
         <br />
-        <Button onClick={() => { setRead(true) }} color="primary" variant='contained'>
+        <Button className={classes.submit} onClick={() => { setRead(true) }} color="primary" variant='contained'>
           Get Results
         </Button>
       </header>

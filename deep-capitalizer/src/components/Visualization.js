@@ -13,6 +13,33 @@ import ButtonAppBar from './shared-components/Navbar';
 const useStyles = makeStyles({
   root: {
     textAlign: 'center',
+    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "gray"
+    },
+    "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "green"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "green"
+    },
+    "& .MuiOutlinedInput-input": {
+      color: "black"
+    },
+    "&:hover .MuiOutlinedInput-input": {
+      color: "green"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
+      color: "black"
+    },
+    "& .MuiInputLabel-outlined": {
+      color: "gray"
+    },
+    "&:hover .MuiInputLabel-outlined": {
+      color: "black"
+    },
+    "& .MuiInputLabel-outlined.Mui-focused": {
+      color: "gray"
+    },
   },
   header: {
     minHeight: '85vh',
@@ -26,6 +53,18 @@ const useStyles = makeStyles({
     minHeight: '40vh',
     maxWidth: '80vw',
   },
+  submit: {
+    // margin: theme.spacing(3, 0, 2),
+    backgroundColor: 'rgba(30, 99, 0, 0.8)',
+    color: 'white',
+    "& .MuiTouchRipple-root span":{
+      backgroundColor: 'rgba(30, 99, 0)!important',
+      opacity: .1,
+    },
+    "&:hover": {
+      backgroundColor: 'rgba(65, 176, 18)'
+    },
+  },
 });
 
 const Visualization = () => {
@@ -36,6 +75,7 @@ const Visualization = () => {
   const [prodName, setProd] = useState(null);
   const [graphData, setGraph] = useState(null);
   const [error, setError] = useState(null);
+  const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset" };
 
   // Fetch from "/selectData" end-point
   useEffect(() => {
@@ -103,7 +143,9 @@ const Visualization = () => {
       <div className={classes.root}>
         <ButtonAppBar />
         <header className={classes.header}>
-          <ComboSearch setItem={(item) => setProd(item)}/>
+          <ComboSearch                   
+            inputProps={{ style: inputStyle }}
+            setItem={(item) => setProd(item)} />
           <br />
           <p>
             {'Price per Unit'}
@@ -125,7 +167,7 @@ const Visualization = () => {
             }
 
           <br />
-          <Button onClick={() => { setRead(true) }} color="primary" variant='contained'>
+          <Button className={classes.submit} onClick={() => { setRead(true) }} color="primary" variant='contained'>
             Get Results
           </Button>
         </header>
