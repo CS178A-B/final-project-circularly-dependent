@@ -7,9 +7,26 @@ function preProcess(data) {
 
 function postProcess(data) {
   let thisData = data
+
   if (thisData.DESCRIPTOR == 0) {
     thisData.DESCRIPTOR = "";
   }
+
+  thisData.PRODUCT_NAME = thisData.PRODUCT_NAME.toString();
+  if (thisData.PRODUCT_NAME.charAt(0) === '.') thisData.PRODUCT_NAME = thisData.PRODUCT_NAME.slice(1);
+  if (thisData.PRODUCT_NAME.charAt(0) === '%') thisData.PRODUCT_NAME = thisData.PRODUCT_NAME.slice(1);
+  if (thisData.PRODUCT_NAME.charAt(0) === '~') thisData.PRODUCT_NAME = thisData.PRODUCT_NAME.slice(1);
+  if (thisData.PRODUCT_NAME.charAt(0) === '#') thisData.PRODUCT_NAME = thisData.PRODUCT_NAME.slice(1);
+
+  thisData.PRODUCT_NAME = thisData.PRODUCT_NAME.replace(/(\\\*)+/, "");
+
+
+  if (thisData.PRODUCT_NAME.indexOf(" ") === 0) thisData.PRODUCT_NAME = thisData.PRODUCT_NAME.slice(1);
+  thisData.PRODUCT_NAME = thisData.PRODUCT_NAME.replace(/\d\d\\\//, "");
+
+
+  // console.log(thisData.ENTRY_ID, thisData.PRODUCT_NAME.charAt(0) !== '.')
+  
   thisData.REQUESTOR_DEPARTMENT = Number(thisData.REQUESTOR_DEPARTMENT);
   thisData.ITEM_DESC = (thisData.ITEM_DESC).replace("\"\\\"", "");
   thisData.ITEM_DESC = (thisData.ITEM_DESC).replace("\"", "");
@@ -20,9 +37,8 @@ function postProcess(data) {
 
   thisData.ITEM_TOTAL_AMOUNT = (thisData.ITEM_TOTAL_AMOUNT).replace(/\D/g,'');
   thisData.ITEM_TOTAL_AMOUNT = Number(thisData.ITEM_TOTAL_AMOUNT);
-  if ((thisData.PO_NO).includes("\n")) {
-    thisData.PO_NO = (thisData.PO_NO).replace("\n", "");
-  }
+  
+  thisData.PO_NO = (thisData.PO_NO).replace("\n", "");
   thisData.PO_NO = (thisData.PO_NO).replace(/\D/g,'');
   thisData.PO_NO = Number(thisData.PO_NO);
 
@@ -40,6 +56,7 @@ function postProcess(data) {
 
   thisData.PO_QUANTITY = (thisData.PO_QUANTITY).replace(/\D/g,'');
   thisData.PO_QUANTITY = Number(thisData.PO_QUANTITY);
+
 
   return thisData;
 }
