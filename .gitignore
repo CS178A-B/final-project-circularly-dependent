@@ -4,4 +4,4 @@ web-build/
 server/log-file.txt
 nlpCore-app/target/
 nlpCore-app/outdata.txt
-logstash.conf
+# logstash.conf
