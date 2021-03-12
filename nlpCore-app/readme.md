@@ -40,6 +40,22 @@ line:31 <version>3.2.0</version>
 line:36 <version>3.2.0</version>
 ```
 
+If you are running the server and client then you can forget everything else and in the ```.../nlpCore-app``` directory run
+```bash
+chmod u+x ./listener.sh
+./listener.sh
+```
+This will listen for when the server changes the file in ```.../server/client-to-nlp/newData.json``` file and will process the json data when the update is made to that file. That file changes automatically when the client uploads a csv file through the front end home page.
+
+## Testing and Tinkering
+
+Testing information is done with travis CI in the .yml file in the root directory.
+```
+mvn clean install
+mvn -Dtest=testCoreNLP test #Tests all
+```
+The testing class is in ```final-project-circularly-dependent/nlpCore-app/src/test/java/testCoreNLP.java``` This is where we can add more testing methods.
+
 From the ```.../nlpCore-app``` directory run
 ```bash
 chmod u+x process_update.sh
