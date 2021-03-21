@@ -10,10 +10,10 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { SERVER_PORT } from '../globals';
+import { makeStyles } from '@material-ui/core/styles';
 import { UserContext } from '../globals';
+import { SERVER_PORT } from '../globals';
 import ButtonAppBar from './shared-components/Navbar';
 
 function Copyright() {
@@ -104,6 +104,7 @@ export default function SignUp() {
     setCity('');
     setUsername('');
     setPassword('');
+    setConfirmPass('');
     setServerMsg('');
   }
   
@@ -184,29 +185,6 @@ export default function SignUp() {
           </Typography>
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
-              {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete='fname'
-                  name='firstName'
-                  variant='outlined'
-                  required
-                  fullWidth
-                  id='firstName'
-                  label='First Name'
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant='outlined'
-                  required
-                  fullWidth
-                  id='lastName'
-                  label='Last Name'
-                  name='lastName'
-                  autoComplete='lname'
-                />
-              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   className={classes.root}
@@ -221,7 +199,6 @@ export default function SignUp() {
                   autoComplete='city'
                   value={city} 
                   onChange={e => setCity(e.target.value)}
-                  
                   />
               </Grid>
               <Grid item xs={12}>

@@ -54,11 +54,11 @@ const useStyles = makeStyles((theme) => ({
   }, 
   linkHome: {
     textDecoration: 'none', 
-    color: '#FFF'  
+    color: '#FFF',
   },
   linkOther: {
     textDecoration: 'none', 
-    color: '#000000'  
+    color: '#000000',
   },
 }));
 
@@ -68,18 +68,18 @@ export default function ButtonAppBar() {
   const {loggedIn, _setLoggedIn} = useContext(UserContext);
   let logStatus = 'SIGN IN';
 
-  let url = '/login'
+  let url = '/login';
   if (loggedIn) {
-    logStatus = 'SIGN OUT'
-    url = '/logout'    
+    logStatus = 'SIGN OUT';
+    url = '/logout';    
   } else {
-    logStatus = 'SIGN IN'
-    url = '/login'
+    logStatus = 'SIGN IN';
+    url = '/login';
   }
 
   return (
     <div className={classes.root}>
-      <AppBar className={(location.pathname === '/')? classes.homeappbar : classes.appbar} >
+      <AppBar className={(location.pathname === '/')? classes.homeappbar : classes.appbar}>
         <Toolbar>
           <Box className={classes.title}>
             <Link to="/" className={(location.pathname === '/')? classes.linkHome : classes.linkOther}>
@@ -87,26 +87,22 @@ export default function ButtonAppBar() {
             </Link>
           </Box>      
           <div className={classes.graphButton}>
-
             <Link to="/dashboard" className={(location.pathname === '/')? classes.linkHome : classes.linkOther}>
               <IconButton  color="inherit" aria-label="menu">
                 <TimelineOutlinedIcon />
               </IconButton>
             </Link>
-
             <Link to="/upload" className={(location.pathname === '/')? classes.linkHome : classes.linkOther}>
               <IconButton  color="inherit" aria-label="menu">
                 <PublishIcon />
               </IconButton>
             </Link>
-            
             <Link to="/aboutUs" className={(location.pathname === '/')? classes.linkHome : classes.linkOther}>
               <IconButton  color="inherit" aria-label="menu">
                 <WbIncandescentTwoToneIcon />
               </IconButton>
             </Link>
-          </div>    
-
+          </div>  
           <Link to={url} className={(location.pathname === '/')? classes.loginHome : classes.loginOther}>
             <Button className={classes.button} color="inherit">{logStatus}</Button>
           </Link>

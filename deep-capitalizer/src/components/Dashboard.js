@@ -1,5 +1,3 @@
-import './App.css';
-import { SERVER_PORT } from '../globals';
 import { makeStyles } from '@material-ui/core/styles';
 import ButtonAppBar from './shared-components/Navbar';
 
