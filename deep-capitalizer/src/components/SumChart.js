@@ -1,16 +1,13 @@
 import './App.css';
 import {
-  BarChart, LineChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
 import ComboSearch from './shared-components/ComboSearch';
-
-// import rawData from '../resources/out1.json';
 import { SERVER_PORT } from './../globals';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { useState, useEffect } from 'react';
 import ButtonAppBar from './shared-components/Navbar';
-
 
 const useStyles = makeStyles({
   root: {
@@ -56,7 +53,6 @@ const useStyles = makeStyles({
     maxWidth: '80vw',
   },
   submit: {
-    // margin: theme.spacing(3, 0, 2),
     backgroundColor: 'rgba(30, 99, 0, 0.8)',
     color: 'white',
     "& .MuiTouchRipple-root span":{
@@ -117,12 +113,7 @@ const SumChart = () => {
       console.log('Da rawData:', typeof(rawData), rawData);
       let g = [];
       for (let entry of rawData) {
-        // console.log(typeof(entry))
-        // console.log(`entry ${entry['entry_id']}:`, entry)
-        // console.log('product name:', entry['product_name'])
-        // if (entry['year'] === 2018) {
           g.push(entry);
-        // }
       }
       console.log('graphSTUFF:', g);
       setGraph(g);
@@ -135,12 +126,7 @@ const SumChart = () => {
       console.log('Da rawData:', typeof(rawData), rawData);
       let g = [];
       for (let entry of rawData.PURCHASES) {
-        // console.log(typeof(entry))
-        // console.log(`entry ${entry['entry_id']}:`, entry)
-        // console.log('product name:', entry['product_name'])
-        // if (entry['YEAR'] === 2018) {
           g.push(entry);
-        // }
       }
       console.log('graphSTUFF:', g);
       setGraph(g);
@@ -164,9 +150,7 @@ const SumChart = () => {
               <LineChart
                 width={500}
                 height={250}
-                data={graphData}
-
-              >
+                data={graphData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="year" />
                 <YAxis />
@@ -178,7 +162,6 @@ const SumChart = () => {
           :
             <br />
           }
-
         <br />
         <Button className={classes.submit} onClick={() => { setRead(true) }} color="primary" variant='contained'>
           Get Results

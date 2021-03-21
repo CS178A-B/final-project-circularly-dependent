@@ -6,8 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Cards from './shared-components/Card';
 import Grid from '@material-ui/core/Grid';
 import ButtonAppBar from './shared-components/Navbar';
-import Button from '@material-ui/core/Button';
-
 
 const Upload = () => {
   const { register, handleSubmit } = useForm();
@@ -17,7 +15,7 @@ const Upload = () => {
   useEffect(() => {
     const checkHistory = async () => {
       if (!tried) {
-        setTried(true)
+        setTried(true);
         await fetch(`http://localhost:${SERVER_PORT}/serverUpload`)
         .then(res => res.json())
         .then (
@@ -28,15 +26,15 @@ const Upload = () => {
   }, [tried]);
 
   const onSubmit = async(data) => {
-    const formData = new FormData()
-    formData.append('file', data.file[0])
+    const formData = new FormData();
+    formData.append('file', data.file[0]);
 
     const res = await fetch(`http://localhost:${SERVER_PORT}/serverUpload`, {
       method: 'POST',
       body: formData
     }).then(res => res.json())
-    setTried(false)
-    alert(JSON.stringify(res.message))
+    setTried(false);
+    alert(JSON.stringify(res.message));
   }
 
   const useStyles = makeStyles(() => ({
@@ -61,39 +59,18 @@ const Upload = () => {
       padding: '1rem'
     },
     button: {
-      // margin: 0,
-      // top: 30, left: 0, bottom:0, right: 0, 
-      // height: '5%',
-      // width: '13.8%',
-      // position: 'relative',
-      // top: '30%',
-      // left: '50%',
-      // marginRight: '-50%',
-      // transform: 'translate(-50%, -50%)' ,
-
       backgroundColor: 'rgba(30, 99, 0, 0.8)',
-      // color: 'white',
-      // padding: '0.5rem',
-      // fontFamily: 'sans-serif',
-      // borderRadius: '0.3rem',
-      // cursor: 'pointer',
-      // marginTop: '1rem',
-      // borderStyle: 'none',
       boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.19), 0 6px 20px 0 rgba(0, 0, 0, 0.0)',
-
-      // background: 'linear-gradient(45deg, #177000 30%, #0b8a00 90%)',
       borderRadius: 3,
       border: 0,
       color: 'white',
       height: 48,
       padding: '0 30px',
-      // boxShadow: '0 3px 5px 2px rgba(41, 84, 30, .3)',
     },
       gridContainer: {
       paddingLeft: '2px',
       paddingRight: '2px',
     },
-    
   }));
 
   const classes = useStyles();
@@ -117,7 +94,6 @@ const Upload = () => {
             <Cards CardName='File History' Files = {history}/>
           </Grid>
         </Grid>
-
       </div>
     </div>
   )

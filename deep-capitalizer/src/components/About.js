@@ -1,19 +1,13 @@
   
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import CameraIcon from '@material-ui/icons/PhotoCamera';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
 import ButtonAppBar from './shared-components/Navbar';
 import Siena from "../resources/sienaSEHa.jpg";
 import Nate from "../resources/nateBrennan.jpg";
@@ -25,9 +19,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      {/* <Link color="inherit" href="https://material-ui.com/"> */}
         Circularly Dependent {' '}
-      {/* </Link>{' '} */}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -55,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   cardMedia: {
-    // paddingTop: '56.25%', // 16:9
     paddingTop: '100%',
   },
   cardContent: {
@@ -79,7 +70,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
   }, 
   submit: {
-    // margin: theme.spacing(3, 0, 2),
     backgroundColor: 'rgba(30, 99, 0, 0.8)',
     color: 'white',
     "& .MuiTouchRipple-root span":{
@@ -92,8 +82,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const cards = [0, 1, 2];
-// const faces = [`url(${Nate})`,`url(${Jason})`,`url(${Siena})`]
 const developers = [
   {
     id : "nate",
@@ -126,6 +114,7 @@ const Album =() => {
       <ButtonAppBar />
 
       <main>
+
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="lg">
@@ -136,7 +125,7 @@ const Album =() => {
               Make money management fit to your interest{<br />}
               Analyze your data by timeline, items, unit price, or all {<br />}
             </Typography>
-            <img className={classes.contentImage} src={Kibana} />
+            <img className={classes.contentImage}  alt="dashboard" src={Kibana} />
           </Container>
         </div>
         <Container className={classes.cardGrid} maxWidth="md">
@@ -149,17 +138,10 @@ const Album =() => {
                 A team that brings your needs to reality{<br />}
                 Reach out for more{<br />}
               </Typography>
-              {/* <Button variant="contained" className={classes.submit}>
-                Main call to action
-              </Button> */}
             </Grid>
-                {/* <Grid item>
-                  <Button variant="outlined" className={classes.submit}>
-                    Secondary action
-                  </Button>
-                </Grid> */}
           </Grid>
           {/* End hero unit */}
+
           <Grid container spacing={4}>
             {developers.map((developer) => (
               <Grid item key={developer.id} xs={12} sm={6} md={4}>
@@ -177,20 +159,13 @@ const Album =() => {
                       {developer.content}
                     </Typography>
                   </CardContent>
-                  {/* <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions> */}
                 </Card>
               </Grid>
             ))}
           </Grid>
         </Container>
       </main>
+
       {/* Footer */}
       <footer className={classes.footer}>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">

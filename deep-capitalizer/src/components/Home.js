@@ -5,11 +5,9 @@ import ButtonAppBar from './shared-components/Navbar';
 import { UserContext } from '../globals';
 import typingWithGraphLeft from '../resources/typingWithGraphLeft.mp4';
 import Typography from '@material-ui/core/Typography';
-import Logo from '../resources/logo11trans-BlackBck-med.png';
-
-const imageLink = 'https://wallpapercave.com/wp/wp4831635.jpg';
 
 const Home = () => {
+  // eslint-disable-next-line
   const {loggedIn, _setLoggedIn} = useContext(UserContext);
   return (
     <div>
@@ -24,8 +22,6 @@ const Home = () => {
           width: '100%',
           height: '100%',
           objectFit: 'cover',
-          // transform: 'translate(-50%, -50%)',
-          // WebkitTransform: 'translate(-50%, -50%)',
           zIndex: 0,
         }}
       >
@@ -43,11 +39,6 @@ const Home = () => {
       </div>
 
       <div style={{
-        // position:'relative',
-        // top:'50%',
-        // left:'0',
-        // alignItems: 'center',
-        // justifyItems: 'center',
         textAlign: 'center',
         width: '100%',
         height: '60%',  // 40% for 1440p centering
@@ -57,16 +48,7 @@ const Home = () => {
         top: 30, left: 0, bottom: 0, right: 0,
         zIndex: 1,
       }}>
-        {/* <h1 style={{color: 'white', fontFamily: 'Commissioner', fontWeight: 500}}> 
-          From Number to Visual {<br />}
-          Start today
-        </h1> */}
-        {/* <Box align='center' marginBottom={5}>
-          <img src={Logo} />
-        </Box> */}
-        {/* <Typography style={{color: 'white', fontFamily: 'Maven Pro', fontWeight: 500}} component="h1" variant="h1" align="center" color="textPrimary" gutterBottom>
-          Capitalizer
-        </Typography> */}
+    
         <Typography style={{color: 'white', fontFamily: 'Commissioner', fontWeight: 400}} component="h1" variant="h1" align="center" color="textPrimary" gutterBottom>
           Watch Wise {<br />}
           Spend Smart
