@@ -18,7 +18,7 @@ import ButtonAppBar from './shared-components/Navbar';
 import Siena from "../resources/sienaSEHa.jpg";
 import Nate from "../resources/nateBrennan.jpg";
 import Jason from "../resources/jasonChan.jpg";
-import Kibana  from "./video/kibana.png"
+import Kibana  from "../resources/kibana.png"
 
 
 function Copyright() {
