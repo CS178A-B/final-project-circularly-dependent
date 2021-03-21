@@ -112,9 +112,7 @@ const Album =() => {
     <React.Fragment>
       <CssBaseline />
       <ButtonAppBar />
-
       <main>
-
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="lg">
@@ -128,6 +126,7 @@ const Album =() => {
             <img className={classes.contentImage}  alt="dashboard" src={Kibana} />
           </Container>
         </div>
+        {/* End hero unit */}
         <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={2} justify="center">
             <Grid item>
@@ -140,8 +139,6 @@ const Album =() => {
               </Typography>
             </Grid>
           </Grid>
-          {/* End hero unit */}
-
           <Grid container spacing={4}>
             {developers.map((developer) => (
               <Grid item key={developer.id} xs={12} sm={6} md={4}>
@@ -165,7 +162,6 @@ const Album =() => {
           </Grid>
         </Container>
       </main>
-
       {/* Footer */}
       <footer className={classes.footer}>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">

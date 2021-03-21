@@ -1,14 +1,14 @@
-import './App.css';
-import { SERVER_PORT, timeout } from '../globals';
 import { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
+import { SERVER_PORT, timeout } from '../globals';
 import logo from '../resources/logo.svg';
+import './App.css';
 
 const ServerTest = () => {
   const [count, setCount] = useState(0);
   const [serverMsg, setServerMsg] = useState(null);
   const [error, setError] = useState(null);
-  const [clientMsg, setClientMsg]  = useState(['Click to poke Server'])
+  const [clientMsg, setClientMsg]  = useState(['Click to poke Server']);
 
   // Handle poke
   useEffect(() => {
