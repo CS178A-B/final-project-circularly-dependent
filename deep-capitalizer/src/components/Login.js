@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: 'black',
     backgroundColor: 'rgba(65, 176, 18)',
   },
   form: {
@@ -112,15 +111,13 @@ export default function Login() {
 
         let result = await res.json();
         let city = result.city;
-        console.log(city)
 
         try{
           if (city !== '') {
-            setLoggedIn(true)
+            setLoggedIn(true);
           } 
           else {
-            console.log("here to change setvalue")
-            alert("username and password do not match")
+            alert("username and password do not match");
           }
         }
         catch(e) {} 
