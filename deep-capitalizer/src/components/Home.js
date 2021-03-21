@@ -41,7 +41,7 @@ const Home = () => {
       <div style={{
         textAlign: 'center',
         width: '100%',
-        height: '60%',  // 40% for 1440p centering
+        height: '65%',  // 40% for 1440p centering
         overflow: 'auto',
         margin: 'auto',
         position: 'absolute',
