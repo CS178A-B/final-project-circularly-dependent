@@ -148,6 +148,8 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 Install Node Package Manager (npm). [Helpful NPM Documentation](https://www.npmjs.com/get-npm)
 
-Install MySQL. [Helpful MySQL Documentation](https://dev.mysql.com/downloads/mysql/)
+Install Java. [Download Java here](https://www.java.com/en/)
+
+Install MySQL. [Download MySQL here](https://dev.mysql.com/downloads/mysql/)
 
 
