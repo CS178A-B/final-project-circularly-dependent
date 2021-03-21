@@ -10,10 +10,10 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { SERVER_PORT } from '../globals';
+import { makeStyles } from '@material-ui/core/styles';
 import { UserContext } from '../globals';
+import { SERVER_PORT } from '../globals';
 import ButtonAppBar from './shared-components/Navbar';
 
 function Copyright() {
@@ -97,6 +97,7 @@ export default function SignUp() {
   const [serverMsg, setServerMsg] = useState('');
   const [promos, setPromos] = useState(false);
   const [error, setError] = useState('');
+  // eslint-disable-next-line
   const {_loggedIn, setLoggedIn} = useContext(UserContext);
   const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset" };
 
@@ -104,30 +105,30 @@ export default function SignUp() {
     setCity('');
     setUsername('');
     setPassword('');
+    setConfirmPass('');
     setServerMsg('');
   }
   
-  const isValid = () => {
-    if (city.length < 1) {
-      alert('Please enter a valid city');
-      return false;
-    }
-    if (username.length < 5) {
-      alert('Please enter a valid email');
-      return false;
-    }
-    if (password.length < 6) {
-      alert('Password must be at least 6 characters');
-      return false;
-    }
-    if (password !== confirmPass) {
-      alert('Passwords do not match');
-      return false;
-    }
-    return true;
-  }
-
   useEffect(() => {
+    const isValid = () => {
+      if (city.length < 1) {
+        alert('Please enter a valid city');
+        return false;
+      }
+      if (username.length < 5) {
+        alert('Please enter a valid email');
+        return false;
+      }
+      if (password.length < 6) {
+        alert('Password must be at least 6 characters');
+        return false;
+      }
+      if (password !== confirmPass) {
+        alert('Passwords do not match');
+        return false;
+      }
+      return true;
+    }  
     const signUpAttempt = async () => {
       if (attempted) {
         setAttempted(false);
@@ -151,17 +152,17 @@ export default function SignUp() {
               setLoggedIn(res.isSignedUp);
             },
             err => setError(err)
-          );
-          if (error) { 
-            console.log(error); 
+            );
+            if (error) { 
+              console.log(error); 
+            }
+          } else {
+            clearFormState();
           }
-        } else {
-          clearFormState();
         }
       }
-    }
-    signUpAttempt();
-  }, [attempted]);
+      signUpAttempt();
+  }, [attempted, city, error, password, confirmPass, setLoggedIn, username]);
 
   useEffect(() => {
     if (serverMsg && serverMsg !== '') {
@@ -184,29 +185,6 @@ export default function SignUp() {
           </Typography>
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
-              {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete='fname'
-                  name='firstName'
-                  variant='outlined'
-                  required
-                  fullWidth
-                  id='firstName'
-                  label='First Name'
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant='outlined'
-                  required
-                  fullWidth
-                  id='lastName'
-                  label='Last Name'
-                  name='lastName'
-                  autoComplete='lname'
-                />
-              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   className={classes.root}
@@ -221,7 +199,6 @@ export default function SignUp() {
                   autoComplete='city'
                   value={city} 
                   onChange={e => setCity(e.target.value)}
-                  
                   />
               </Grid>
               <Grid item xs={12}>

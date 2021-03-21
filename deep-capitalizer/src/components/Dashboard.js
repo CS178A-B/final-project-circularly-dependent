@@ -1,5 +1,3 @@
-import './App.css';
-import { SERVER_PORT } from '../globals';
 import { makeStyles } from '@material-ui/core/styles';
 import ButtonAppBar from './shared-components/Navbar';
 
@@ -22,7 +20,7 @@ const Dashboard = () => {
   return (
     <div className={classes.root}>
       <ButtonAppBar />
-      <iframe className={classes.kibana} frameBorder='0' src="http://localhost:5601/goto/bd2a6d6717be3b32e53e1cfa83291c25" />
+      <iframe className={classes.kibana} title='kibana-dashboard' frameBorder='0' src='http://localhost:5601/goto/bd2a6d6717be3b32e53e1cfa83291c25' />
     </div>
   );
 }

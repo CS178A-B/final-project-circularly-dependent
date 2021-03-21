@@ -25,6 +25,7 @@ function postProcess(data) {
   thisData.PRODUCT_NAME = thisData.PRODUCT_NAME.replace(/\d\d\\\//, "");
 
   if (thisData.PRODUCT_NAME === '0') thisData.PRODUCT_NAME = 'Misc.';
+  if (thisData.PRODUCT_NAME === 'GLOVE') thisData.PRODUCT_NAME = 'GLOVES';
 
   // console.log(thisData.ENTRY_ID, thisData.PRODUCT_NAME.charAt(0) !== '.')
   

@@ -15,10 +15,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import ButtonAppBar from './shared-components/Navbar';
-import Siena from "./video/sienaSEHa.jpg";
-import Nate from "./video/nateBrennan.jpg";
-import Jason from "./video/jasonChan.jpg";
-import Kibana  from "./video/kibana.png"
+import Siena from "../resources/sienaSEHa.jpg";
+import Nate from "../resources/nateBrennan.jpg";
+import Jason from "../resources/jasonChan.jpg";
+import Kibana  from "../resources/kibana.png"
 
 
 function Copyright() {

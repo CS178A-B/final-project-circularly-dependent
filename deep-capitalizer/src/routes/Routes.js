@@ -31,7 +31,6 @@ const Routes = () => {
     <div className='App'>
       <Router history={history}>
         <UserContext.Provider value={{loggedIn, setLoggedIn}}>
-          {/* <ButtonAppBar/> */}
           <Switch>
               <Route path='/' exact component={Home} />
               <Route path='/signup' exact component={SignUp} >
@@ -54,9 +53,7 @@ const Routes = () => {
               <Route path='/upload' exact component={Upload}>
                 {(!loggedIn)? <Redirect to='/login' /> : <Upload />} 
               </Route>
-              {/* <Route path='/goal' exact component={Goal} /> */}
               <Route path='/aboutUs' exact component={About} />
-              <Route path='/server-test' exact component={ServerTest} />
           </Switch>
         </UserContext.Provider>
       </Router>

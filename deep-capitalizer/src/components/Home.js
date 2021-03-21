@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import ButtonAppBar from './shared-components/Navbar';
 import { UserContext } from '../globals';
-import typingWithGraphLeft from './video/typingWithGraphLeft.mp4';
+import typingWithGraphLeft from '../resources/typingWithGraphLeft.mp4';
 import Typography from '@material-ui/core/Typography';
 import Logo from '../resources/logo11trans-BlackBck-med.png';
 
