@@ -18,9 +18,11 @@
 <a href="https://github.com/sha021" target="_blank"><img src="https://avatars2.githubusercontent.com/u/43655180?s=400&u=e858756c01f86ccbeae24090f24dc0045d6997d6&v=4" align="left" height="30px">Siena Seung Eun Ha </a>
 
 ## Usage
-Demo: <Link to youtube video>
-
+### Demo <Link to youtube video>
+NLP: https://www.youtube.com/watch?v=bgSFB-p9-s0 <br />
+Client: https://www.youtube.com/watch?v=Tcz1K4I6WFg
 <Screenshot of application>
+
 
 ## How To Run 
 
@@ -41,7 +43,7 @@ In the project directory, you can satisfy dependencies with:
 
 To run server in development mode:
 
-### `npm start`
+#### `npm start`
 
 Logging will be on the console you ran from.<br />
 Server will be listening on [http://localhost:4000](http://localhost:4000).
@@ -63,18 +65,18 @@ You can satisfy dependencies with:
 
 To run client in development mode:
 
-### `npm start`
+#### `npm start`
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.<br />
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `npm test`
+#### `npm test`
 
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+#### `npm run build`
 
 Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -84,7 +86,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+#### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
