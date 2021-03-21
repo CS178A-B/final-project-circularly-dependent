@@ -20,8 +20,13 @@
 ## Usage
 ### Demo <Link to youtube video>
 NLP: https://www.youtube.com/watch?v=bgSFB-p9-s0 <br />
-Client: https://www.youtube.com/watch?v=Tcz1K4I6WFg
-<Screenshot of application>
+Client: https://www.youtube.com/watch?v=Tcz1K4I6WFg <br />
+Screenshots of Application <br />
+![Alt text](/../readmeUpdate/screenshots/mainPage.png?raw=true "Optional Title")
+![Alt text](/../readmeUpdate/screenshots/UploadPage.png?raw=true "Optional Title")
+![Alt text](/../readmeUpdate/screenshots/comboSearch.png?raw=true "Optional Title")
+![Alt text](/../readmeUpdate/screenshots/priceperGloves.png?raw=true "Optional Title")
+![Alt text](/../readmeUpdate/screenshots/annualGloves.png?raw=true "Optional Title")
 
 
 ## How To Run 
@@ -99,12 +104,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Diagrams
 
-Sequence Diagram
-
-Frontend Structure
-
-
-Overall System Diagram
+![Alt text](/../readmeUpdate/screenshots/pipeline.png?raw=true "Optional Title")
 
 ## Dependencies
 Install Node Package Manager (npm). [Helpful Documentation](https://www.npmjs.com/get-npm)
