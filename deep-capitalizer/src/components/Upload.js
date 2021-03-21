@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { SERVER_PORT } from '../globals';
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
-
-import Cards from './shared-components/Card';
 import Grid from '@material-ui/core/Grid';
 import ButtonAppBar from './shared-components/Navbar';
+import { SERVER_PORT } from '../globals';
+import Cards from './shared-components/Card';
 
 const Upload = () => {
   const { register, handleSubmit } = useForm();

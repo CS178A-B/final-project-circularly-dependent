@@ -1,13 +1,12 @@
-import './App.css';
+import { useState, useEffect } from 'react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
-import ComboSearch from './shared-components/ComboSearch';
-import { SERVER_PORT } from './../globals';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { useState, useEffect } from 'react';
+import { SERVER_PORT } from './../globals';
 import ButtonAppBar from './shared-components/Navbar';
+import ComboSearch from './shared-components/ComboSearch';
 
 const useStyles = makeStyles({
   root: {
