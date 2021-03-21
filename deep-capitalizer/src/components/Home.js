@@ -7,6 +7,7 @@ import typingWithGraphLeft from '../resources/typingWithGraphLeft.mp4';
 import Typography from '@material-ui/core/Typography';
 
 const Home = () => {
+  // eslint-disable-next-line
   const {loggedIn, _setLoggedIn} = useContext(UserContext);
   return (
     <div>
