@@ -58,7 +58,7 @@ app.get('/test', (req, res) => {
 
 app.get('/nlpSignal', (req, res) => {
   database.mySql();
-  res.status(200).json({"message": "you poke meee"})
+  res.status(200).json({"message": "you poke meee"});
 });
 
 app.post('/signUp', (req, res) => {
@@ -95,77 +95,69 @@ app.post('/signUp', (req, res) => {
 });
 
 app.post('/signIn', (req, res) => {
-  console.log('tryint to log in?')
-  const user = req.body.username
-  const pass = req.body.password
-  console.log(user)
-  console.log(pass)
-  // const sqlquery = 'SELECT COUNT(username) as cnt FROM users WHERE username = \'' + user + '\' AND password = \'' + pass + '\' LIMIT 0, 1'
-  const sqlquery = 'SELECT city FROM users WHERE username = \'' + user + '\' AND password = \'' + pass + '\''
+  console.log('tryint to log in?');
+  const user = req.body.username;
+  const pass = req.body.password;
+  const sqlquery = 'SELECT city FROM users WHERE username = \'' + user + '\' AND password = \'' + pass + '\'';
 
   con.query(sqlquery, function (err, result) {
     if (err) throw err;
-    //results = (result[0].cnt)
     if (result.length !== 0) {
-      console.log(result[0])
+      console.log(result[0]);
       res.status(200).json({
         "username" : user,
         "city" : result[0].city
       });
     }
     else {
-      res.status(409).json({"message" : "User/Password does not Match", "city" : ""})
+      res.status(409).json({"message" : "User/Password does not Match", "city" : ""});
     }
   });
 })
 
 app.post('/selectData', (req, res) => {
-  // let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\' ORDER BY ISSUE_DATE ASC, unit_price'
-  let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\' ORDER BY unit_price LIMIT 20'
-
-  console.log(sqlquery)
+  let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\' ORDER BY unit_price LIMIT 20';
   con.query(sqlquery, function (err, result) {
     if (err) throw err;
     console.log(result);
-    res.status(200).json(result)
+    res.status(200).json(result);
   });
 })
 
 app.post('/overall', (req, res) => {
-  //let sqlquery = 'SELECT * FROM items WHERE product_name = \'' + req.body.product_name + '\' ORDER BY ISSUE_DATE ASC, item_total'
-  let sqlquery  = 'SELECT SUM(item_total) AS Sum, YEAR(issue_date) as year FROM items WHERE product_name = \'' + req.body.product_name + '\'GROUP BY YEAR(issue_date) ORDER BY YEAR ASC'  
+  let sqlquery  = 'SELECT SUM(item_total) AS Sum, YEAR(issue_date) as year FROM items WHERE product_name = \'' + req.body.product_name + '\'GROUP BY YEAR(issue_date) ORDER BY YEAR ASC';  
   con.query(sqlquery, function (err, result) {
     if (err) throw err;
     console.log(result);
-    res.status(200).json(result)
+    res.status(200).json(result);
   });
 })
 
 app.get('/productName', (req, res) => {
-  let sqlquery = 'SELECT DISTINCT product_name FROM items'
+  let sqlquery = 'SELECT DISTINCT product_name FROM items';
   con.query(sqlquery, function (err, result) {
     if (err) throw err;
     console.log(result);
-    res.status(200).json(result)
+    res.status(200).json(result);
   });
 })
 
 app.get('/serverUpload', (req,res) => {
-  const dir = path.join(__dirname + '/../uploads/')
+  const dir = path.join(__dirname + '/../uploads/');
   let files = fs.readdirSync(dir);  
-  let uploadList = []
+  let uploadList = [];
   for (const file of files) {
-    uploadList.push(file)
+    uploadList.push(file);
   }
-  console.log(uploadList)
-  res.status(200).json(uploadList)
+  console.log(uploadList);
+  res.status(200).json(uploadList);
 })
 
 let results = [];
 app.post('/serverUpload', (req, res, next) => {
   const file = req.files.file;
-  let toNLPfile = path.join(__dirname + '/client-to-nlp/newData.json')
-  fp = path.join(__dirname + '/../uploads/', file.name)
+  let toNLPfile = path.join(__dirname + '/client-to-nlp/newData.json');
+  fp = path.join(__dirname + '/../uploads/', file.name);
   
   if (fs.existsSync(fp)) {
     res.send({
@@ -176,26 +168,24 @@ app.post('/serverUpload', (req, res, next) => {
   else {
     file.mv("./uploads/" + file.name, function(err, result) {
       if (err) throw err;
-      let [fileName, fileExtension] = (file.name).split('.')
+      let [fileName, _fileExtension] = (file.name).split('.');
 
       delayedRes = async() => { 
         fs.createReadStream(fp)
         .on('error', () => {
-            console.log("errorr")
+            console.log("errorr");
         })
         .pipe(csv())
         .on('data', (row) => {
-            results.push(row)
+            results.push(row);
         })
         .on('end', () => {
-          fileName = './server/client-to-nlp/newData.json'
+          fileName = './server/client-to-nlp/newData.json';
           if (fs.existsSync(toNLPfile)) {
-            console.log("UNLINKINGGGG")
-            fs.unlinkSync(toNLPfile)
+            fs.unlinkSync(toNLPfile);
           }
           fs.writeFile(fileName, JSON.stringify(results), function (err) {
             if (err) throw err;
-            console.log('Saved!');
           });
         })
       }
