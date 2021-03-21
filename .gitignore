@@ -2,3 +2,8 @@ node_modules/
 web-build/
 .vscode/
 server/log-file.txt
+server/process_log
+server/client-to-nlp/*
+server/nlp-to-server/*
+nlpCore-app/target/
+nlpCore-app/outdata.txt

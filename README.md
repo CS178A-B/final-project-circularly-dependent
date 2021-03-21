@@ -107,6 +107,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ![Alt text](/../readmeUpdate/screenshots/pipeline.png?raw=true "Optional Title")
 
 ## Dependencies
+
 Install Node Package Manager (npm). [Helpful Documentation](https://www.npmjs.com/get-npm)
 
 Install MySQL (https://dev.mysql.com/downloads/mysql/)
