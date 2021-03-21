@@ -97,6 +97,7 @@ export default function SignUp() {
   const [serverMsg, setServerMsg] = useState('');
   const [promos, setPromos] = useState(false);
   const [error, setError] = useState('');
+  // eslint-disable-next-line
   const {_loggedIn, setLoggedIn} = useContext(UserContext);
   const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset" };
 
@@ -108,27 +109,26 @@ export default function SignUp() {
     setServerMsg('');
   }
   
-  const isValid = () => {
-    if (city.length < 1) {
-      alert('Please enter a valid city');
-      return false;
-    }
-    if (username.length < 5) {
-      alert('Please enter a valid email');
-      return false;
-    }
-    if (password.length < 6) {
-      alert('Password must be at least 6 characters');
-      return false;
-    }
-    if (password !== confirmPass) {
-      alert('Passwords do not match');
-      return false;
-    }
-    return true;
-  }
-
   useEffect(() => {
+    const isValid = () => {
+      if (city.length < 1) {
+        alert('Please enter a valid city');
+        return false;
+      }
+      if (username.length < 5) {
+        alert('Please enter a valid email');
+        return false;
+      }
+      if (password.length < 6) {
+        alert('Password must be at least 6 characters');
+        return false;
+      }
+      if (password !== confirmPass) {
+        alert('Passwords do not match');
+        return false;
+      }
+      return true;
+    }  
     const signUpAttempt = async () => {
       if (attempted) {
         setAttempted(false);
@@ -152,17 +152,17 @@ export default function SignUp() {
               setLoggedIn(res.isSignedUp);
             },
             err => setError(err)
-          );
-          if (error) { 
-            console.log(error); 
+            );
+            if (error) { 
+              console.log(error); 
+            }
+          } else {
+            clearFormState();
           }
-        } else {
-          clearFormState();
         }
       }
-    }
-    signUpAttempt();
-  }, [attempted]);
+      signUpAttempt();
+  }, [attempted, city, error, password, confirmPass, setLoggedIn, username]);
 
   useEffect(() => {
     if (serverMsg && serverMsg !== '') {

@@ -1,14 +1,12 @@
-import './App.css';
+import { useState, useEffect } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
-// import rawData from '../resources/out1.json';
-import { SERVER_PORT } from './../globals';
-import ComboSearch from './shared-components/ComboSearch';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { useState, useEffect } from 'react';
+import { SERVER_PORT } from './../globals';
 import ButtonAppBar from './shared-components/Navbar';
+import ComboSearch from './shared-components/ComboSearch';
 
 const useStyles = makeStyles({
   root: {
@@ -54,7 +52,6 @@ const useStyles = makeStyles({
     maxWidth: '80vw',
   },
   submit: {
-    // margin: theme.spacing(3, 0, 2),
     backgroundColor: 'rgba(30, 99, 0, 0.8)',
     color: 'white',
     "& .MuiTouchRipple-root span":{
@@ -62,7 +59,7 @@ const useStyles = makeStyles({
       opacity: .1,
     },
     "&:hover": {
-      backgroundColor: 'rgba(65, 176, 18)'
+      backgroundColor: 'rgba(65, 176, 18)',
     },
   },
 });
@@ -81,6 +78,7 @@ const Visualization = () => {
   useEffect(() => {
     const readFile = async () => {
       if (read) {
+
         // No product selected, abort fetch
         if (!prodName) {
           alert('Please select a Product.');
@@ -126,9 +124,6 @@ const Visualization = () => {
       console.log('Da rawData:', typeof(rawData), rawData);
       let g = [];
       for (let entry of rawData.PURCHASES) {
-        // console.log(typeof(entry))
-        // console.log(`entry ${entry['entry_id']}:`, entry)
-        // console.log('product name:', entry['product_name'])
         if (entry['PRODUCT_NAME'] === 'PUMP EFFICIENCY TESTING WATER METER TESTING SAND TESTING') {
           g.push(entry);
         }
@@ -165,7 +160,6 @@ const Visualization = () => {
             :
               <br />
             }
-
           <br />
           <Button className={classes.submit} onClick={() => { setRead(true) }} color="primary" variant='contained'>
             Get Results

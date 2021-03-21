@@ -65,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
   const classes = useStyles();
   const location = useLocation();
+  // eslint-disable-next-line
   const {loggedIn, _setLoggedIn} = useContext(UserContext);
   let logStatus = 'SIGN IN';
 
@@ -83,7 +84,7 @@ export default function ButtonAppBar() {
         <Toolbar>
           <Box className={classes.title}>
             <Link to="/" className={(location.pathname === '/')? classes.linkHome : classes.linkOther}>
-              {(location.pathname === '/') ? <img src={LogoWhite} /> : <img src={LogoBlack} />}
+              {(location.pathname === '/') ? <img src={LogoWhite} alt='' /> : <img src={LogoBlack} alt=''/>}
             </Link>
           </Box>      
           <div className={classes.graphButton}>
