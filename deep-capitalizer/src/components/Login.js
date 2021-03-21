@@ -124,7 +124,7 @@ export default function Login() {
       }
     }
     signInAttempt()
-  }, [attempted]);
+  }, [attempted, ID, password, setLoggedIn]);
   
   if (!loggedIn) {
     return (
